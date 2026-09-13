@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>THE CASE</title>
+
+    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 50% 20%, #292929, #0b0b0b 55%, #030303);
+            color: #eee;
+            font-family: Arial, sans-serif;
+        }
+
+        .app {
+            width: 92%;
+            max-width: 430px;
+            margin: auto;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 40px;
+            letter-spacing: 7px;
+        }
+
+        .subtitle {
+            color: #888;
+            margin-top: 10px;
+            letter-spacing: 2px;
+            font-size: 12px;
+        }
+
+        .box {
+            margin-top: 35px;
+            padding: 25px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #333;
+            border-radius: 12px;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background: #111;
+            color: white;
+            text-align: center;
+            font-size: 17px;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            margin-top: 12px;
+            border-radius: 8px;
+            border: 1px solid #555;
+            background: #eee;
+            color: #111;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        .secondary {
+            background: transparent;
+            color: #aaa;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .code {
+            font-size: 42px;
+            letter-spacing: 10px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .players {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .player {
+            padding: 12px;
+            margin: 7px 0;
+            background: rgba(255,255,255,0.05);
+            border-radius: 7px;
+        }
+
+        .status {
+            margin-top: 15px;
+            color: #888;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <div class="logo">🕵️</div>
+
+    <h1>THE CASE</h1>
+
+    <div class="subtitle">
+        EVERYONE HAS A SECRET
+    </div>
+
+    <!-- HOME -->
+
+    <div class="box" id="home">
+
+        <input
+            id="nameInput"
+            type="text"
+            maxlength="15"
+            placeholder="YOUR NAME"
+        >
+
+        <button onclick="createGame()">
+            CREATE GAME
+        </button>
+
+        <button class="secondary" onclick="showJoin()">
+            JOIN GAME
+        </button>
+
+    </div>
+
+
+    <!-- JOIN -->
+
+    <div class="box hidden" id="joinBox">
+
+        <input
+            id="joinName"
+            type="text"
+            maxlength="15"
+            placeholder="YOUR NAME"
+        >
+
+        <input
+            id="joinCode"
+            type="text"
+            maxlength="6"
+            placeholder="GAME CODE"
+        >
+
+        <button onclick="joinGame()">
+            JOIN GAME
+        </button>
+
+        <button class="secondary" onclick="goHome()">
+            ← BACK
+        </button>
+
+    </div>
+
+
+    <!-- LOBBY -->
+
+    <div class="box hidden" id="lobby">
+
+        <div class="subtitle">
+            GAME CODE
+        </div>
+
+        <div class="code" id="gameCode">
+            ------
+        </div>
+
+        <div class="status">
+            Give this code to your friends.
+        </div>
+
+        <div class="players" id="playersList"></div>
+
+        <button id="startButton" onclick="startGame()" class="hidden">
+            START GAME
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let peer = null;
+let hostConnection = null;
+
+let isHost = false;
+let myName = "";
+
+let players = [];
+
+let connections = {};
+
+
+// Generate 6-character game code
+
+function generateCode() {
+
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+    let code = "";
+
+    for (let i = 0; i < 6; i++) {
+        code += chars[Math.floor(Math.random() * chars.length)];
+    }
+
+    return code;
+}
+
+
+// CREATE GAME
+
+function createGame() {
+
+    myName = document.getElementById("nameInput").value.trim();
+
+    if (!myName) {
+        alert("Write your name first.");
+        return;
+    }
+
+    isHost = true;
+
+    const code = generateCode();
+
+    peer = new Peer("THECASE-" + code);
+
+    peer.on("open", function() {
+
+        players = [
+            {
+                name: myName,
+                host: true
+            }
+        ];
+
+        document.getElementById("home").classList.add("hidden");
+        document.getElementById("lobby").classList.remove("hidden");
+
+        document.getElementById("gameCode").innerText = code;
+
+        document.getElementById("startButton").classList.remove("hidden");
+
+        updatePlayers();
+
+    });
+
+
+    peer.on("connection", function(connection) {
+
+        connection.on("data", function(data) {
+
+            if (data.type === "JOIN") {
+
+                players.push({
+                    name: data.name,
+                    host: false
+                });
+
+                connections[data.id] = connection;
+
+                broadcastPlayers();
+
+                updatePlayers();
+            }
+
+        });
+
+    });
+
+
+    peer.on("error", function(error) {
+
+        console.log(error);
+
+        alert("Couldn't create the game. Try again.");
+
+    });
+
+}
+
+
+// SHOW JOIN
+
+function showJoin() {
+
+    document.getElementById("home").classList.add("hidden");
+
+    document.getElementById("joinBox").classList.remove("hidden");
+
+}
+
+
+// BACK
+
+function goHome() {
+
+    document.getElementById("joinBox").classList.add("hidden");
+
+    document.getElementById("home").classList.remove("hidden");
+
+}
+
+
+// JOIN GAME
+
+function joinGame() {
+
+    const name =
+        document.getElementById("joinName").value.trim();
+
+    const code =
+        document.getElementById("joinCode").value.trim().toUpperCase();
+
+
+    if (!name) {
+
+        alert("Write your name.");
+
+        return;
+    }
+
+
+    if (code.length !== 6) {
+
+        alert("Game code must be 6 characters.");
+
+        return;
+    }
+
+
+    myName = name;
+
+
+    peer = new Peer();
+
+
+    peer.on("open", function(id) {
+
+        const hostId = "THECASE-" + code;
+
+        hostConnection = peer.connect(hostId);
+
+
+        hostConnection.on("open", function() {
+
+            hostConnection.send({
+
+                type: "JOIN",
+
+                name: myName,
+
+                id: id
+
+            });
+
+
+            document.getElementById("joinBox").classList.add("hidden");
+
+            document.getElementById("lobby").classList.remove("hidden");
+
+            document.getElementById("gameCode").innerText = code;
+
+        });
+
+
+        hostConnection.on("data", function(data) {
+
+            if (data.type === "PLAYERS") {
+
+                players = data.players;
+
+                updatePlayers();
+
+            }
+
+        });
+
+
+        hostConnection.on("close", function() {
+
+            alert("The host left the game.");
+
+            location.reload();
+
+        });
+
+    });
+
+
+    peer.on("error", function(error) {
+
+        console.log(error);
+
+        alert("Game not found. Check the code.");
+
+    });
+
+}
+
+
+// UPDATE PLAYER LIST
+
+function updatePlayers() {
+
+    const list = document.getElementById("playersList");
+
+    list.innerHTML = "";
+
+    players.forEach(function(player) {
+
+        const div = document.createElement("div");
+
+        div.className = "player";
+
+        div.innerText =
+            player.name +
+            (player.host ? " 👑 HOST" : "");
+
+        list.appendChild(div);
+
+    });
+
+}
+
+
+// SEND PLAYER LIST TO EVERYONE
+
+function broadcastPlayers() {
+
+    Object.values(connections).forEach(function(connection) {
+
+        connection.send({
+
+            type: "PLAYERS",
+
+            players: players
+
+        });
+
+    });
+
+}
+
+
+// START GAME
+
+function startGame() {
+
+    if (players.length < 4) {
+
+        alert("You need at least 4 players.");
+
+        return;
+
+    }
+
+    alert("GAME START — next step will be the CASE system!");
+
+}
+
+</script>
+
+</body>
+</html>
