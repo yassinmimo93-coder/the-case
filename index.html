@@ -1097,9 +1097,15 @@ let timerInterval = null;
 
 let votes = {};
 let scores = {};
-
 let accusedId = null;
 let detectiveId = null;
+
+// ===============================
+// MULTI-ROUND SYSTEM
+// ===============================
+
+let roundNumber = 0;
+let roundHistory = [];
 
 
 /* =========================================================
@@ -1584,6 +1590,60 @@ function finishVoting(){
         scores[accusedId] =
             (scores[accusedId] || 0) + 1;
     }
+    
+// ===============================
+// SAVE ROUND HISTORY
+// ===============================
+
+const roundScores = {};
+
+Object.keys(players).forEach(id => {
+    roundScores[id] = scores[id] || 0;
+});
+
+const roundPoints = {};
+
+Object.keys(players).forEach(id => {
+    roundPoints[id] = 0;
+});
+
+// نقاط اللاعبين اللي اكتشفوا المتهم
+Object.keys(votes).forEach(voterId => {
+
+    if(votes[voterId] === accusedId){
+
+        roundPoints[voterId] =
+            (roundPoints[voterId] || 0) + 1;
+
+    }
+
+});
+
+// لو المتهم هرب
+if(accusedVotes === 0){
+
+    roundPoints[accusedId] =
+        (roundPoints[accusedId] || 0) + 1;
+
+}
+
+roundHistory.push({
+
+    round: roundNumber,
+
+    caseTitle: currentCase.title,
+
+    accusedId: accusedId,
+
+    votes: {...votes},
+
+    accusedVotes: accusedVotes,
+
+    points: roundPoints,
+
+    totalScores: roundScores
+
+});    
     else{
 
         // كل واحد صوّت صح ياخد نقطة
@@ -2235,10 +2295,12 @@ async function createGame(){
         hostPeerId = myId;
 
         players = {};
-        connections = {};
+connections = {};
+scores = {};
+votes = {};
 
-        scores = {};
-        votes = {};
+roundNumber = 0;
+roundHistory = [];
 
         gameStarted = false;
         roundFinished = false;
@@ -2977,10 +3039,13 @@ function startGame(){
     accusedId =
         shuffled[1];
 
-    gameStarted = true;
-    roundFinished = false;
+   // جولة جديدة
+roundNumber++;
 
-    votes = {};
+gameStarted = true;
+roundFinished = false;
+
+votes = {};
 
     gameEndTime =
         Date.now() + (15 * 60 * 1000);
@@ -3576,35 +3641,38 @@ function finishVoting(){
         :
         "المتهم هرب! محدش صوت عليه.";
 
-    const resultData = {
+   const resultData = {
 
-        type:"RESULT",
+    type:"RESULT",
 
-        accusedId:
-            accusedId,
+    round:
+        roundNumber,
 
-        detectiveId:
-            detectiveId,
+    caseTitle:
+        currentCase.title,
 
-        votes:
-            votes,
+    accusedId:
+        accusedId,
 
-        scores:
-            scores,
+    detectiveId:
+        detectiveId,
 
-        accusedVotes:
-            accusedVotes,
+    votes:
+        votes,
 
-        message:
-            resultMessage
+    scores:
+        scores,
 
-    };
+    accusedVotes:
+        accusedVotes,
 
-    receiveResult(resultData);
+    roundHistory:
+        roundHistory,
 
-    broadcast(resultData);
+    message:
+        resultMessage
 
-}
+};
 
 
 /* =========================================================
@@ -3636,6 +3704,13 @@ function receiveResult(data){
     scores =
         data.scores || {};
 
+    if(data.roundHistory){
+
+    roundHistory =
+        data.roundHistory;
+
+}
+    
     const accused =
         players[accusedId];
 
@@ -3651,6 +3726,8 @@ function receiveResult(data){
 
     renderScores();
 
+    renderRoundHistory();
+    
     renderVoteDetails();
 
     if(isHost){
@@ -3683,6 +3760,38 @@ function receiveResult(data){
 
 }
 
+function renderRoundHistory(){
+
+    const box = $("voteDetails");
+
+    if(!box) return;
+
+    if(roundHistory.length === 0) return;
+
+    box.innerHTML += `
+        <div class="vote-detail">
+            📜 <strong>الجولات السابقة</strong>
+        </div>
+    `;
+
+    roundHistory.forEach(round => {
+
+        const accused =
+            players[round.accusedId];
+
+        box.innerHTML += `
+            <div class="vote-detail">
+                الجولة ${round.round} — ${escapeHtml(round.caseTitle)}
+                <br>
+                المتهم: <strong>
+                    ${escapeHtml(accused ? accused.name : "غير معروف")}
+                </strong>
+            </div>
+        `;
+
+    });
+
+}    
 
 function renderScores(){
 
