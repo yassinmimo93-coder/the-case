@@ -847,10 +847,6 @@ select:focus{
 &#x20;                   🕵️
 &#x20;               \</div>
 
-  <div id="roundResult"
-     class="role-description">
-</div>
-  
 &#x20;               \<h2>المتهم الحقيقي هو\</h2>
 
 &#x20;               \<div id="accusedResult"
@@ -1106,9 +1102,7 @@ let scores = {};
 let accusedId = null;
 let detectiveId = null;
 
-let roundNumber = 0;
-let roundHistory = [];  
-  
+
 /\* =========================================================
 &#x20;  HELPERS
 \========================================================= \*/
@@ -1503,9 +1497,6 @@ async function createGame(){
 
 &#x20;       scores = {};
 &#x20;       votes = {};
-
-roundNumber = 0;
-roundHistory = [];
 
 &#x20;       gameStarted = false;
 &#x20;       roundFinished = false;
@@ -2230,8 +2221,6 @@ function startGame(){
 &#x20;       return;
 &#x20;   }
 
-roundNumber++;
-
 &#x20;   /\* =====================================================
 &#x20;      اختيار الأدوار
 &#x20;   \===================================================== \*/
@@ -2845,25 +2834,10 @@ function finishVoting(){
 &#x20;       :
 &#x20;       "المتهم هرب! محدش صوت عليه.";
 
-roundHistory.push({
-    round: roundNumber,
-    caseTitle: currentCase.title,
-    accusedId: accusedId,
-    detectiveId: detectiveId,
-    accusedVotes: accusedVotes,
-    scores: {...scores}
-});
-
 &#x20;   const resultData = {
 
 &#x20;       type:"RESULT",
 
-round:
-    roundNumber,
-
-roundHistory:
-    roundHistory,
-    
 &#x20;       accusedId:
 &#x20;           accusedId,
 
@@ -2933,15 +2907,6 @@ function receiveResult(data){
 &#x20;   $("resultMessage").textContent =
 &#x20;       data.message || "";
 
-roundNumber =
-    data.round || roundNumber;
-
-roundHistory =
-    data.roundHistory || roundHistory;
-    
-$("roundResult").textContent =
-    `الجولة ${roundNumber}`;
-    
 &#x20;   renderScores();
 
 &#x20;   renderVoteDetails();
@@ -3229,3 +3194,4 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 \</body>
 \</html>
+
