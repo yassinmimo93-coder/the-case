@@ -1174,6 +1174,749 @@ function randomCode(){
     return result;
 }
 
+// =========================================================
+// GAME ROUND SYSTEM
+// =========================================================
+
+function startGame(){
+    if(!isHost) return;
+
+    const playerIds = Object.keys(players);
+
+    if(playerIds.length < 3){
+        alert("لازم يكون فيه 3 لاعبين على الأقل عشان تبدأ القضية.");
+        return;
+    }
+
+    // تأكيد القضية المختارة من الـ Lobby
+    selectedCaseIndex = Number($("caseSelect")?.value ?? selectedCaseIndex);
+    currentCase = CASES[selectedCaseIndex];
+
+    if(!currentCase){
+        alert("اختار قضية الأول.");
+        return;
+    }
+
+    // Reset round
+    votes = {};
+    roundFinished = false;
+    gameStarted = true;
+
+    // الحفاظ على السكور
+    playerIds.forEach(id => {
+        if(typeof scores[id] !== "number"){
+            scores[id] = 0;
+        }
+    });
+
+    // اختيار Detective و Accused
+    const shuffled = [...playerIds].sort(() => Math.random() - 0.5);
+
+    detectiveId = shuffled[0];
+    accusedId = shuffled[1];
+
+    gameEndTime = Date.now() + (15 * 60 * 1000);
+
+    // إرسال بيانات مختلفة لكل لاعب
+    playerIds.forEach(id => {
+
+        let role = "suspect";
+        let secret = "";
+
+        if(id === detectiveId){
+            role = "detective";
+
+            secret = `
+أنت المحقق في هذه القضية. مهمتك هي إدارة التحقيق والوصول إلى المتهم الحقيقي.
+ابدأ بأسئلة هادئة لكل اللاعبين، واطلب من كل شخص أن يحكي روايته بنفسه.
+ركز على التفاصيل الصغيرة، مثل الوقت والمكان ومن كان يعرف ماذا، وقارن إجابات اللاعبين ببعضها.
+لا تكشف من تشك فيه بسرعة، وحاول أن تجعل كل لاعب يشرح قصته بالتفصيل.
+في النهاية، كوّن رأيك بناءً على التناقضات والأدلة الموجودة، ثم صوّت على الشخص الذي تعتقد أنه المتهم.
+`;
+        }
+        else if(id === accusedId){
+            role = "accused";
+
+            secret = `
+أنت المتهم في هذه القضية، لكن باقي اللاعبين لا يعرفون أنك المتهم.
+لديك رواية خاصة بك عن الأحداث، ومهمتك أن تدافع عن نفسك بطريقة طبيعية من غير ما تكشف دورك.
+جاوب على أسئلة المحقق واللاعبين بثبات، وحاول أن تجعل روايتك متوافقة مع أحداث القضية.
+لو حد اتهمك، لا تتوتر ولا تغيّر كلامك بشكل واضح؛ اشرح وجهة نظرك واطلب منه أن يوضح لماذا يشك فيك.
+هدفك أن تنهي التصويت من غير أن يتم اختيارك.
+`;
+        }
+        else{
+            role = "suspect";
+
+            const clues = currentCase.clues || [];
+            const clue = clues.length
+                ? clues[Math.floor(Math.random() * clues.length)]
+                : "لاحظت تفصيلة مهمة أثناء الأحداث، لكنك غير متأكد من معناها.";
+
+            secret = `
+أنت أحد المشتبه بهم في هذه القضية.
+لديك معلومة خاصة لا يعرفها باقي اللاعبين: ${clue}
+
+مهمتك أن تتصرف كشخص طبيعي موجود في القضية، وتحكي فقط الجزء الذي تعرفه.
+يمكنك مشاركة المعلومة الخاصة بك أثناء التحقيق إذا شعرت أنها ستساعد في كشف الحقيقة، لكن لا تكشف كل ما تعرفه من البداية.
+اسمع روايات باقي اللاعبين وقارنها بمعلومتك، وإذا لاحظت تناقضاً في كلام شخص ما، اسأله عنه مباشرة.
+في النهاية، صوّت على الشخص الذي ترى أنه المتهم الحقيقي.
+`;
+        }
+
+        const payload = {
+            type: "GAME_START",
+            caseIndex: selectedCaseIndex,
+            caseData: currentCase,
+            role: role,
+            secret: secret,
+            accusedId: accusedId,
+            detectiveId: detectiveId,
+            endTime: gameEndTime,
+            scores: scores
+        };
+
+        if(id === myId){
+            myRole = role;
+            mySecret = secret;
+            renderGame();
+        }
+        else if(connections[id]){
+            try{
+                connections[id].send(payload);
+            }catch(e){
+                console.error("GAME_START send error:", e);
+            }
+        }
+    });
+
+    showScreen("gameScreen");
+    startTimer();
+    renderGame();
+}
+
+
+function receiveGameStart(data){
+
+    gameStarted = true;
+    roundFinished = false;
+
+    selectedCaseIndex = Number(data.caseIndex);
+    currentCase = data.caseData;
+
+    myRole = data.role;
+    mySecret = data.secret;
+
+    accusedId = data.accusedId;
+    detectiveId = data.detectiveId;
+
+    gameEndTime = data.endTime;
+
+    if(data.scores){
+        scores = data.scores;
+    }
+
+    votes = {};
+
+    showScreen("gameScreen");
+    renderGame();
+    startTimer();
+}
+
+
+function getRoleTitle(role){
+
+    if(role === "detective"){
+        return "🕵️ المحقق";
+    }
+
+    if(role === "accused"){
+        return "🎭 المتهم";
+    }
+
+    return "🔎 مشتبه به";
+}
+
+
+function getRoleDescription(role){
+
+    if(role === "detective"){
+        return "أنت المسؤول عن التحقيق. اسأل اللاعبين، قارن رواياتهم، وابحث عن التناقضات.";
+    }
+
+    if(role === "accused"){
+        return "أنت المتهم السري. دافع عن روايتك وحاول ألا يتم اكتشاف دورك.";
+    }
+
+    return "أنت مشتبه به. شارك المعلومات التي لديك وساعد في اكتشاف المتهم.";
+}
+
+
+function renderGame(){
+
+    if(!currentCase) return;
+
+    if($("gameCaseTitle")){
+        $("gameCaseTitle").textContent =
+            currentCase.title || "القضية";
+    }
+
+    if($("gameCaseStory")){
+        $("gameCaseStory").textContent =
+            currentCase.story || currentCase.description || "";
+    }
+
+    if($("roleName")){
+        $("roleName").textContent =
+            getRoleTitle(myRole);
+    }
+
+    if($("roleDescription")){
+        $("roleDescription").textContent =
+            getRoleDescription(myRole);
+    }
+
+    if($("scriptBox")){
+        $("scriptBox").innerHTML = `
+            <div class="script-title">📜 السيناريو الخاص بك</div>
+            <p>${escapeHtml(mySecret || "")}</p>
+        `;
+    }
+
+    if($("evidenceList")){
+
+        const clues = currentCase.clues || [];
+
+        if(clues.length){
+            $("evidenceList").innerHTML = clues.map((clue, i) => `
+                <div class="evidence-item">
+                    <strong>دليل ${i + 1}</strong>
+                    <span>${escapeHtml(clue)}</span>
+                </div>
+            `).join("");
+        }
+        else{
+            $("evidenceList").innerHTML =
+                "<div>لا توجد أدلة عامة إضافية.</div>";
+        }
+    }
+
+    renderVoting();
+}
+
+
+function renderVoting(){
+
+    const box = $("votingArea");
+
+    if(!box) return;
+
+    if(roundFinished){
+        box.innerHTML = `
+            <div class="vote-status">
+                انتهى التصويت.
+            </div>
+        `;
+        return;
+    }
+
+    // المتهم لا يصوت
+    if(myRole === "accused"){
+        box.innerHTML = `
+            <div class="vote-status">
+                🎭 أنت المتهم في القضية، لذلك لا يمكنك التصويت.
+                <br>
+                انتظر نتيجة التحقيق.
+            </div>
+        `;
+        return;
+    }
+
+    const alreadyVoted = Object.prototype.hasOwnProperty.call(votes, myId);
+
+    let html = `
+        <div class="vote-title">🗳️ اختر الشخص الذي تعتقد أنه المتهم</div>
+    `;
+
+    Object.keys(players).forEach(id => {
+
+        if(id === myId) return;
+
+        const name = players[id]?.name || "لاعب";
+
+        const selected =
+            alreadyVoted && votes[myId] === id;
+
+        html += `
+            <button
+                class="vote-btn ${selected ? "selected" : ""}"
+                onclick="submitVote('${id}')"
+                ${alreadyVoted ? "disabled" : ""}
+            >
+                ${escapeHtml(name)}
+            </button>
+        `;
+    });
+
+    if(alreadyVoted){
+        html += `
+            <div class="vote-status">
+                ✅ تم تسجيل تصويتك. انتظر باقي اللاعبين.
+            </div>
+        `;
+    }
+
+    box.innerHTML = html;
+}
+
+
+function submitVote(targetId){
+
+    if(roundFinished || !gameStarted) return;
+
+    if(myRole === "accused"){
+        return;
+    }
+
+    if(targetId === myId){
+        return;
+    }
+
+    if(Object.prototype.hasOwnProperty.call(votes, myId)){
+        return;
+    }
+
+    // المضيف يسجل تصويته بنفسه
+    if(isHost){
+        recordVote(myId, targetId);
+    }
+    else if(connections.host){
+
+        connections.host.send({
+            type: "VOTE",
+            voterId: myId,
+            targetId: targetId
+        });
+
+        votes[myId] = targetId;
+        renderVoting();
+    }
+}
+
+
+function recordVote(voterId, targetId){
+
+    if(!isHost || roundFinished) return;
+
+    if(!players[voterId] || !players[targetId]){
+        return;
+    }
+
+    // المتهم لا يصوت
+    if(voterId === accusedId){
+        return;
+    }
+
+    // ممنوع التصويت للنفس
+    if(voterId === targetId){
+        return;
+    }
+
+    // منع التصويت مرتين
+    if(Object.prototype.hasOwnProperty.call(votes, voterId)){
+        return;
+    }
+
+    votes[voterId] = targetId;
+
+    const eligibleVoters =
+        Object.keys(players).filter(id => id !== accusedId);
+
+    const voteCount = Object.keys(votes).length;
+
+    broadcast({
+        type: "VOTE_UPDATE",
+        votes: votes,
+        voteCount: voteCount,
+        eligibleCount: eligibleVoters.length
+    });
+
+    renderVoting();
+
+    // بمجرد ما كل الناس المسموح لهم يصوتوا تخلص القضية فوراً
+    if(voteCount >= eligibleVoters.length){
+        finishVoting();
+    }
+}
+
+
+function finishVoting(){
+
+    if(!isHost || roundFinished) return;
+
+    roundFinished = true;
+    gameStarted = false;
+
+    if(timerInterval){
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+
+    const voteCounts = {};
+
+    Object.keys(votes).forEach(voterId => {
+
+        const targetId = votes[voterId];
+
+        if(!voteCounts[targetId]){
+            voteCounts[targetId] = 0;
+        }
+
+        voteCounts[targetId]++;
+    });
+
+    const accusedVotes =
+        voteCounts[accusedId] || 0;
+
+    // لو محدش عرف المتهم
+    if(accusedVotes === 0){
+
+        scores[accusedId] =
+            (scores[accusedId] || 0) + 1;
+    }
+    else{
+
+        // كل واحد صوّت صح ياخد نقطة
+        Object.keys(votes).forEach(voterId => {
+
+            if(votes[voterId] === accusedId){
+
+                scores[voterId] =
+                    (scores[voterId] || 0) + 1;
+            }
+        });
+    }
+
+    const resultData = {
+        type: "RESULT",
+        accusedId: accusedId,
+        detectiveId: detectiveId,
+        votes: votes,
+        voteCounts: voteCounts,
+        scores: scores,
+        players: players,
+        caseData: currentCase
+    };
+
+    broadcast(resultData);
+
+    showResult(resultData);
+}
+
+
+function receiveResult(data){
+
+    roundFinished = true;
+    gameStarted = false;
+
+    if(timerInterval){
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+
+    accusedId = data.accusedId;
+    detectiveId = data.detectiveId;
+    votes = data.votes || {};
+    scores = data.scores || scores;
+
+    showResult(data);
+}
+
+
+function showResult(data){
+
+    showScreen("resultScreen");
+
+    const accusedName =
+        data.players?.[data.accusedId]?.name ||
+        players[data.accusedId]?.name ||
+        "المتهم";
+
+    const detectiveName =
+        data.players?.[data.detectiveId]?.name ||
+        players[data.detectiveId]?.name ||
+        "المحقق";
+
+    const accusedVotes =
+        data.voteCounts?.[data.accusedId] || 0;
+
+    if($("resultTitle")){
+        $("resultTitle").textContent =
+            "🔍 انتهى التحقيق";
+    }
+
+    if($("resultMessage")){
+
+        if(accusedVotes === 0){
+            $("resultMessage").innerHTML = `
+                المتهم الحقيقي كان
+                <strong>${escapeHtml(accusedName)}</strong>
+                🎭
+                <br>
+                محدش قدر يكتشفه، لذلك حصل على نقطة.
+            `;
+        }
+        else{
+            $("resultMessage").innerHTML = `
+                المتهم الحقيقي كان
+                <strong>${escapeHtml(accusedName)}</strong>
+                🎭
+                <br>
+                وتم التصويت عليه ${accusedVotes} مرة.
+            `;
+        }
+    }
+
+    if($("resultDetective")){
+        $("resultDetective").textContent =
+            "🕵️ المحقق: " + detectiveName;
+    }
+
+    if($("scoreBoard")){
+
+        const sourcePlayers =
+            data.players || players;
+
+        const sourceScores =
+            data.scores || scores;
+
+        $("scoreBoard").innerHTML =
+            Object.keys(sourcePlayers)
+            .sort((a,b) =>
+                (sourceScores[b] || 0) -
+                (sourceScores[a] || 0)
+            )
+            .map(id => `
+                <div class="score-row">
+                    <span>${escapeHtml(sourcePlayers[id]?.name || "لاعب")}</span>
+                    <strong>${sourceScores[id] || 0}</strong>
+                </div>
+            `)
+            .join("");
+    }
+
+    if($("resultControls")){
+
+        if(isHost){
+            $("resultControls").innerHTML = `
+                <button class="btn btn-primary"
+                        onclick="backToLobby()">
+                    🔄 قضية جديدة
+                </button>
+            `;
+        }
+        else{
+            $("resultControls").innerHTML = `
+                <div class="vote-status">
+                    ⏳ انتظر المضيف لبدء القضية التالية.
+                </div>
+            `;
+        }
+    }
+}
+
+
+function updateTimer(){
+
+    if(!gameStarted) return;
+
+    const remaining =
+        Math.max(0, gameEndTime - Date.now());
+
+    const totalSeconds =
+        Math.ceil(remaining / 1000);
+
+    const minutes =
+        Math.floor(totalSeconds / 60);
+
+    const seconds =
+        totalSeconds % 60;
+
+    const text =
+        String(minutes).padStart(2,"0") +
+        ":" +
+        String(seconds).padStart(2,"0");
+
+    if($("timer")){
+        $("timer").textContent = text;
+    }
+
+    if(remaining <= 0){
+
+        if(isHost){
+            finishVoting();
+        }
+        else{
+            if($("timer")){
+                $("timer").textContent = "00:00";
+            }
+        }
+    }
+}
+
+
+function startTimer(){
+
+    if(timerInterval){
+        clearInterval(timerInterval);
+    }
+
+    updateTimer();
+
+    timerInterval =
+        setInterval(updateTimer,1000);
+}
+
+
+function handleGameVoteUpdate(data){
+
+    votes = data.votes || {};
+
+    renderVoting();
+}
+
+
+function backToLobby(){
+
+    if(!isHost) return;
+
+    gameStarted = false;
+    roundFinished = false;
+
+    if(timerInterval){
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+
+    votes = {};
+    myRole = null;
+    mySecret = null;
+    accusedId = null;
+    detectiveId = null;
+
+    // نفس اللاعبين ونفس السكور
+    broadcastLobby();
+
+    showScreen("lobbyScreen");
+
+    if(typeof renderLobby === "function"){
+        renderLobby();
+    }
+}
+
+
+function leaveGame(){
+
+    if(timerInterval){
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+
+    Object.values(connections).forEach(conn => {
+        try{
+            conn.close();
+        }catch(e){}
+    });
+
+    connections = {};
+
+    if(peer){
+        try{
+            peer.destroy();
+        }catch(e){}
+    }
+
+    peer = null;
+
+    players = {};
+    votes = {};
+    scores = {};
+
+    gameStarted = false;
+    roundFinished = false;
+
+    myRole = null;
+    mySecret = null;
+    accusedId = null;
+    detectiveId = null;
+
+    showHome();
+}
+
+
+// =========================================================
+// OVERRIDE DATA HANDLERS
+// =========================================================
+
+function handleHostData(data, conn){
+
+    if(!data || !data.type) return;
+
+    if(data.type === "JOIN"){
+
+        addPlayer(data.playerId, data.playerName, conn);
+
+        conn.send({
+            type: "LOBBY",
+            players: players,
+            caseIndex: selectedCaseIndex,
+            caseData: currentCase
+        });
+
+        broadcastLobby();
+        return;
+    }
+
+    if(data.type === "VOTE"){
+
+        recordVote(
+            data.voterId,
+            data.targetId
+        );
+
+        return;
+    }
+}
+
+
+function handleClientData(data){
+
+    if(!data || !data.type) return;
+
+    if(data.type === "LOBBY"){
+
+        receiveLobby(data);
+        return;
+    }
+
+    if(data.type === "GAME_START"){
+
+        receiveGameStart(data);
+        return;
+    }
+
+    if(data.type === "VOTE_UPDATE"){
+
+        handleGameVoteUpdate(data);
+        return;
+    }
+
+    if(data.type === "RESULT"){
+
+        receiveResult(data);
+        return;
+    }
+}    
 
 function escapeHtml(value){
 
