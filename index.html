@@ -3,936 +3,2000 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>THE CASE</title>
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
 <style>
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 body{
-    min-height:100vh;
-    font-family:Arial,sans-serif;
-    background:
-        radial-gradient(circle at top,#292929,#0b0b0b 55%,#030303);
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+  min-height:100vh;
+  font-family:Arial, sans-serif;
+  background:
+    radial-gradient(circle at 50% 10%,#292929 0%,#0b0b0b 55%,#030303 100%);
+  color:white;
 }
 
-.container{
-    width:92%;
-    max-width:600px;
-    text-align:center;
-}
-
-.logo{
-    font-size:48px;
-    font-weight:900;
-    letter-spacing:8px;
-    margin-bottom:8px;
-}
-
-.subtitle{
-    color:#aaa;
-    margin-bottom:35px;
-}
-
-.card{
-    background:rgba(20,20,20,.94);
-    border:1px solid #333;
-    border-radius:18px;
-    padding:28px;
-    box-shadow:0 20px 60px #000;
-}
-
-input{
-    width:100%;
-    padding:15px;
-    margin:8px 0;
-    border-radius:10px;
-    border:1px solid #444;
-    background:#111;
-    color:white;
-    font-size:16px;
-    outline:none;
+button,input{
+  font:inherit;
 }
 
 button{
-    width:100%;
-    padding:15px;
-    margin-top:12px;
-    border:none;
-    border-radius:10px;
-    background:#e6e6e6;
-    color:#111;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
+  cursor:pointer;
 }
 
-button:hover{
-    background:white;
+.screen{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
 }
 
-.secondary{
-    background:#222;
-    color:white;
-    border:1px solid #444;
+.card{
+  width:100%;
+  max-width:650px;
+  background:rgba(20,20,20,.96);
+  border:1px solid #444;
+  border-radius:20px;
+  padding:28px;
+  box-shadow:0 20px 70px rgba(0,0,0,.6);
+}
+
+.logo{
+  text-align:center;
+  font-size:42px;
+  font-weight:900;
+  letter-spacing:6px;
+  margin-bottom:8px;
+}
+
+.subtitle{
+  text-align:center;
+  color:#999;
+  margin-bottom:30px;
+}
+
+input{
+  width:100%;
+  padding:15px;
+  margin:8px 0;
+  border-radius:12px;
+  border:1px solid #444;
+  background:#111;
+  color:white;
+  outline:none;
+}
+
+input:focus{
+  border-color:#aaa;
+}
+
+.btn{
+  width:100%;
+  padding:15px;
+  margin-top:12px;
+  border:none;
+  border-radius:12px;
+  background:#eee;
+  color:#111;
+  font-weight:bold;
+}
+
+.btn:hover{
+  background:white;
+}
+
+.btn.secondary{
+  background:#242424;
+  color:white;
+  border:1px solid #444;
+}
+
+.btn.danger{
+  background:#8d2222;
+  color:white;
 }
 
 .hidden{
-    display:none !important;
+  display:none !important;
 }
 
-.code{
-    font-size:40px;
-    font-weight:900;
-    letter-spacing:8px;
-    margin:20px 0;
+.section-title{
+  font-size:13px;
+  color:#999;
+  letter-spacing:2px;
+  margin-bottom:10px;
+}
+
+.code-box{
+  text-align:center;
+  font-size:42px;
+  font-weight:bold;
+  letter-spacing:8px;
+  padding:18px;
+  background:#080808;
+  border:1px solid #444;
+  border-radius:15px;
+  margin:15px 0 25px;
 }
 
 .players{
-    margin-top:20px;
-    text-align:left;
+  margin:15px 0;
 }
 
 .player{
-    background:#171717;
-    border:1px solid #333;
-    border-radius:10px;
-    padding:13px;
-    margin:7px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#111;
+  border:1px solid #333;
+  padding:13px;
+  border-radius:10px;
+  margin:7px 0;
 }
 
-.status{
-    margin-top:15px;
-    color:#aaa;
-    min-height:20px;
-}
-
-.error{
-    color:#ff6b6b;
-}
-
-.success{
-    color:#7dff9b;
-}
-
-.case-box{
-    text-align:left;
-    margin-top:20px;
-    padding:20px;
-    background:#111;
-    border:1px solid #333;
-    border-radius:12px;
+.player .you{
+  color:#aaa;
+  font-size:12px;
 }
 
 .case-title{
-    font-size:24px;
-    font-weight:bold;
-    margin-bottom:12px;
+  font-size:29px;
+  font-weight:bold;
+  margin-bottom:18px;
+  line-height:1.3;
 }
 
-.case-text{
-    color:#ccc;
-    line-height:1.6;
+.story{
+  background:#111;
+  border-left:4px solid #888;
+  padding:18px;
+  border-radius:10px;
+  line-height:1.8;
+  color:#ddd;
+  margin-bottom:18px;
+}
+
+.evidence{
+  background:#161616;
+  border:1px solid #333;
+  border-radius:12px;
+  padding:15px;
+  margin:10px 0;
+  line-height:1.7;
+}
+
+.evidence b{
+  display:block;
+  margin-bottom:5px;
+}
+
+.secret{
+  background:#17120d;
+  border:1px solid #72582d;
+  border-radius:14px;
+  padding:20px;
+  margin-top:20px;
+  line-height:1.8;
+}
+
+.role{
+  text-align:center;
+  font-size:27px;
+  font-weight:bold;
+  margin-bottom:12px;
 }
 
 .timer{
-    font-size:44px;
-    font-weight:bold;
-    margin:20px 0;
+  text-align:center;
+  font-size:48px;
+  font-weight:bold;
+  margin:15px 0;
+  letter-spacing:3px;
+}
+
+.vote-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:15px;
+}
+
+.vote-btn{
+  padding:14px;
+  background:#181818;
+  color:white;
+  border:1px solid #444;
+  border-radius:10px;
+}
+
+.vote-btn:hover{
+  background:#292929;
+}
+
+.result{
+  text-align:center;
+  padding:25px;
+  background:#111;
+  border-radius:15px;
+  margin-top:20px;
+}
+
+.score{
+  display:flex;
+  justify-content:space-between;
+  padding:12px;
+  background:#151515;
+  border-radius:9px;
+  margin:6px 0;
 }
 
 .small{
-    color:#777;
-    font-size:13px;
-    margin-top:15px;
+  color:#888;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.error{
+  color:#ff7777;
+  text-align:center;
+  margin-top:10px;
+}
+
+.success{
+  color:#7cff9b;
+  text-align:center;
+  margin-top:10px;
+}
+
+@media(max-width:500px){
+  .card{
+    padding:20px;
+  }
+
+  .logo{
+    font-size:32px;
+  }
+
+  .code-box{
+    font-size:32px;
+  }
+
+  .case-title{
+    font-size:24px;
+  }
+
+  .timer{
+    font-size:40px;
+  }
+
+  .vote-grid{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- HOME -->
+<div id="homeScreen" class="screen">
+  <div class="card">
 
-    <!-- HOME -->
-    <section id="home">
-        <div class="logo">THE CASE</div>
-        <div class="subtitle">Can you find the truth?</div>
+    <div class="logo">THE CASE</div>
+    <div class="subtitle">A social detective game</div>
 
-        <div class="card">
+    <input id="homeName" placeholder="Enter your name">
 
-            <input id="homeName"
-                   placeholder="Enter your name"
-                   maxlength="20">
+    <button class="btn" onclick="createGame()">
+      CREATE GAME
+    </button>
 
-            <button onclick="showCreate()">
-                CREATE GAME
-            </button>
+    <button class="btn secondary" onclick="showJoin()">
+      JOIN GAME
+    </button>
 
-            <button class="secondary" onclick="showJoin()">
-                JOIN GAME
-            </button>
+    <div id="joinBox" class="hidden">
 
-            <div id="homeStatus" class="status"></div>
+      <input id="joinName" placeholder="Enter your name">
 
-        </div>
-    </section>
+      <input id="joinCode"
+             placeholder="GAME CODE"
+             maxlength="6"
+             style="text-transform:uppercase">
 
+      <button class="btn" onclick="joinGame()">
+        JOIN
+      </button>
 
-    <!-- JOIN -->
-    <section id="join" class="hidden">
+    </div>
 
-        <div class="logo">JOIN</div>
+    <div id="homeMessage"></div>
 
-        <div class="card">
-
-            <input id="joinName"
-                   placeholder="Your name"
-                   maxlength="20">
-
-            <input id="joinCode"
-                   placeholder="GAME CODE"
-                   maxlength="6"
-                   style="text-transform:uppercase">
-
-            <button onclick="joinGame()">
-                JOIN GAME
-            </button>
-
-            <button class="secondary" onclick="goHome()">
-                BACK
-            </button>
-
-            <div id="joinStatus" class="status"></div>
-
-        </div>
-
-    </section>
+  </div>
+</div>
 
 
-    <!-- LOBBY -->
-    <section id="lobby" class="hidden">
+<!-- LOBBY -->
+<div id="lobbyScreen" class="screen hidden">
+  <div class="card">
 
-        <div class="logo">LOBBY</div>
+    <div class="logo" style="font-size:32px">
+      THE CASE
+    </div>
 
-        <div class="card">
+    <div class="section-title">
+      GAME CODE
+    </div>
 
-            <div>GAME CODE</div>
+    <div id="gameCodeDisplay" class="code-box">
+      ------
+    </div>
 
-            <div id="gameCodeDisplay" class="code"></div>
+    <div class="section-title">
+      PLAYERS
+    </div>
 
-            <div class="small">
-                Share this code with your friends
-            </div>
+    <div id="playersList" class="players"></div>
 
-            <div id="players" class="players"></div>
+    <button id="startBtn"
+            class="btn hidden"
+            onclick="startGame()">
+      START CASE
+    </button>
 
-            <button id="startButton"
-                    onclick="startGame()"
-                    class="hidden">
-                START CASE
-            </button>
+    <div id="lobbyMessage" class="small" style="text-align:center;margin-top:15px">
+      Waiting for players...
+    </div>
 
-            <button class="secondary"
-                    onclick="goHome()">
-                LEAVE
-            </button>
-
-            <div id="lobbyStatus" class="status"></div>
-
-        </div>
-
-    </section>
+  </div>
+</div>
 
 
-    <!-- GAME -->
-    <section id="game" class="hidden">
+<!-- GAME -->
+<div id="gameScreen" class="screen hidden">
+  <div class="card">
 
-        <div class="logo">THE CASE</div>
+    <div class="section-title">
+      THE CASE
+    </div>
 
-        <div class="card">
+    <div id="caseTitle" class="case-title"></div>
 
-            <div class="timer" id="timer">
-                15:00
-            </div>
+    <div id="caseStory" class="story"></div>
 
-            <div id="roleBox"></div>
+    <div class="section-title">
+      EVIDENCE
+    </div>
 
-            <div id="caseBox" class="case-box"></div>
+    <div id="evidenceBox"></div>
 
-            <button onclick="showVote()">
-                VOTE
-            </button>
+    <div class="secret">
 
-            <div id="voteBox"></div>
+      <div class="section-title">
+        PRIVATE INFORMATION
+      </div>
 
-        </div>
+      <div id="roleText" class="role"></div>
 
-    </section>
+      <div id="secretText"></div>
 
+    </div>
+
+    <div id="timer" class="timer">
+      15:00
+    </div>
+
+    <div id="voteArea"></div>
+
+    <div id="resultArea"></div>
+
+  </div>
 </div>
 
 
 <script>
 
-let peer = null;
-let hostConnection = null;
-
-let isHost = false;
-
-let gameCode = "";
-let myId = "";
-let myName = "";
-
-let players = [];
-
-let connections = {};
-
-let gameStarted = false;
-
-let timerInterval = null;
-let timeLeft = 900;
-
-
-/* =========================
-   CASES
-========================= */
+/* =========================================================
+   CASE DATABASE
+========================================================= */
 
 const cases = [
 
 {
-title:"The Locked Office",
-text:"A private office was found locked from the inside after a valuable document disappeared. Four people were nearby. Someone is hiding an important detail."
+title:"لغز يخت البحر المظلم",
+
+story:"على متن يخت فاخر في عرض البحر، انطفأت الكهرباء لمدة ثلاث دقائق بالضبط. بعد عودة التيار، اكتشف الجميع أن أحد النزلاء قُتل وأن مستندات مهمة اختفت من غرفة التخزين. الباب كان مغلقًا دون آثار اقتحام.",
+
+evidence:[
+"المفتاح الخاص بغرفة التخزين كان معلقًا في مكانه.",
+"شخص واحد فقط قال إنه سمع خطوات سريعة أثناء الظلام.",
+"ساعة الممر توقفت عند لحظة انقطاع الكهرباء.",
+"وُجدت ورقة ممزقة بالقرب من غرفة التخزين."
+],
+
+clues:[
+"قبل انقطاع الكهرباء بدقائق، رأيت شخصًا يتجه ناحية السلم المؤدي للطابق السفلي.",
+"سمعت صوت مفتاح يسقط على الأرض أثناء الظلام، لكنك لم تعرف صاحبه.",
+"كنت في صالة اليخت وقت انقطاع الكهرباء، وسمعت بابًا يُغلق في الأسفل.",
+"لاحظت أن أحد الأشخاص كان يعرف مكان غرفة التخزين بشكل أفضل من الباقين."
+],
+
+solution:"المتهم استغل انقطاع الكهرباء للوصول إلى غرفة التخزين وإخفاء المستندات، ثم حاول جعل حركة المفتاح والباب تبدو كأنها حدثت دون تدخل منه."
 },
 
 {
-title:"The Missing Key",
-text:"During a small gathering, the only key to a locked cabinet disappeared. Everyone claims they never touched it."
+title:"جريمة خيمة العرّافة المسحورة",
+
+story:"في مخيم صحراوي، بدأت عاصفة قوية وأصبحت الرؤية شبه معدومة. بعد دقائق، اكتشف الموجودون أن العرّافة قُتلت داخل خيمتها وأن صندوقها الثمين اختفى.",
+
+evidence:[
+"الباب الأمامي للخيمة كان مغلقًا.",
+"وُجدت آثار حركة بالقرب من الجزء الخلفي للخيمة.",
+"رائحة عطر قوية بقيت داخل الخيمة.",
+"أحد الموجودين اختفى عن حلقة النار لعدة دقائق."
+],
+
+clues:[
+"رأيت شخصًا يبتعد عن الخيمة قبل العاصفة مباشرة.",
+"سمعت حركة خلف الخيمة أثناء أسوأ لحظات العاصفة.",
+"لاحظت أن أحد الأشخاص كان يعرف مكان صندوق العرّافة.",
+"شخص ما سأل عن مكان العرّافة قبل بداية العاصفة."
+],
+
+solution:"المتهم استغل العاصفة للوصول إلى الخيمة وإخفاء الصندوق، ثم حاول استخدام وجود شخص آخر بعيدًا عن النار لصرف الشبهات."
 },
 
 {
-title:"The Last Message",
-text:"A strange message was sent shortly before an important item vanished. The sender says someone else used their phone."
+title:"سرقة المتحف الأثرية الكبيرة",
+
+story:"في منتصف الليل، اختفى تمثال أثري نادر من متحف مغلق. وُجد حارس الأمن فاقدًا للوعي، وكانت لوحة الكهرباء معطلة وكاميرات المراقبة توقفت في نفس الفترة.",
+
+evidence:[
+"الكاميرات توقفت قبل اختفاء التمثال مباشرة.",
+"استُخدم مفتاح احتياطي لفتح منطقة التخزين.",
+"وُجدت بقعة زيت بالقرب من لوحة الكهرباء.",
+"لم تظهر آثار اقتحام على الباب الرئيسي."
+],
+
+clues:[
+"كنت تعرف أن هناك مفتاحًا احتياطيًا للمخزن.",
+"رأيت شخصًا بالقرب من لوحة الكهرباء قبل الحادث.",
+"سمعت صوت قفل حديدي بعد توقف الكاميرات.",
+"شخص ما كان مهتمًا جدًا بمواعيد تغيير الحراسة."
+],
+
+solution:"المتهم استخدم معرفة مسبقة بالمتحف والمفتاح الاحتياطي، وعطل المراقبة ثم نقل التمثال أثناء فترة الغياب."
 },
 
 {
-title:"The Empty Room",
-text:"A room was left empty for only a few minutes. When everyone returned, an important object was gone."
+title:"قطار منتصف الليل السريع",
+
+story:"أثناء رحلة قطار سريع في الصحراء، عُثر على أحد الركاب مقتولًا داخل مقصورته. الباب كان مغلقًا، وانقطعت الكهرباء للحظات أثناء مرور القطار في منطقة مظلمة.",
+
+evidence:[
+"باب المقصورة كان مغلقًا عند اكتشاف الحادث.",
+"شباك الطوارئ كان مفتوحًا قليلًا.",
+"وُجدت علبة سجائر ليست ملكًا للضحية.",
+"ثلاثة ركاب سمعوا خطوات في الممر."
+],
+
+clues:[
+"رأيت شخصًا يمر بالممر وقت انقطاع الكهرباء.",
+"كنت تعرف أن شباك الطوارئ يمكن فتحه.",
+"وجدت علبة سجائر في مكان لم تكن فيه قبل الرحلة.",
+"أحد الركاب غيّر مكانه بشكل مفاجئ بعد انقطاع الكهرباء."
+],
+
+solution:"المتهم استغل حركة القطار والظلام للخروج من المقصورة دون استخدام الممر بالطريقة المعتادة، ثم ترك دليلًا يمكن أن يوجه الشك إلى شخص آخر."
 },
 
 {
-title:"The Museum Mystery",
-text:"A rare museum item disappeared shortly before closing. The security system recorded nothing unusual."
+title:"مأساة كواليس المسرح المظلم",
+
+story:"أثناء عرض مسرحي مزدحم، حدث خلل مفاجئ في الإضاءة. وبعد لحظات، اكتشف الفريق أن المخرج قُتل خلف الكواليس واختفت إيرادات التذاكر.",
+
+evidence:[
+"أداة من أدوات المسرح وُجدت في مكان غير مكانها.",
+"لوحة الإضاءة حدث بها خلل قبل الحادث.",
+"كان هناك خلاف قديم بين المخرج وأحد أفراد الفريق.",
+"اختفت حقيبة تحتوي على الإيرادات."
+],
+
+clues:[
+"كنت خلف الستارة قبل انطفاء الإضاءة.",
+"سمعت شخصين يتجادلان قبل بداية العرض.",
+"رأيت شخصًا يحمل حقيبة بالقرب من غرفة الإدارة.",
+"لاحظت أن أحد الأدوات تم تبديل مكانها."
+],
+
+solution:"المتهم استغل الفوضى الناتجة عن خلل الإضاءة للوصول إلى المخرج وسرقة الإيرادات، ثم اعتمد على الخلافات القديمة لصرف الانتباه."
 },
 
 {
-title:"The Hotel Floor",
-text:"A valuable package disappeared from a hotel room. Several guests had reasons to visit the same floor."
+title:"جريمة الغرفة 404 في الفندق المهجور",
+
+story:"في فندق قديم، اكتُشفت غرفة 404 في حالة فوضى بعد حادث غامض. وُجدت آثار طينية قرب النافذة، بينما كان بعض الموجودين متأكدين أن الغرفة لم يدخلها أحد من الممر.",
+
+evidence:[
+"آثار طينية ظهرت بالقرب من النافذة.",
+"لم يوجد كسر واضح في الباب.",
+"انقطعت الكهرباء في الفندق لفترة قصيرة.",
+"اختفى مستند مهم من الغرفة."
+],
+
+clues:[
+"رأيت شخصًا يحمل حذاءً عليه طين.",
+"كنت بالقرب من الدرج وقت انقطاع الكهرباء.",
+"سمعت حركة عند النافذة.",
+"شخص ما كان يعرف قيمة المستند المختفي."
+],
+
+solution:"المتهم استخدم النافذة لصناعة قصة عن اقتحام خارجي، بينما كان هدفه الحقيقي الوصول إلى المستند."
 },
 
 {
-title:"The Secret Meeting",
-text:"Four people attended a secret meeting. Afterwards, one important piece of information had leaked."
+title:"انفجار المعمل السري",
+
+story:"حدث تسريب خطير داخل معمل علمي، وتوقفت أنظمة الحماية. بعد انتهاء الفوضى، اختفت تركيبة بحثية مهمة واكتُشف أن رئيس الفريق لم يعد موجودًا.",
+
+evidence:[
+"التسريب بدأ بالقرب من منطقة الأبحاث.",
+"خزنة الأبحاث كانت مفتوحة.",
+"مفتاح الخزنة كان مكسورًا.",
+"أحد الباحثين تجاهل إنذارًا سابقًا."
+],
+
+clues:[
+"سمعت إنذارًا قبل بداية الفوضى.",
+"رأيت شخصًا يدخل منطقة الأبحاث قبل الحادث.",
+"كنت تعرف مكان الخزنة.",
+"لاحظت أن أحد الباحثين تصرف بهدوء غريب أثناء الإخلاء."
+],
+
+solution:"المتهم استغل الفوضى الناتجة عن التسريب للوصول إلى الأبحاث وإخفاء أثره."
 },
 
 {
-title:"The Broken Clock",
-text:"A clock stopped at a suspicious time during a mysterious disappearance. Everyone gives a different account of what happened."
+title:"فنجان القهوة المر في المقهى المهجور",
+
+story:"في مقهى قديم، تناول ناقد فني قهوته ثم ساءت حالته بشكل مفاجئ. بعد ذلك اكتُشفت سرقة محفظته واختفاء بعض أوراقه.",
+
+evidence:[
+"الفنجان لم يعد في مكانه الأصلي.",
+"تم تنظيف جزء من الطاولة.",
+"اختفت محفظة الضحية.",
+"شخص واحد طلب تغيير مكان الجلوس قبل الحادث."
+],
+
+clues:[
+"رأيت شخصًا يقترب من الطاولة.",
+"لاحظت أن الفنجان تحرك من مكانه.",
+"كنت جالسًا بالقرب من الضحية.",
+"سمعت شخصًا يسأل عن المحفظة قبل الحادث."
+],
+
+solution:"المتهم استغل انشغال الموجودين وحركة الطاولات للوصول إلى فنجان الضحية وسرقة أوراقه."
 },
 
 {
-title:"The Train Case",
-text:"Something valuable disappeared during a short train journey. Nobody admits leaving their seat."
+title:"استوديو الرسام الغامض",
+
+story:"داخل استوديو مغلق، اكتشف الأصدقاء أن الرسام مات وأن لوحته الأصلية اختفت. كانت أدوات الرسم مبعثرة، وبعضها وُجد في أماكن غير معتادة.",
+
+evidence:[
+"اللوحة الأصلية اختفت.",
+"باب الاستوديو لم يكن مكسورًا.",
+"أداة رسم وُجدت في غير مكانها.",
+"كان هناك خلاف حول ملكية اللوحة."
+],
+
+clues:[
+"سمعت خلافًا حول اللوحة قبل الحادث.",
+"رأيت شخصًا يقترب من الاستوديو.",
+"كنت تعرف قيمة اللوحة.",
+"لاحظت أن أحد الأشخاص كان يبحث عن شيء داخل الاستوديو."
+],
+
+solution:"المتهم كان يعرف قيمة اللوحة والخلاف حول ملكيتها، واستغل الفوضى لإخفائها."
 },
 
 {
-title:"The Old Mansion",
-text:"An old mansion was searched after a mysterious event. One room contains a clue that contradicts someone's story."
+title:"لغز الجزيرة المقطوعة",
+
+story:"بعد عاصفة قوية في جزيرة معزولة، اكتشف أفراد المجموعة أن أحد السياح مات وأن مؤنًا ثمينة اختفت. قارب النجاة تحرك بعيدًا عن الشاطئ.",
+
+evidence:[
+"قارب النجاة تحرك دون إعلان.",
+"آثار أقدام ظهرت بالقرب من الشاطئ.",
+"اختفت مؤن من المخزن.",
+"العاصفة أخفت معظم الأصوات."
+],
+
+clues:[
+"رأيت شخصًا بالقرب من القارب.",
+"كنت تعرف مكان المؤن.",
+"سمعت حركة على الشاطئ أثناء العاصفة.",
+"شخص ما سأل عن موعد وصول المساعدة."
+],
+
+solution:"المتهم استغل العاصفة للتحرك بين المخزن والشاطئ وإخفاء هدفه الحقيقي."
 },
 
 {
-title:"The Missing Laptop",
-text:"A laptop disappeared from a study room. Several people knew the access code."
+title:"دموع ليلة الفرح الكبير",
+
+story:"خلال حفل زفاف مزدحم، انقطعت الكهرباء فجأة. عند عودتها، اكتشف الحاضرون اختفاء محتويات خزنة وغياب حارس القاعة.",
+
+evidence:[
+"الخزنة كانت مفتوحة.",
+"الكهرباء انقطعت لعدة دقائق.",
+"حركة الناس كانت كثيفة.",
+"أحد مفاتيح القاعة اختفى ثم ظهر."
+],
+
+clues:[
+"رأيت شخصًا يتجه ناحية غرفة الخزنة.",
+"كنت بالقرب من لوحة الكهرباء.",
+"سمعت صوت باب يفتح أثناء الظلام.",
+"شخص ما كان يعرف موعد الحفل بالتفصيل."
+],
+
+solution:"المتهم استغل الزحام والظلام للوصول إلى الخزنة ثم حاول الاعتماد على الفوضى لإخفاء تحركاته."
 },
 
 {
-title:"The Restaurant Table",
-text:"An expensive item vanished from a private restaurant table while everyone was distracted."
+title:"مكتبة التاريخ القديمة",
+
+story:"في مكتبة تاريخية، اختفت مخطوطة نادرة بعد حادث غامض لأمين المكتبة. نافذة المخزن كانت مكسورة، مما جعل الجميع يعتقد أن شخصًا من الخارج دخل المكان.",
+
+evidence:[
+"نافذة المخزن مكسورة.",
+"المخطوطة اختفت من مكان محفوظ.",
+"لم تختفِ أي كتب أخرى.",
+"المتهم الحقيقي كان يعرف نظام المكتبة."
+],
+
+clues:[
+"كنت تعرف مكان المخطوطة.",
+"رأيت النافذة قبل أن تُكسر.",
+"سمعت صوتًا داخل المخزن.",
+"شخص ما كان يعرف موعد إغلاق المكتبة."
+],
+
+solution:"الاقتحام الخارجي كان خدعة. المتهم كان يعرف مكان المخطوطة ونظام المكتبة."
 },
 
 {
-title:"The Gallery",
-text:"A painting was discovered to have been switched with a copy. Only a few people had access to the gallery."
+title:"صخور الكهف الجبلي المسدود",
+
+story:"أثناء رحلة استكشاف، حدث انهيار مفاجئ داخل كهف. بعد انتهاء الخطر، اكتشف الفريق أن معدات مهمة اختفت وأن أحد المستكشفين لم يعد معهم.",
+
+evidence:[
+"حبل الاستكشاف كان مقطوعًا.",
+"القطع حدث قبل الانهيار.",
+"كان هناك خلاف حول اكتشاف ثمين.",
+"أحد الأشخاص كان قريبًا من الحبال."
+],
+
+clues:[
+"كنت بالقرب من مدخل الكهف.",
+"سمعت صوتًا قصيرًا قبل الانهيار.",
+"رأيت شخصًا يقترب من معدات الاستكشاف.",
+"كنت تعرف مكان الاكتشاف الثمين."
+],
+
+solution:"المتهم استغل الفوضى الناتجة عن الانهيار لإبعاد الآخرين عن مكان الاكتشاف."
 },
 
 {
-title:"The Midnight Call",
-text:"A mysterious phone call happened late at night. Someone claims they were asleep, but another clue suggests otherwise."
+title:"خيانة على ظهر البارجة",
+
+story:"على متن بارجة عسكرية، توقفت أنظمة الرادار واختفى سجل تحركات مهم. بعد ذلك اكتُشف أن ضابط الاتصالات قُتل.",
+
+evidence:[
+"الرادار توقف في توقيت محدد.",
+"سجل التحركات اختفى.",
+"كان هناك تشويش على الاتصالات.",
+"عدد قليل من الأشخاص كان لديهم وصول للنظام."
+],
+
+clues:[
+"كنت بالقرب من غرفة الاتصالات.",
+"رأيت شخصًا يحمل بطاقة دخول للنظام.",
+"سمعت حديثًا عن سجل التحركات.",
+"شخص ما كان يعرف موعد تغيير الضابط."
+],
+
+solution:"المتهم استغل معرفته بأنظمة البارجة لإخفاء سجل التحركات وربط الحادث بعطل تقني."
 },
 
 {
-title:"The Conference Room",
-text:"A confidential file disappeared from a conference room after a short meeting."
+title:"قصر العجوز المرعب",
+
+story:"داخل قصر قديم، اختفت وصية مهمة بعد حادث غامض للعجوز الثري ومحاميه. كما اختفى خاتم ثمين.",
+
+evidence:[
+"الوصية الأصلية اختفت.",
+"وُجدت مسودة مختلفة للوصية.",
+"الخاتم اختفى.",
+"كان هناك خلاف حول الميراث."
+],
+
+clues:[
+"كنت تعرف موعد وصول المحامي.",
+"رأيت شخصًا يبحث عن أوراق.",
+"سمعت نقاشًا حول الميراث.",
+"لاحظت أن شخصًا كان مهتمًا بالخاتم."
+],
+
+solution:"المتهم كان يريد تغيير مسار الميراث وإخفاء المستندات التي يمكن أن تكشف الحقيقة."
 },
 
 {
-title:"The Lighthouse",
-text:"During a storm, an important object disappeared from a lighthouse. Everyone had a different reason for being there."
+title:"لغز السيرك المتجول",
+
+story:"بعد انتهاء عرض السيرك، اختفت إيرادات كبيرة من الخزنة. وُجد قناع تنكري قرب المكان، بينما اكتشف الفريق أن أحد العاملين لم يعد موجودًا.",
+
+evidence:[
+"الخزنة كانت مفتوحة.",
+"قناع تنكري وُجد قربها.",
+"الإضاءة حدث بها خلل.",
+"كان البهلوان يعرف بوجود المال."
+],
+
+clues:[
+"رأيت شخصًا يرتدي شيئًا يشبه القناع.",
+"كنت خلف خيمة الإدارة.",
+"سمعت صوت الخزنة.",
+"شخص ما سأل عن مكان الأموال."
+],
+
+solution:"المتهم استغل التنكر والإضاءة لإخفاء هويته أثناء الوصول إلى الخزنة."
 },
 
 {
-title:"The Tournament",
-text:"During a local tournament, a valuable trophy disappeared. Several participants had access to the storage room."
+title:"لغز الفندق الجبلي الثلجي",
+
+story:"في فندق جبلي معزول، انقطعت التدفئة. عُثر على المدير داخل غرفته والباب مغلق، بينما اختفى دفتر الحسابات.",
+
+evidence:[
+"الباب كان مغلقًا.",
+"نافذة الغرفة كانت مفتوحة.",
+"آثار أقدام ظهرت على الثلج.",
+"دفتر الحسابات اختفى."
+],
+
+clues:[
+"رأيت آثار أقدام خارج الفندق.",
+"كنت تعرف مكان دفتر الحسابات.",
+"سمعت حركة عند النافذة.",
+"شخص ما كان يخشى ظهور الحسابات."
+],
+
+solution:"المتهم استخدم النافذة لإرباك الجميع وجعل الغرفة تبدو وكأنها مستحيلة الدخول."
 },
 
 {
-title:"The Photograph",
-text:"A photograph disappeared from a locked drawer. Someone knew exactly where it was."
+title:"محطة الفضاء المعزولة",
+
+story:"داخل محطة فضاء بعيدة، حدث خلل في نظام التحكم وانخفضت أنظمة الأمان. بعد السيطرة على المشكلة، اكتشف الفريق أن أحد العلماء مات وأن بيانات مهمة اختفت.",
+
+evidence:[
+"لوحة التحكم تعرضت لتعديل.",
+"بيانات مهمة اختفت.",
+"كان هناك سجل دخول غير متوقع.",
+"شخص واحد كان يعرف النظام بشكل كامل."
+],
+
+clues:[
+"كنت تعمل بالقرب من لوحة التحكم.",
+"رأيت سجل دخول غير معتاد.",
+"كنت تعرف قيمة البيانات.",
+"شخص ما حاول إلقاء اللوم على عطل تقني."
+],
+
+solution:"المتهم استغل معرفته بالنظام لإخفاء سرقة البيانات وجعل الحادث يبدو كأنه عطل."
 },
 
 {
-title:"The Library",
-text:"A rare book vanished from a library shelf. A witness remembers seeing someone nearby."
+title:"لغز المنارة القديمة العالية",
+
+story:"في منارة بحرية، انطفأ الضوء فجأة واختفى سجل الملاحة. بعد دقائق، اكتشف الموجودون أن حارس المنارة مات.",
+
+evidence:[
+"محرك الإضاءة توقف.",
+"سجل الملاحة اختفى.",
+"حبل كان معلقًا بالقرب من النافذة.",
+"العاصفة أخفت أصوات الحركة."
+],
+
+clues:[
+"كنت تعرف نظام تشغيل المنارة.",
+"رأيت شخصًا قرب النافذة.",
+"سمعت حركة أثناء العاصفة.",
+"شخص ما كان مهتمًا بسجل الملاحة."
+],
+
+solution:"المتهم أراد إخفاء معلومات الملاحة واستغل الظلام والعاصفة لإخفاء تحركاته."
 },
 
 {
-title:"The Final Clue",
-text:"A mysterious incident leaves four people with different stories. One story contains a small contradiction."
+title:"لغز المزرعة المعزولة",
+
+story:"في مزرعة بعيدة، اختفى حصان أصيل وتوقفت كاميرات المراقبة. بعد ذلك اكتُشف أن حارس المزرعة قُتل وأن باب الحظيرة بدا وكأنه كُسر من الخارج.",
+
+evidence:[
+"الكاميرات توقفت قبل اختفاء الحصان.",
+"باب الحظيرة بدا مكسورًا.",
+"آثار عجلات ظهرت قرب المزرعة.",
+"كان هناك شخص يعرف قيمة الحصان."
+],
+
+clues:[
+"رأيت سيارة قرب المزرعة.",
+"كنت تعرف موعد عمل الكاميرات.",
+"سمعت حركة قرب الحظيرة.",
+"شخص ما كان يسأل عن الحصان منذ فترة."
+],
+
+solution:"المتهم عطّل المراقبة أولًا ثم استخدم الفوضى حول باب الحظيرة لإخفاء عملية السرقة."
 }
 
 ];
 
 
-/* =========================
-   UI
-========================= */
+/* =========================================================
+   GAME VARIABLES
+========================================================= */
 
-function hideAll(){
+let peer = null;
+let hostPeer = null;
+let isHost = false;
 
-    document.getElementById("home").classList.add("hidden");
-    document.getElementById("join").classList.add("hidden");
-    document.getElementById("lobby").classList.add("hidden");
-    document.getElementById("game").classList.add("hidden");
+let myName = "";
+let myId = "";
 
+let gameCode = "";
+let players = [];
+
+let connections = {};
+
+let currentCase = null;
+let myRole = "";
+let mySecret = "";
+
+let gameStarted = false;
+let gameEndTime = 0;
+let timerInterval = null;
+
+let votes = {};
+let voted = false;
+
+let scores = {};
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function $(id){
+  return document.getElementById(id);
 }
-
-
-function goHome(){
-
-    hideAll();
-
-    document.getElementById("home").classList.remove("hidden");
-
-}
-
-
-function showCreate(){
-
-    let name =
-        document.getElementById("homeName").value.trim();
-
-    if(!name){
-
-        document.getElementById("homeStatus").innerHTML =
-            '<span class="error">Enter your name first.</span>';
-
-        return;
-    }
-
-    createGame(name);
-
-}
-
-
-function showJoin(){
-
-    hideAll();
-
-    document.getElementById("join").classList.remove("hidden");
-
-}
-
 
 function generateCode(){
 
-    const chars =
-        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const chars =
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
-    let code = "";
+  let code="";
 
-    for(let i=0;i<6;i++){
+  for(let i=0;i<6;i++){
+    code += chars[Math.floor(Math.random()*chars.length)];
+  }
 
-        code +=
-            chars[Math.floor(Math.random()*chars.length)];
+  return code;
+}
 
-    }
+function shuffle(array){
 
-    return code;
+  return [...array].sort(
+    ()=>Math.random()-0.5
+  );
+
+}
+
+function showScreen(id){
+
+  ["homeScreen","lobbyScreen","gameScreen"]
+  .forEach(x=>{
+    $(x).classList.add("hidden");
+  });
+
+  $(id).classList.remove("hidden");
+}
+
+function showJoin(){
+
+  $("joinBox").classList.remove("hidden");
+
+}
+
+function message(text,type=""){
+
+  $("homeMessage").className =
+    type==="error" ? "error" :
+    type==="success" ? "success" : "";
+
+  $("homeMessage").innerText=text;
 
 }
 
 
-/* =========================
+/* =========================================================
    CREATE GAME
-========================= */
+========================================================= */
 
-function createGame(name){
+function createGame(){
 
-    myName = name;
-    isHost = true;
+  myName =
+    $("homeName").value.trim();
 
-    gameCode = generateCode();
+  if(!myName){
 
-    myId = "THECASE-" + gameCode;
+    message("Enter your name first.","error");
+    return;
 
-    document.getElementById("homeStatus").innerHTML =
-        "Creating game...";
+  }
 
-    peer = new Peer(myId);
+  isHost=true;
 
-    peer.on("open", function(id){
+  gameCode=generateCode();
 
-        players = [
+  myId="";
 
-            {
-                id:id,
-                name:myName,
-                host:true
-            }
+  peer = new Peer(
+    "THECASE-"+gameCode
+  );
 
-        ];
+  peer.on("open",id=>{
 
-        hideAll();
+    myId=id;
 
-        document.getElementById("lobby")
-            .classList.remove("hidden");
+    players=[
+      {
+        id:id,
+        name:myName
+      }
+    ];
 
-        document.getElementById("gameCodeDisplay")
-            .innerText = gameCode;
+    scores[id]=0;
 
-        document.getElementById("startButton")
-            .classList.remove("hidden");
+    $("gameCodeDisplay").innerText =
+      gameCode;
 
-        updatePlayers();
+    $("startBtn").classList.remove("hidden");
 
-    });
-
-
-    peer.on("connection", function(conn){
-
-        connections[conn.peer] = conn;
-
-        conn.on("data", function(data){
-
-            if(data.type === "JOIN"){
-
-                players.push({
-
-                    id:data.id,
-                    name:data.name,
-                    host:false
-
-                });
-
-                broadcastPlayers();
-
-            }
-
-        });
-
-        conn.on("close",function(){
-
-            players =
-                players.filter(p =>
-                    p.id !== conn.peer
-                );
-
-            broadcastPlayers();
-
-        });
-
-    });
-
-
-    peer.on("error", function(error){
-
-        document.getElementById("homeStatus")
-            .innerHTML =
-            '<span class="error">Could not create game. Try again.</span>';
-
-    });
-
-}
-
-
-/* =========================
-   UPDATE PLAYERS
-========================= */
-
-function updatePlayers(){
-
-    const box =
-        document.getElementById("players");
-
-    box.innerHTML =
-        "<h3>PLAYERS (" +
-        players.length +
-        ")</h3>";
-
-    players.forEach(function(player){
-
-        box.innerHTML +=
-
-            '<div class="player">' +
-
-            player.name +
-
-            (player.host ? " 👑" : "") +
-
-            '</div>';
-
-    });
-
-}
-
-
-function broadcastPlayers(){
+    showScreen("lobbyScreen");
 
     updatePlayers();
 
-    Object.values(connections).forEach(function(conn){
+  });
 
-        conn.send({
+  peer.on("connection",conn=>{
 
-            type:"PLAYERS",
-            players:players
+    connections[conn.peer]=conn;
 
-        });
+    conn.on("open",()=>{});
+
+    conn.on("data",data=>{
+
+      handleHostData(conn,data);
 
     });
+
+    conn.on("close",()=>{
+
+      delete connections[conn.peer];
+
+      players =
+        players.filter(
+          p=>p.id!==conn.peer
+        );
+
+      updatePlayers();
+      broadcastPlayers();
+
+    });
+
+  });
+
+  peer.on("error",err=>{
+
+    message(
+      "Could not create game. Try again.",
+      "error"
+    );
+
+  });
 
 }
 
 
-/* =========================
+/* =========================================================
+   HOST DATA
+========================================================= */
+
+function handleHostData(conn,data){
+
+  if(data.type==="JOIN"){
+
+    const exists =
+      players.some(
+        p=>p.id===data.id
+      );
+
+    if(!exists){
+
+      players.push({
+        id:data.id,
+        name:data.name
+      });
+
+      scores[data.id]=0;
+
+    }
+
+    broadcastPlayers();
+
+  }
+
+  if(data.type==="VOTE"){
+
+    if(!gameStarted) return;
+
+    if(votes[data.voter]) return;
+
+    if(data.voter===data.target) return;
+
+    votes[data.voter]=data.target;
+
+    checkVotes();
+
+  }
+
+}
+
+
+/* =========================================================
+   BROADCAST
+========================================================= */
+
+function broadcastPlayers(){
+
+  const packet={
+    type:"PLAYERS",
+    players:players
+  };
+
+  Object.values(connections)
+  .forEach(conn=>{
+
+    if(conn.open){
+      conn.send(packet);
+    }
+
+  });
+
+  updatePlayers();
+
+}
+
+
+/* =========================================================
    JOIN GAME
-========================= */
+========================================================= */
 
 function joinGame(){
 
-    let name =
-        document.getElementById("joinName")
-        .value.trim();
+  myName =
+    $("joinName").value.trim();
 
-    let code =
-        document.getElementById("joinCode")
-        .value.trim()
-        .toUpperCase();
+  gameCode =
+    $("joinCode").value.trim().toUpperCase();
 
-    if(!name){
+  if(!myName){
 
-        document.getElementById("joinStatus").innerHTML =
-            '<span class="error">Enter your name.</span>';
+    message("Enter your name first.","error");
+    return;
 
-        return;
+  }
 
-    }
+  if(gameCode.length!==6){
 
-    if(code.length !== 6){
+    message("Enter a valid 6-character code.","error");
+    return;
 
-        document.getElementById("joinStatus").innerHTML =
-            '<span class="error">Game code must be 6 characters.</span>';
+  }
 
-        return;
+  isHost=false;
 
-    }
+  peer = new Peer();
 
-    myName = name;
+  peer.on("open",id=>{
 
-    gameCode = code;
+    myId=id;
 
-    document.getElementById("joinStatus").innerText =
-        "Connecting...";
+    hostPeer =
+      "THECASE-"+gameCode;
 
-    peer = new Peer();
+    const conn =
+      peer.connect(hostPeer);
 
-    peer.on("open", function(id){
+    connections.host=conn;
 
-        myId = id;
+    conn.on("open",()=>{
 
-        hostConnection =
-            peer.connect("THECASE-" + gameCode);
+      conn.send({
+        type:"JOIN",
+        name:myName,
+        id:myId
+      });
 
-        hostConnection.on("open", function(){
+      $("gameCodeDisplay").innerText =
+        gameCode;
 
-            hostConnection.send({
+      showScreen("lobbyScreen");
 
-                type:"JOIN",
-
-                name:myName,
-
-                id:myId
-
-            });
-
-            hideAll();
-
-            document.getElementById("lobby")
-                .classList.remove("hidden");
-
-            document.getElementById("gameCodeDisplay")
-                .innerText = gameCode;
-
-            document.getElementById("lobbyStatus")
-                .innerHTML =
-                '<span class="success">Connected!</span>';
-
-        });
-
-
-        hostConnection.on("data", function(data){
-
-            if(data.type === "PLAYERS"){
-
-                players = data.players;
-
-                updatePlayers();
-
-            }
-
-
-            if(data.type === "START"){
-
-                startGameForEveryone(data);
-
-            }
-
-        });
-
-
-        hostConnection.on("close",function(){
-
-            alert("Host left the game.");
-
-            goHome();
-
-        });
+      $("startBtn")
+        .classList.add("hidden");
 
     });
 
+    conn.on("data",data=>{
 
-    peer.on("error", function(){
-
-        document.getElementById("joinStatus")
-            .innerHTML =
-            '<span class="error">Could not join. Check the code.</span>';
+      handleClientData(data);
 
     });
+
+    conn.on("close",()=>{
+
+      alert("Host disconnected.");
+
+      location.reload();
+
+    });
+
+  });
+
+  peer.on("error",err=>{
+
+    message(
+      "Could not join this game. Check the code.",
+      "error"
+    );
+
+  });
 
 }
 
 
-/* =========================
-   START GAME
-========================= */
+/* =========================================================
+   CLIENT DATA
+========================================================= */
 
-function startGame(){
+function handleClientData(data){
 
-    if(!isHost) return;
+  if(data.type==="PLAYERS"){
 
-    if(players.length < 2){
+    players=data.players;
 
-        document.getElementById("lobbyStatus")
-            .innerHTML =
-            '<span class="error">Need at least 2 players.</span>';
+    updatePlayers();
 
-        return;
+  }
 
-    }
+  if(data.type==="GAME_START"){
 
-    const selectedCase =
-        cases[Math.floor(Math.random()*cases.length)];
+    receiveGame(data);
 
-    const accusedIndex =
-        Math.floor(Math.random()*players.length);
+  }
 
-    const accused =
-        players[accusedIndex];
+  if(data.type==="TIMER"){
 
-    players.forEach(function(player){
+    gameEndTime=data.endTime;
 
-        let role =
-            player.id === accused.id
-            ? "MOTAHAM"
-            : "SUSPECT";
+  }
 
-        if(player.host && player.id !== accused.id){
+  if(data.type==="RESULT"){
 
-            // Host remains a suspect unless selected as accused.
+    showResult(data);
 
-        }
-
-        const data = {
-
-            type:"START",
-
-            caseData:selectedCase,
-
-            accusedId:accused.id,
-
-            role:role
-
-        };
-
-        if(player.id === myId){
-
-            startGameForEveryone(data);
-
-        }else{
-
-            if(connections[player.id]){
-
-                connections[player.id].send(data);
-
-            }
-
-        }
-
-    });
+  }
 
 }
 
 
-function startGameForEveryone(data){
+/* =========================================================
+   UPDATE PLAYERS
+========================================================= */
 
-    gameStarted = true;
+function updatePlayers(){
 
-    hideAll();
+  $("playersList").innerHTML="";
 
-    document.getElementById("game")
-        .classList.remove("hidden");
+  players.forEach(player=>{
 
-    document.getElementById("caseBox").innerHTML =
+    const div=
+      document.createElement("div");
 
-        '<div class="case-title">' +
-        data.caseData.title +
-        '</div>' +
+    div.className="player";
 
-        '<div class="case-text">' +
-        data.caseData.text +
-        '</div>';
+    div.innerHTML=
+      `<span>${escapeHtml(player.name)}</span>
+       <span class="you">
+       ${player.id===myId ? "YOU" : ""}
+       </span>`;
 
-    let roleText = "";
+    $("playersList").appendChild(div);
 
-    if(data.role === "MOTAHAM"){
+  });
 
-        roleText =
-            '<div class="case-box">' +
-            '<h2>YOUR SECRET ROLE</h2>' +
-            '<p>You are the <b>MOTAHAM</b>.</p>' +
-            '<p>Your goal is to avoid being correctly identified.</p>' +
-            '</div>';
+  if(isHost){
+
+    if(players.length<3){
+
+      $("lobbyMessage").innerText =
+        "Need at least 3 players to start.";
+
+      $("startBtn").disabled=true;
 
     }else{
 
-        roleText =
-            '<div class="case-box">' +
-            '<h2>YOUR SECRET ROLE</h2>' +
-            '<p>You are a <b>SUSPECT</b>.</p>' +
-            '<p>Investigate the others and find the Motaham.</p>' +
-            '</div>';
+      $("lobbyMessage").innerText =
+        "Ready to start.";
+
+      $("startBtn").disabled=false;
 
     }
 
-    document.getElementById("roleBox")
-        .innerHTML = roleText;
-
-    startTimer();
+  }
 
 }
 
 
-/* =========================
+/* =========================================================
+   START GAME
+========================================================= */
+
+function startGame(){
+
+  if(!isHost) return;
+
+  if(players.length<3){
+
+    alert("You need at least 3 players.");
+    return;
+
+  }
+
+  currentCase =
+    cases[
+      Math.floor(
+        Math.random()*cases.length
+      )
+    ];
+
+  const shuffled =
+    shuffle(players);
+
+  const detective =
+    shuffled[0];
+
+  const accused =
+    shuffled[1];
+
+  const suspects =
+    shuffled.slice(2);
+
+  const roles={};
+
+  roles[detective.id]={
+    role:"DETECTIVE",
+    secret:
+      "أنت المحقق. مهمتك جمع المعلومات وطرح الأسئلة وملاحظة التناقضات. لا تكشف معلوماتك الخاصة بسهولة."
+  };
+
+  roles[accused.id]={
+    role:"ACCUSED",
+    secret:
+      "أنت المتهم الحقيقي في هذه القضية. حاول الدفاع عن نفسك دون كشف حقيقتك. باقي اللاعبين لا يعرفون هويتك."
+  };
+
+  suspects.forEach((player,index)=>{
+
+    const clue =
+      currentCase.clues[
+        index % currentCase.clues.length
+      ];
+
+    roles[player.id]={
+      role:"SUSPECT",
+      secret:
+        "معلومتك السرية: "+clue+
+        "\n\nاستخدم هذه المعلومة أثناء التحقيق، لكن ليس من الضروري أن تكشف كل شيء فورًا."
+    };
+
+  });
+
+  gameStarted=true;
+
+  votes={};
+  voted=false;
+
+  const endTime =
+    Date.now() + (15*60*1000);
+
+  gameEndTime=endTime;
+
+  players.forEach(player=>{
+
+    const packet={
+
+      type:"GAME_START",
+
+      case:{
+        title:currentCase.title,
+        story:currentCase.story,
+        evidence:currentCase.evidence
+      },
+
+      role:roles[player.id].role,
+
+      secret:roles[player.id].secret,
+
+      endTime:endTime
+
+    };
+
+    if(player.id===myId){
+
+      receiveGame(packet);
+
+    }else{
+
+      const conn =
+        connections[player.id];
+
+      if(conn && conn.open){
+
+        conn.send(packet);
+
+      }
+
+    }
+
+  });
+
+}
+
+
+/* =========================================================
+   RECEIVE GAME
+========================================================= */
+
+function receiveGame(data){
+
+  currentCase=data.case;
+
+  myRole=data.role;
+
+  mySecret=data.secret;
+
+  gameEndTime=data.endTime;
+
+  gameStarted=true;
+
+  voted=false;
+
+  renderGame();
+
+  startTimer();
+
+  if(myRole==="ACCUSED"){
+
+    $("voteArea").innerHTML=
+      `<div class="small" style="text-align:center;margin-top:20px">
+      أنت المتهم. لا يمكنك التصويت على نفسك.
+      </div>`;
+
+  }else{
+
+    renderVoting();
+
+  }
+
+}
+
+
+/* =========================================================
+   RENDER GAME
+========================================================= */
+
+function renderGame(){
+
+  $("caseTitle").innerText =
+    currentCase.title;
+
+  $("caseStory").innerText =
+    currentCase.story;
+
+  $("evidenceBox").innerHTML="";
+
+  currentCase.evidence.forEach(
+    (item,index)=>{
+
+      const div=
+        document.createElement("div");
+
+      div.className="evidence";
+
+      div.innerHTML=
+        `<b>الدليل ${index+1}</b>
+         ${escapeHtml(item)}`;
+
+      $("evidenceBox")
+        .appendChild(div);
+
+    }
+  );
+
+  let roleName="";
+
+  if(myRole==="DETECTIVE")
+    roleName="🕵️ أنت المحقق";
+
+  if(myRole==="ACCUSED")
+    roleName="⚠️ أنت المتهم";
+
+  if(myRole==="SUSPECT")
+    roleName="👤 أنت مشتبه به";
+
+  $("roleText").innerText =
+    roleName;
+
+  $("secretText").innerText =
+    mySecret;
+
+  $("resultArea").innerHTML="";
+
+  showScreen("gameScreen");
+
+}
+
+
+/* =========================================================
    TIMER
-========================= */
+========================================================= */
 
 function startTimer(){
 
-    clearInterval(timerInterval);
+  clearInterval(timerInterval);
 
-    timeLeft = 900;
+  function tick(){
 
-    updateTimer();
+    const remaining =
+      Math.max(
+        0,
+        gameEndTime-Date.now()
+      );
 
-    timerInterval =
-        setInterval(function(){
+    const totalSeconds =
+      Math.floor(remaining/1000);
 
-            timeLeft--;
+    const minutes =
+      Math.floor(totalSeconds/60);
 
-            updateTimer();
+    const seconds =
+      totalSeconds%60;
 
-            if(timeLeft <= 0){
+    $("timer").innerText =
+      String(minutes).padStart(2,"0")
+      +":"+
+      String(seconds).padStart(2,"0");
 
-                clearInterval(timerInterval);
+    if(remaining<=0){
 
-                alert("TIME IS UP!");
+      clearInterval(timerInterval);
 
-            }
+      if(isHost){
 
-        },1000);
+        finishVoting();
+
+      }
+
+    }
+
+  }
+
+  tick();
+
+  timerInterval =
+    setInterval(tick,1000);
+
+}
+
+
+/* =========================================================
+   VOTING
+========================================================= */
+
+function renderVoting(){
+
+  $("voteArea").innerHTML=
+    `<div class="section-title" style="margin-top:25px">
+      VOTE
+    </div>
+    <div class="small">
+      اختر الشخص الذي تعتقد أنه المتهم.
+    </div>
+    <div id="voteGrid" class="vote-grid"></div>`;
+
+  const grid=
+    $("voteGrid");
+
+  players.forEach(player=>{
+
+    if(player.id===myId) return;
+
+    const btn=
+      document.createElement("button");
+
+    btn.className="vote-btn";
+
+    btn.innerText=
+      player.name;
+
+    btn.onclick=()=>{
+
+      submitVote(player.id);
+
+    };
+
+    grid.appendChild(btn);
+
+  });
 
 }
 
 
-function updateTimer(){
+function submitVote(targetId){
 
-    let minutes =
-        Math.floor(timeLeft / 60);
+  if(voted) return;
 
-    let seconds =
-        timeLeft % 60;
+  if(myRole==="ACCUSED") return;
 
-    document.getElementById("timer")
-        .innerText =
+  voted=true;
 
-        String(minutes).padStart(2,"0")
-        + ":" +
-        String(seconds).padStart(2,"0");
+  document
+    .querySelectorAll(".vote-btn")
+    .forEach(btn=>{
+      btn.disabled=true;
+    });
+
+  if(isHost){
+
+    votes[myId]=targetId;
+
+    checkVotes();
+
+  }else{
+
+    const conn=
+      connections.host;
+
+    if(conn && conn.open){
+
+      conn.send({
+
+        type:"VOTE",
+
+        voter:myId,
+
+        target:targetId
+
+      });
+
+    }
+
+  }
+
+  $("voteArea").innerHTML=
+    `<div class="success">
+      تم تسجيل تصويتك.
+    </div>`;
 
 }
 
 
-/* =========================
-   VOTE
-========================= */
+/* =========================================================
+   CHECK VOTES
+========================================================= */
 
-function showVote(){
+function checkVotes(){
 
-    const box =
-        document.getElementById("voteBox");
+  const eligible =
+    players.filter(
+      p=>p.id!==getAccusedId()
+    );
 
-    box.innerHTML =
+  const voteCount =
+    Object.keys(votes).length;
 
-        '<div class="case-box">' +
+  if(voteCount>=eligible.length){
 
-        '<h3>WHO IS THE MOTAHAM?</h3>' +
+    finishVoting();
 
-        '<p style="color:#aaa;margin-top:8px">' +
-        'Voting system will be connected to everyone in the next update.' +
-        '</p>' +
-
-        '</div>';
+  }
 
 }
+
+
+/* =========================================================
+   FIND ACCUSED
+========================================================= */
+
+function getAccusedId(){
+
+  for(const player of players){
+
+    if(player._role==="ACCUSED"){
+      return player.id;
+    }
+
+  }
+
+  return null;
+
+}
+
+
+/* =========================================================
+   FINISH VOTING
+========================================================= */
+
+function finishVoting(){
+
+  if(!isHost) return;
+
+  let accusedId=null;
+
+  /*
+    We keep the role hidden from players,
+    but the host stores it here.
+  */
+
+  accusedId =
+    window.__accusedId;
+
+  if(!accusedId){
+
+    finishWithoutRole();
+    return;
+
+  }
+
+  const correctVoters=[];
+
+  Object.keys(votes).forEach(voterId=>{
+
+    if(votes[voterId]===accusedId){
+
+      correctVoters.push(voterId);
+
+    }
+
+  });
+
+  if(correctVoters.length===0){
+
+    scores[accusedId] =
+      (scores[accusedId]||0)+1;
+
+  }else{
+
+    correctVoters.forEach(id=>{
+
+      scores[id]=
+        (scores[id]||0)+1;
+
+    });
+
+  }
+
+  const result={
+
+    type:"RESULT",
+
+    accusedId:accusedId,
+
+    accusedName:
+      players.find(
+        p=>p.id===accusedId
+      ).name,
+
+    correctVoters:
+      correctVoters,
+
+    scores:scores
+
+  };
+
+  showResult(result);
+
+  Object.values(connections)
+  .forEach(conn=>{
+
+    if(conn.open)
+      conn.send(result);
+
+  });
+
+}
+
+
+function finishWithoutRole(){
+
+  alert("Game error. Please start a new game.");
+
+}
+
+
+/* =========================================================
+   SHOW RESULT
+========================================================= */
+
+function showResult(data){
+
+  clearInterval(timerInterval);
+
+  let text="";
+
+  if(data.correctVoters.length===0){
+
+    text=
+      "لم ينجح أحد في كشف المتهم!<br><br>"+
+      "المتهم يحصل على نقطة.";
+
+  }else{
+
+    text=
+      "تم كشف المتهم!<br><br>"+
+      "كل لاعب اختار المتهم بشكل صحيح يحصل على نقطة.";
+
+  }
+
+  $("resultArea").innerHTML=
+
+    `<div class="result">
+
+      <h2>انتهت القضية</h2>
+
+      <p style="margin:18px 0;line-height:1.8">
+        المتهم الحقيقي هو:
+        <br>
+        <strong>${escapeHtml(data.accusedName)}</strong>
+      </p>
+
+      <p style="line-height:1.8">
+        ${text}
+      </p>
+
+      <div style="margin-top:20px">
+        <div class="section-title">
+          SCORES
+        </div>
+
+        ${players.map(p=>`
+          <div class="score">
+            <span>${escapeHtml(p.name)}</span>
+            <strong>${data.scores[p.id]||0}</strong>
+          </div>
+        `).join("")}
+
+      </div>
+
+      ${
+        isHost
+        ?
+        `<button class="btn"
+                 onclick="backToLobby()">
+           BACK TO LOBBY
+         </button>`
+        :
+        `<div class="small" style="margin-top:20px">
+           Waiting for host...
+         </div>`
+      }
+
+    </div>`;
+
+}
+
+
+/* =========================================================
+   BACK TO LOBBY
+========================================================= */
+
+function backToLobby(){
+
+  if(!isHost) return;
+
+  gameStarted=false;
+
+  votes={};
+
+  currentCase=null;
+
+  myRole="";
+
+  mySecret="";
+
+  $("resultArea").innerHTML="";
+
+  $("startBtn")
+    .classList.remove("hidden");
+
+  showScreen("lobbyScreen");
+
+  updatePlayers();
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(text){
+
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
+   IMPORTANT HOST ROLE STORAGE
+========================================================= */
+
+/*
+   We wrap startGame so the host secretly knows
+   who the accused is.
+*/
+
+const originalStartGame = startGame;
+
+startGame = function(){
+
+  if(!isHost) return;
+
+  if(players.length<3){
+
+    alert("You need at least 3 players.");
+    return;
+
+  }
+
+  currentCase =
+    cases[
+      Math.floor(
+        Math.random()*cases.length
+      )
+    ];
+
+  const shuffled =
+    shuffle(players);
+
+  const detective =
+    shuffled[0];
+
+  const accused =
+    shuffled[1];
+
+  window.__accusedId =
+    accused.id;
+
+  const suspects =
+    shuffled.slice(2);
+
+  const roles={};
+
+  roles[detective.id]={
+    role:"DETECTIVE",
+    secret:
+      "أنت المحقق. مهمتك جمع المعلومات وطرح الأسئلة وملاحظة التناقضات. لا تكشف معلوماتك الخاصة بسهولة."
+  };
+
+  roles[accused.id]={
+    role:"ACCUSED",
+    secret:
+      "أنت المتهم الحقيقي في هذه القضية. حاول الدفاع عن نفسك دون كشف حقيقتك. باقي اللاعبين لا يعرفون هويتك."
+  };
+
+  suspects.forEach((player,index)=>{
+
+    roles[player.id]={
+      role:"SUSPECT",
+      secret:
+        "معلومتك السرية: "+
+        currentCase.clues[
+          index % currentCase.clues.length
+        ]+
+        "\n\nاستخدم هذه المعلومة أثناء التحقيق، لكن ليس من الضروري أن تكشف كل شيء فورًا."
+    };
+
+  });
+
+  gameStarted=true;
+
+  votes={};
+  voted=false;
+
+  const endTime=
+    Date.now()+900000;
+
+  gameEndTime=endTime;
+
+  players.forEach(player=>{
+
+    const packet={
+
+      type:"GAME_START",
+
+      case:{
+        title:currentCase.title,
+        story:currentCase.story,
+        evidence:currentCase.evidence
+      },
+
+      role:roles[player.id].role,
+
+      secret:roles[player.id].secret,
+
+      endTime:endTime
+
+    };
+
+    if(player.id===myId){
+
+      receiveGame(packet);
+
+    }else{
+
+      const conn=
+        connections[player.id];
+
+      if(conn && conn.open){
+
+        conn.send(packet);
+
+      }
+
+    }
+
+  });
+
+};
 
 </script>
 
