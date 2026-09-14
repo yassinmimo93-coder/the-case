@@ -1,214 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>THE CASE</title>
+<title>THE CASE</title>
 
-    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-        body {
-            min-height: 100vh;
-            background:
-                radial-gradient(circle at 50% 20%, #292929, #0b0b0b 55%, #030303);
-            color: #eee;
-            font-family: Arial, sans-serif;
-        }
+body{
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+    background:
+        radial-gradient(circle at top,#292929,#0b0b0b 55%,#030303);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
 
-        .app {
-            width: 92%;
-            max-width: 430px;
-            margin: auto;
-            padding: 50px 0;
-            text-align: center;
-        }
+.container{
+    width:92%;
+    max-width:600px;
+    text-align:center;
+}
 
-        .logo {
-            font-size: 55px;
-            margin-bottom: 10px;
-        }
+.logo{
+    font-size:48px;
+    font-weight:900;
+    letter-spacing:8px;
+    margin-bottom:8px;
+}
 
-        h1 {
-            font-size: 40px;
-            letter-spacing: 7px;
-        }
+.subtitle{
+    color:#aaa;
+    margin-bottom:35px;
+}
 
-        .subtitle {
-            color: #888;
-            margin-top: 10px;
-            letter-spacing: 2px;
-            font-size: 12px;
-        }
+.card{
+    background:rgba(20,20,20,.94);
+    border:1px solid #333;
+    border-radius:18px;
+    padding:28px;
+    box-shadow:0 20px 60px #000;
+}
 
-        .box {
-            margin-top: 35px;
-            padding: 25px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid #333;
-            border-radius: 12px;
-        }
+input{
+    width:100%;
+    padding:15px;
+    margin:8px 0;
+    border-radius:10px;
+    border:1px solid #444;
+    background:#111;
+    color:white;
+    font-size:16px;
+    outline:none;
+}
 
-        input {
-            width: 100%;
-            padding: 16px;
-            margin: 8px 0;
-            border-radius: 8px;
-            border: 1px solid #444;
-            background: #111;
-            color: white;
-            text-align: center;
-            font-size: 17px;
-            outline: none;
-        }
+button{
+    width:100%;
+    padding:15px;
+    margin-top:12px;
+    border:none;
+    border-radius:10px;
+    background:#e6e6e6;
+    color:#111;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
 
-        button {
-            width: 100%;
-            padding: 16px;
-            margin-top: 12px;
-            border-radius: 8px;
-            border: 1px solid #555;
-            background: #eee;
-            color: #111;
-            font-size: 15px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            cursor: pointer;
-        }
+button:hover{
+    background:white;
+}
 
-        button:hover {
-            opacity: 0.85;
-        }
+.secondary{
+    background:#222;
+    color:white;
+    border:1px solid #444;
+}
 
-        .secondary {
-            background: transparent;
-            color: #aaa;
-        }
+.hidden{
+    display:none !important;
+}
 
-        .hidden {
-            display: none;
-        }
+.code{
+    font-size:40px;
+    font-weight:900;
+    letter-spacing:8px;
+    margin:20px 0;
+}
 
-        .code {
-            font-size: 42px;
-            letter-spacing: 10px;
-            margin: 20px 0;
-            font-weight: bold;
-        }
+.players{
+    margin-top:20px;
+    text-align:left;
+}
 
-        .players {
-            margin-top: 20px;
-            text-align: left;
-        }
+.player{
+    background:#171717;
+    border:1px solid #333;
+    border-radius:10px;
+    padding:13px;
+    margin:7px 0;
+}
 
-        .player {
-            padding: 12px;
-            margin: 7px 0;
-            background: rgba(255,255,255,0.05);
-            border-radius: 7px;
-        }
+.status{
+    margin-top:15px;
+    color:#aaa;
+    min-height:20px;
+}
 
-        .status {
-            margin-top: 15px;
-            color: #888;
-            font-size: 13px;
-        }
-    </style>
+.error{
+    color:#ff6b6b;
+}
+
+.success{
+    color:#7dff9b;
+}
+
+.case-box{
+    text-align:left;
+    margin-top:20px;
+    padding:20px;
+    background:#111;
+    border:1px solid #333;
+    border-radius:12px;
+}
+
+.case-title{
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.case-text{
+    color:#ccc;
+    line-height:1.6;
+}
+
+.timer{
+    font-size:44px;
+    font-weight:bold;
+    margin:20px 0;
+}
+
+.small{
+    color:#777;
+    font-size:13px;
+    margin-top:15px;
+}
+</style>
 </head>
 
 <body>
 
-<div class="app">
-
-    <div class="logo">🕵️</div>
-
-    <h1>THE CASE</h1>
-
-    <div class="subtitle">
-        EVERYONE HAS A SECRET
-    </div>
+<div class="container">
 
     <!-- HOME -->
+    <section id="home">
+        <div class="logo">THE CASE</div>
+        <div class="subtitle">Can you find the truth?</div>
 
-    <div class="box" id="home">
+        <div class="card">
 
-        <input
-            id="nameInput"
-            type="text"
-            maxlength="15"
-            placeholder="YOUR NAME"
-        >
+            <input id="homeName"
+                   placeholder="Enter your name"
+                   maxlength="20">
 
-        <button onclick="createGame()">
-            CREATE GAME
-        </button>
+            <button onclick="showCreate()">
+                CREATE GAME
+            </button>
 
-        <button class="secondary" onclick="showJoin()">
-            JOIN GAME
-        </button>
+            <button class="secondary" onclick="showJoin()">
+                JOIN GAME
+            </button>
 
-    </div>
+            <div id="homeStatus" class="status"></div>
+
+        </div>
+    </section>
 
 
     <!-- JOIN -->
+    <section id="join" class="hidden">
 
-    <div class="box hidden" id="joinBox">
+        <div class="logo">JOIN</div>
 
-        <input
-            id="joinName"
-            type="text"
-            maxlength="15"
-            placeholder="YOUR NAME"
-        >
+        <div class="card">
 
-        <input
-            id="joinCode"
-            type="text"
-            maxlength="6"
-            placeholder="GAME CODE"
-        >
+            <input id="joinName"
+                   placeholder="Your name"
+                   maxlength="20">
 
-        <button onclick="joinGame()">
-            JOIN GAME
-        </button>
+            <input id="joinCode"
+                   placeholder="GAME CODE"
+                   maxlength="6"
+                   style="text-transform:uppercase">
 
-        <button class="secondary" onclick="goHome()">
-            ← BACK
-        </button>
+            <button onclick="joinGame()">
+                JOIN GAME
+            </button>
 
-    </div>
+            <button class="secondary" onclick="goHome()">
+                BACK
+            </button>
+
+            <div id="joinStatus" class="status"></div>
+
+        </div>
+
+    </section>
 
 
     <!-- LOBBY -->
+    <section id="lobby" class="hidden">
 
-    <div class="box hidden" id="lobby">
+        <div class="logo">LOBBY</div>
 
-        <div class="subtitle">
-            GAME CODE
+        <div class="card">
+
+            <div>GAME CODE</div>
+
+            <div id="gameCodeDisplay" class="code"></div>
+
+            <div class="small">
+                Share this code with your friends
+            </div>
+
+            <div id="players" class="players"></div>
+
+            <button id="startButton"
+                    onclick="startGame()"
+                    class="hidden">
+                START CASE
+            </button>
+
+            <button class="secondary"
+                    onclick="goHome()">
+                LEAVE
+            </button>
+
+            <div id="lobbyStatus" class="status"></div>
+
         </div>
 
-        <div class="code" id="gameCode">
-            ------
+    </section>
+
+
+    <!-- GAME -->
+    <section id="game" class="hidden">
+
+        <div class="logo">THE CASE</div>
+
+        <div class="card">
+
+            <div class="timer" id="timer">
+                15:00
+            </div>
+
+            <div id="roleBox"></div>
+
+            <div id="caseBox" class="case-box"></div>
+
+            <button onclick="showVote()">
+                VOTE
+            </button>
+
+            <div id="voteBox"></div>
+
         </div>
 
-        <div class="status">
-            Give this code to your friends.
-        </div>
-
-        <div class="players" id="playersList"></div>
-
-        <button id="startButton" onclick="startGame()" class="hidden">
-            START GAME
-        </button>
-
-    </div>
+    </section>
 
 </div>
 
@@ -219,188 +288,420 @@ let peer = null;
 let hostConnection = null;
 
 let isHost = false;
+
+let gameCode = "";
+let myId = "";
 let myName = "";
 
 let players = [];
 
 let connections = {};
 
+let gameStarted = false;
 
-// Generate 6-character game code
+let timerInterval = null;
+let timeLeft = 900;
 
-function generateCode() {
 
-    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+/* =========================
+   CASES
+========================= */
 
-    let code = "";
+const cases = [
 
-    for (let i = 0; i < 6; i++) {
-        code += chars[Math.floor(Math.random() * chars.length)];
-    }
+{
+title:"The Locked Office",
+text:"A private office was found locked from the inside after a valuable document disappeared. Four people were nearby. Someone is hiding an important detail."
+},
 
-    return code;
+{
+title:"The Missing Key",
+text:"During a small gathering, the only key to a locked cabinet disappeared. Everyone claims they never touched it."
+},
+
+{
+title:"The Last Message",
+text:"A strange message was sent shortly before an important item vanished. The sender says someone else used their phone."
+},
+
+{
+title:"The Empty Room",
+text:"A room was left empty for only a few minutes. When everyone returned, an important object was gone."
+},
+
+{
+title:"The Museum Mystery",
+text:"A rare museum item disappeared shortly before closing. The security system recorded nothing unusual."
+},
+
+{
+title:"The Hotel Floor",
+text:"A valuable package disappeared from a hotel room. Several guests had reasons to visit the same floor."
+},
+
+{
+title:"The Secret Meeting",
+text:"Four people attended a secret meeting. Afterwards, one important piece of information had leaked."
+},
+
+{
+title:"The Broken Clock",
+text:"A clock stopped at a suspicious time during a mysterious disappearance. Everyone gives a different account of what happened."
+},
+
+{
+title:"The Train Case",
+text:"Something valuable disappeared during a short train journey. Nobody admits leaving their seat."
+},
+
+{
+title:"The Old Mansion",
+text:"An old mansion was searched after a mysterious event. One room contains a clue that contradicts someone's story."
+},
+
+{
+title:"The Missing Laptop",
+text:"A laptop disappeared from a study room. Several people knew the access code."
+},
+
+{
+title:"The Restaurant Table",
+text:"An expensive item vanished from a private restaurant table while everyone was distracted."
+},
+
+{
+title:"The Gallery",
+text:"A painting was discovered to have been switched with a copy. Only a few people had access to the gallery."
+},
+
+{
+title:"The Midnight Call",
+text:"A mysterious phone call happened late at night. Someone claims they were asleep, but another clue suggests otherwise."
+},
+
+{
+title:"The Conference Room",
+text:"A confidential file disappeared from a conference room after a short meeting."
+},
+
+{
+title:"The Lighthouse",
+text:"During a storm, an important object disappeared from a lighthouse. Everyone had a different reason for being there."
+},
+
+{
+title:"The Tournament",
+text:"During a local tournament, a valuable trophy disappeared. Several participants had access to the storage room."
+},
+
+{
+title:"The Photograph",
+text:"A photograph disappeared from a locked drawer. Someone knew exactly where it was."
+},
+
+{
+title:"The Library",
+text:"A rare book vanished from a library shelf. A witness remembers seeing someone nearby."
+},
+
+{
+title:"The Final Clue",
+text:"A mysterious incident leaves four people with different stories. One story contains a small contradiction."
 }
 
-
-// CREATE GAME
-
-function createGame() {
-
-    myName = document.getElementById("nameInput").value.trim();
-
-    if (!myName) {
-        alert("Write your name first.");
-        return;
-    }
-
-    isHost = true;
-
-    const code = generateCode();
-
-    peer = new Peer("THECASE-" + code);
-
-    peer.on("open", function() {
-
-        players = [
-            {
-                name: myName,
-                host: true
-            }
-        ];
-
-        document.getElementById("home").classList.add("hidden");
-        document.getElementById("lobby").classList.remove("hidden");
-
-        document.getElementById("gameCode").innerText = code;
-
-        document.getElementById("startButton").classList.remove("hidden");
-
-        updatePlayers();
-
-    });
+];
 
 
-    peer.on("connection", function(connection) {
+/* =========================
+   UI
+========================= */
 
-        connection.on("data", function(data) {
-
-            if (data.type === "JOIN") {
-
-                players.push({
-                    name: data.name,
-                    host: false
-                });
-
-                connections[data.id] = connection;
-
-                broadcastPlayers();
-
-                updatePlayers();
-            }
-
-        });
-
-    });
-
-
-    peer.on("error", function(error) {
-
-        console.log(error);
-
-        alert("Couldn't create the game. Try again.");
-
-    });
-
-}
-
-
-// SHOW JOIN
-
-function showJoin() {
+function hideAll(){
 
     document.getElementById("home").classList.add("hidden");
-
-    document.getElementById("joinBox").classList.remove("hidden");
+    document.getElementById("join").classList.add("hidden");
+    document.getElementById("lobby").classList.add("hidden");
+    document.getElementById("game").classList.add("hidden");
 
 }
 
 
-// BACK
+function goHome(){
 
-function goHome() {
-
-    document.getElementById("joinBox").classList.add("hidden");
+    hideAll();
 
     document.getElementById("home").classList.remove("hidden");
 
 }
 
 
-// JOIN GAME
+function showCreate(){
 
-function joinGame() {
+    let name =
+        document.getElementById("homeName").value.trim();
 
-    const name =
-        document.getElementById("joinName").value.trim();
+    if(!name){
 
-    const code =
-        document.getElementById("joinCode").value.trim().toUpperCase();
-
-
-    if (!name) {
-
-        alert("Write your name.");
+        document.getElementById("homeStatus").innerHTML =
+            '<span class="error">Enter your name first.</span>';
 
         return;
     }
 
+    createGame(name);
 
-    if (code.length !== 6) {
+}
 
-        alert("Game code must be 6 characters.");
 
-        return;
+function showJoin(){
+
+    hideAll();
+
+    document.getElementById("join").classList.remove("hidden");
+
+}
+
+
+function generateCode(){
+
+    const chars =
+        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+    let code = "";
+
+    for(let i=0;i<6;i++){
+
+        code +=
+            chars[Math.floor(Math.random()*chars.length)];
+
     }
 
+    return code;
+
+}
+
+
+/* =========================
+   CREATE GAME
+========================= */
+
+function createGame(name){
+
+    myName = name;
+    isHost = true;
+
+    gameCode = generateCode();
+
+    myId = "THECASE-" + gameCode;
+
+    document.getElementById("homeStatus").innerHTML =
+        "Creating game...";
+
+    peer = new Peer(myId);
+
+    peer.on("open", function(id){
+
+        players = [
+
+            {
+                id:id,
+                name:myName,
+                host:true
+            }
+
+        ];
+
+        hideAll();
+
+        document.getElementById("lobby")
+            .classList.remove("hidden");
+
+        document.getElementById("gameCodeDisplay")
+            .innerText = gameCode;
+
+        document.getElementById("startButton")
+            .classList.remove("hidden");
+
+        updatePlayers();
+
+    });
+
+
+    peer.on("connection", function(conn){
+
+        connections[conn.peer] = conn;
+
+        conn.on("data", function(data){
+
+            if(data.type === "JOIN"){
+
+                players.push({
+
+                    id:data.id,
+                    name:data.name,
+                    host:false
+
+                });
+
+                broadcastPlayers();
+
+            }
+
+        });
+
+        conn.on("close",function(){
+
+            players =
+                players.filter(p =>
+                    p.id !== conn.peer
+                );
+
+            broadcastPlayers();
+
+        });
+
+    });
+
+
+    peer.on("error", function(error){
+
+        document.getElementById("homeStatus")
+            .innerHTML =
+            '<span class="error">Could not create game. Try again.</span>';
+
+    });
+
+}
+
+
+/* =========================
+   UPDATE PLAYERS
+========================= */
+
+function updatePlayers(){
+
+    const box =
+        document.getElementById("players");
+
+    box.innerHTML =
+        "<h3>PLAYERS (" +
+        players.length +
+        ")</h3>";
+
+    players.forEach(function(player){
+
+        box.innerHTML +=
+
+            '<div class="player">' +
+
+            player.name +
+
+            (player.host ? " 👑" : "") +
+
+            '</div>';
+
+    });
+
+}
+
+
+function broadcastPlayers(){
+
+    updatePlayers();
+
+    Object.values(connections).forEach(function(conn){
+
+        conn.send({
+
+            type:"PLAYERS",
+            players:players
+
+        });
+
+    });
+
+}
+
+
+/* =========================
+   JOIN GAME
+========================= */
+
+function joinGame(){
+
+    let name =
+        document.getElementById("joinName")
+        .value.trim();
+
+    let code =
+        document.getElementById("joinCode")
+        .value.trim()
+        .toUpperCase();
+
+    if(!name){
+
+        document.getElementById("joinStatus").innerHTML =
+            '<span class="error">Enter your name.</span>';
+
+        return;
+
+    }
+
+    if(code.length !== 6){
+
+        document.getElementById("joinStatus").innerHTML =
+            '<span class="error">Game code must be 6 characters.</span>';
+
+        return;
+
+    }
 
     myName = name;
 
+    gameCode = code;
+
+    document.getElementById("joinStatus").innerText =
+        "Connecting...";
 
     peer = new Peer();
 
+    peer.on("open", function(id){
 
-    peer.on("open", function(id) {
+        myId = id;
 
-        const hostId = "THECASE-" + code;
+        hostConnection =
+            peer.connect("THECASE-" + gameCode);
 
-        hostConnection = peer.connect(hostId);
-
-
-        hostConnection.on("open", function() {
+        hostConnection.on("open", function(){
 
             hostConnection.send({
 
-                type: "JOIN",
+                type:"JOIN",
 
-                name: myName,
+                name:myName,
 
-                id: id
+                id:myId
 
             });
 
+            hideAll();
 
-            document.getElementById("joinBox").classList.add("hidden");
+            document.getElementById("lobby")
+                .classList.remove("hidden");
 
-            document.getElementById("lobby").classList.remove("hidden");
+            document.getElementById("gameCodeDisplay")
+                .innerText = gameCode;
 
-            document.getElementById("gameCode").innerText = code;
+            document.getElementById("lobbyStatus")
+                .innerHTML =
+                '<span class="success">Connected!</span>';
 
         });
 
 
-        hostConnection.on("data", function(data) {
+        hostConnection.on("data", function(data){
 
-            if (data.type === "PLAYERS") {
+            if(data.type === "PLAYERS"){
 
                 players = data.players;
 
@@ -408,88 +709,228 @@ function joinGame() {
 
             }
 
+
+            if(data.type === "START"){
+
+                startGameForEveryone(data);
+
+            }
+
         });
 
 
-        hostConnection.on("close", function() {
+        hostConnection.on("close",function(){
 
-            alert("The host left the game.");
+            alert("Host left the game.");
 
-            location.reload();
+            goHome();
 
         });
 
     });
 
 
-    peer.on("error", function(error) {
+    peer.on("error", function(){
 
-        console.log(error);
-
-        alert("Game not found. Check the code.");
+        document.getElementById("joinStatus")
+            .innerHTML =
+            '<span class="error">Could not join. Check the code.</span>';
 
     });
 
 }
 
 
-// UPDATE PLAYER LIST
+/* =========================
+   START GAME
+========================= */
 
-function updatePlayers() {
+function startGame(){
 
-    const list = document.getElementById("playersList");
+    if(!isHost) return;
 
-    list.innerHTML = "";
+    if(players.length < 2){
 
-    players.forEach(function(player) {
-
-        const div = document.createElement("div");
-
-        div.className = "player";
-
-        div.innerText =
-            player.name +
-            (player.host ? " 👑 HOST" : "");
-
-        list.appendChild(div);
-
-    });
-
-}
-
-
-// SEND PLAYER LIST TO EVERYONE
-
-function broadcastPlayers() {
-
-    Object.values(connections).forEach(function(connection) {
-
-        connection.send({
-
-            type: "PLAYERS",
-
-            players: players
-
-        });
-
-    });
-
-}
-
-
-// START GAME
-
-function startGame() {
-
-    if (players.length < 4) {
-
-        alert("You need at least 4 players.");
+        document.getElementById("lobbyStatus")
+            .innerHTML =
+            '<span class="error">Need at least 2 players.</span>';
 
         return;
 
     }
 
-    alert("GAME START — next step will be the CASE system!");
+    const selectedCase =
+        cases[Math.floor(Math.random()*cases.length)];
+
+    const accusedIndex =
+        Math.floor(Math.random()*players.length);
+
+    const accused =
+        players[accusedIndex];
+
+    players.forEach(function(player){
+
+        let role =
+            player.id === accused.id
+            ? "MOTAHAM"
+            : "SUSPECT";
+
+        if(player.host && player.id !== accused.id){
+
+            // Host remains a suspect unless selected as accused.
+
+        }
+
+        const data = {
+
+            type:"START",
+
+            caseData:selectedCase,
+
+            accusedId:accused.id,
+
+            role:role
+
+        };
+
+        if(player.id === myId){
+
+            startGameForEveryone(data);
+
+        }else{
+
+            if(connections[player.id]){
+
+                connections[player.id].send(data);
+
+            }
+
+        }
+
+    });
+
+}
+
+
+function startGameForEveryone(data){
+
+    gameStarted = true;
+
+    hideAll();
+
+    document.getElementById("game")
+        .classList.remove("hidden");
+
+    document.getElementById("caseBox").innerHTML =
+
+        '<div class="case-title">' +
+        data.caseData.title +
+        '</div>' +
+
+        '<div class="case-text">' +
+        data.caseData.text +
+        '</div>';
+
+    let roleText = "";
+
+    if(data.role === "MOTAHAM"){
+
+        roleText =
+            '<div class="case-box">' +
+            '<h2>YOUR SECRET ROLE</h2>' +
+            '<p>You are the <b>MOTAHAM</b>.</p>' +
+            '<p>Your goal is to avoid being correctly identified.</p>' +
+            '</div>';
+
+    }else{
+
+        roleText =
+            '<div class="case-box">' +
+            '<h2>YOUR SECRET ROLE</h2>' +
+            '<p>You are a <b>SUSPECT</b>.</p>' +
+            '<p>Investigate the others and find the Motaham.</p>' +
+            '</div>';
+
+    }
+
+    document.getElementById("roleBox")
+        .innerHTML = roleText;
+
+    startTimer();
+
+}
+
+
+/* =========================
+   TIMER
+========================= */
+
+function startTimer(){
+
+    clearInterval(timerInterval);
+
+    timeLeft = 900;
+
+    updateTimer();
+
+    timerInterval =
+        setInterval(function(){
+
+            timeLeft--;
+
+            updateTimer();
+
+            if(timeLeft <= 0){
+
+                clearInterval(timerInterval);
+
+                alert("TIME IS UP!");
+
+            }
+
+        },1000);
+
+}
+
+
+function updateTimer(){
+
+    let minutes =
+        Math.floor(timeLeft / 60);
+
+    let seconds =
+        timeLeft % 60;
+
+    document.getElementById("timer")
+        .innerText =
+
+        String(minutes).padStart(2,"0")
+        + ":" +
+        String(seconds).padStart(2,"0");
+
+}
+
+
+/* =========================
+   VOTE
+========================= */
+
+function showVote(){
+
+    const box =
+        document.getElementById("voteBox");
+
+    box.innerHTML =
+
+        '<div class="case-box">' +
+
+        '<h3>WHO IS THE MOTAHAM?</h3>' +
+
+        '<p style="color:#aaa;margin-top:8px">' +
+        'Voting system will be connected to everyone in the next update.' +
+        '</p>' +
+
+        '</div>';
 
 }
 
