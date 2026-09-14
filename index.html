@@ -1,682 +1,933 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THE CASE</title>
-<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
-<style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+\<!DOCTYPE html>
+\<html lang="ar" dir="rtl">
+\<head>
+\<meta charset="UTF-8">
+\<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+\<title>THE CASE\</title>
+
+\<script src="[https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js](https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js)">\</script>
+
+\<style>
+\*{
+&#x20;   box-sizing:border-box;
+&#x20;   margin:0;
+&#x20;   padding:0;
 }
+
 body{
-    font-family:Arial,Tahoma,sans-serif;
-    background:
-        radial-gradient(circle at top,#182033 0%,#090c13 45%,#05070b 100%);
-    color:#fff;
-    min-height:100vh;
+&#x20;   font-family:Arial,Tahoma,sans-serif;
+&#x20;   background:
+&#x20;       radial-gradient(circle at top,#182033 0%,#090c13 45%,#05070b 100%);
+&#x20;   color:#fff;
+&#x20;   min-height:100vh;
 }
+
 button,
 select,
 input{
-    font-family:inherit;
+&#x20;   font-family:inherit;
 }
+
 button{
-    cursor:pointer;
+&#x20;   cursor:pointer;
 }
+
 .hidden{
-    display:none!important;
+&#x20;   display:none!important;
 }
-/* =========================
-   APP
-========================= */
-#app{
-    width:100%;
-    min-height:100vh;
-    padding:20px;
+
+/\* =========================
+&#x20;  APP
+\========================= \*/
+
+\#app{
+&#x20;   width:100%;
+&#x20;   min-height:100vh;
+&#x20;   padding:20px;
 }
+
 .screen{
-    width:100%;
-    max-width:900px;
-    margin:auto;
+&#x20;   width:100%;
+&#x20;   max-width:900px;
+&#x20;   margin:auto;
 }
-/* =========================
-   LOGO
-========================= */
+
+/\* =========================
+&#x20;  LOGO
+\========================= \*/
+
 .logo{
-    text-align:center;
-    margin:25px 0 35px;
+&#x20;   text-align:center;
+&#x20;   margin:25px 0 35px;
 }
+
 .logo h1{
-    font-size:48px;
-    letter-spacing:8px;
-    font-weight:900;
+&#x20;   font-size:48px;
+&#x20;   letter-spacing:8px;
+&#x20;   font-weight:900;
 }
+
 .logo p{
-    color:#8e99ad;
-    margin-top:8px;
-    font-size:14px;
+&#x20;   color:#8e99ad;
+&#x20;   margin-top:8px;
+&#x20;   font-size:14px;
 }
-/* =========================
-   CARD
-========================= */
+
+/\* =========================
+&#x20;  CARD
+\========================= \*/
+
 .card{
-    background:rgba(17,22,32,.94);
-    border:1px solid #273043;
-    border-radius:18px;
-    padding:24px;
-    box-shadow:0 20px 60px rgba(0,0,0,.35);
-    margin-bottom:18px;
+&#x20;   background:rgba(17,22,32,.94);
+&#x20;   border:1px solid #273043;
+&#x20;   border-radius:18px;
+&#x20;   padding:24px;
+&#x20;   box-shadow:0 20px 60px rgba(0,0,0,.35);
+&#x20;   margin-bottom:18px;
 }
+
 .card h2{
-    font-size:22px;
-    margin-bottom:18px;
+&#x20;   font-size:22px;
+&#x20;   margin-bottom:18px;
 }
+
 .card h3{
-    margin-bottom:10px;
+&#x20;   margin-bottom:10px;
 }
-/* =========================
-   INPUT
-========================= */
+
+/\* =========================
+&#x20;  INPUT
+\========================= \*/
+
 .input-group{
-    margin-bottom:15px;
+&#x20;   margin-bottom:15px;
 }
+
 .input-group label{
-    display:block;
-    color:#9da8bb;
-    font-size:13px;
-    margin-bottom:7px;
+&#x20;   display:block;
+&#x20;   color:#9da8bb;
+&#x20;   font-size:13px;
+&#x20;   margin-bottom:7px;
 }
+
 input,
 select{
-    width:100%;
-    background:#0c111a;
-    color:#fff;
-    border:1px solid #303b4e;
-    border-radius:11px;
-    padding:14px;
-    outline:none;
-    font-size:15px;
+&#x20;   width:100%;
+&#x20;   background:#0c111a;
+&#x20;   color:#fff;
+&#x20;   border:1px solid #303b4e;
+&#x20;   border-radius:11px;
+&#x20;   padding:14px;
+&#x20;   outline:none;
+&#x20;   font-size:15px;
 }
+
 input:focus,
 select:focus{
-    border-color:#7183a3;
+&#x20;   border-color:#7183a3;
 }
-/* =========================
-   BUTTONS
-========================= */
+
+/\* =========================
+&#x20;  BUTTONS
+\========================= \*/
+
 .btn{
-    width:100%;
-    border:none;
-    border-radius:11px;
-    padding:14px 18px;
-    font-size:15px;
-    font-weight:bold;
-    transition:.2s;
+&#x20;   width:100%;
+&#x20;   border:none;
+&#x20;   border-radius:11px;
+&#x20;   padding:14px 18px;
+&#x20;   font-size:15px;
+&#x20;   font-weight:bold;
+&#x20;   transition:.2s;
 }
+
 .btn:hover{
-    transform:translateY(-1px);
-    filter:brightness(1.1);
+&#x20;   transform:translateY(-1px);
+&#x20;   filter:brightness(1.1);
 }
+
 .btn-primary{
-    background:#fff;
-    color:#080b10;
+&#x20;   background:#fff;
+&#x20;   color:#080b10;
 }
+
 .btn-secondary{
-    background:#1d2635;
-    color:#fff;
-    border:1px solid #354158;
+&#x20;   background:#1d2635;
+&#x20;   color:#fff;
+&#x20;   border:1px solid #354158;
 }
+
 .btn-danger{
-    background:#8d2931;
-    color:#fff;
+&#x20;   background:#8d2931;
+&#x20;   color:#fff;
 }
+
 .btn-success{
-    background:#286d52;
-    color:#fff;
+&#x20;   background:#286d52;
+&#x20;   color:#fff;
 }
+
 .btn + .btn{
-    margin-top:10px;
+&#x20;   margin-top:10px;
 }
-/* =========================
-   LOBBY
-========================= */
+
+/\* =========================
+&#x20;  LOBBY
+\========================= \*/
+
 .mode-buttons{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
+&#x20;   display:grid;
+&#x20;   grid-template-columns:1fr 1fr;
+&#x20;   gap:12px;
 }
+
 .mode-buttons button{
-    min-height:100px;
+&#x20;   min-height:100px;
 }
+
 .big-icon{
-    display:block;
-    font-size:30px;
-    margin-bottom:8px;
+&#x20;   display:block;
+&#x20;   font-size:30px;
+&#x20;   margin-bottom:8px;
 }
+
 .game-code{
-    text-align:center;
-    font-size:38px;
-    letter-spacing:8px;
-    font-weight:900;
-    padding:18px;
-    background:#090d15;
-    border-radius:13px;
-    border:1px dashed #3a465b;
-    margin:15px 0;
+&#x20;   text-align:center;
+&#x20;   font-size:38px;
+&#x20;   letter-spacing:8px;
+&#x20;   font-weight:900;
+&#x20;   padding:18px;
+&#x20;   background:#090d15;
+&#x20;   border-radius:13px;
+&#x20;   border:1px dashed #3a465b;
+&#x20;   margin:15px 0;
 }
+
 .players-list{
-    display:flex;
-    flex-direction:column;
-    gap:8px;
+&#x20;   display:flex;
+&#x20;   flex-direction:column;
+&#x20;   gap:8px;
 }
+
 .player{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    background:#0c111a;
-    border:1px solid #202b3c;
-    padding:12px 14px;
-    border-radius:10px;
+&#x20;   display:flex;
+&#x20;   align-items:center;
+&#x20;   justify-content:space-between;
+&#x20;   background:#0c111a;
+&#x20;   border:1px solid #202b3c;
+&#x20;   padding:12px 14px;
+&#x20;   border-radius:10px;
 }
+
 .player-name{
-    font-weight:bold;
+&#x20;   font-weight:bold;
 }
+
 .host-badge{
-    font-size:11px;
-    color:#c5cfdf;
-    background:#202a3a;
-    padding:4px 7px;
-    border-radius:6px;
+&#x20;   font-size:11px;
+&#x20;   color:#c5cfdf;
+&#x20;   background:#202a3a;
+&#x20;   padding:4px 7px;
+&#x20;   border-radius:6px;
 }
-/* =========================
-   CASE SELECT
-========================= */
+
+/\* =========================
+&#x20;  CASE SELECT
+\========================= \*/
+
 .case-preview{
-    background:#0a0f17;
-    border:1px solid #263246;
-    border-radius:12px;
-    padding:16px;
-    margin-top:12px;
+&#x20;   background:#0a0f17;
+&#x20;   border:1px solid #263246;
+&#x20;   border-radius:12px;
+&#x20;   padding:16px;
+&#x20;   margin-top:12px;
 }
+
 .case-preview-title{
-    font-weight:900;
-    font-size:18px;
-    margin-bottom:8px;
+&#x20;   font-weight:900;
+&#x20;   font-size:18px;
+&#x20;   margin-bottom:8px;
 }
+
 .case-preview-story{
-    color:#aeb8c9;
-    line-height:1.8;
-    font-size:14px;
+&#x20;   color:#aeb8c9;
+&#x20;   line-height:1.8;
+&#x20;   font-size:14px;
 }
-/* =========================
-   GAME
-========================= */
+
+/\* =========================
+&#x20;  GAME
+\========================= \*/
+
 .timer{
-    text-align:center;
-    font-size:42px;
-    font-weight:900;
-    margin:8px 0 20px;
+&#x20;   text-align:center;
+&#x20;   font-size:42px;
+&#x20;   font-weight:900;
+&#x20;   margin:8px 0 20px;
 }
+
 .timer.warning{
-    animation:pulse 1s infinite;
+&#x20;   animation:pulse 1s infinite;
 }
+
 @keyframes pulse{
-    50%{
-        opacity:.5;
-    }
+&#x20;   50%{
+&#x20;       opacity:.5;
+&#x20;   }
 }
+
 .role-box{
-    border-radius:15px;
-    padding:20px;
-    margin-bottom:18px;
-    border:1px solid #334056;
-    background:#0b1019;
+&#x20;   border-radius:15px;
+&#x20;   padding:20px;
+&#x20;   margin-bottom:18px;
+&#x20;   border:1px solid #334056;
+&#x20;   background:#0b1019;
 }
+
 .role-name{
-    font-size:25px;
-    font-weight:900;
-    margin-bottom:8px;
+&#x20;   font-size:25px;
+&#x20;   font-weight:900;
+&#x20;   margin-bottom:8px;
 }
+
 .role-description{
-    color:#aab5c7;
-    line-height:1.7;
+&#x20;   color:#aab5c7;
+&#x20;   line-height:1.7;
 }
+
 .script-box{
-    background:#111a27;
-    border:1px solid #2b3950;
-    border-radius:13px;
-    padding:18px;
-    margin-top:15px;
+&#x20;   background:#111a27;
+&#x20;   border:1px solid #2b3950;
+&#x20;   border-radius:13px;
+&#x20;   padding:18px;
+&#x20;   margin-top:15px;
 }
+
 .script-box h3{
-    font-size:17px;
+&#x20;   font-size:17px;
 }
+
 .script-box p,
 .script-box li{
-    color:#c0c9d7;
-    line-height:1.8;
+&#x20;   color:#c0c9d7;
+&#x20;   line-height:1.8;
 }
+
 .script-box ul{
-    padding-right:20px;
-    margin-top:10px;
+&#x20;   padding-right:20px;
+&#x20;   margin-top:10px;
 }
+
 .secret{
-    background:#17120d;
-    border-color:#54452e;
+&#x20;   background:#17120d;
+&#x20;   border-color:#54452e;
 }
-/* =========================
-   EVIDENCE
-========================= */
+
+/\* =========================
+&#x20;  EVIDENCE
+\========================= \*/
+
 .evidence{
-    background:#0a0f17;
-    border:1px solid #273246;
-    border-radius:12px;
-    padding:15px;
-    margin-top:10px;
+&#x20;   background:#0a0f17;
+&#x20;   border:1px solid #273246;
+&#x20;   border-radius:12px;
+&#x20;   padding:15px;
+&#x20;   margin-top:10px;
 }
+
 .evidence-title{
-    font-weight:bold;
-    margin-bottom:7px;
+&#x20;   font-weight:bold;
+&#x20;   margin-bottom:7px;
 }
+
 .evidence-text{
-    color:#adb7c7;
-    line-height:1.7;
+&#x20;   color:#adb7c7;
+&#x20;   line-height:1.7;
 }
-/* =========================
-   VOTING
-========================= */
+
+/\* =========================
+&#x20;  VOTING
+\========================= \*/
+
 .vote-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-    gap:10px;
-    margin-top:15px;
+&#x20;   display:grid;
+&#x20;   grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+&#x20;   gap:10px;
+&#x20;   margin-top:15px;
 }
+
 .vote-btn{
-    background:#111925;
-    color:#fff;
-    border:1px solid #2d3a50;
-    border-radius:11px;
-    padding:14px 8px;
-    font-weight:bold;
+&#x20;   background:#111925;
+&#x20;   color:#fff;
+&#x20;   border:1px solid #2d3a50;
+&#x20;   border-radius:11px;
+&#x20;   padding:14px 8px;
+&#x20;   font-weight:bold;
 }
+
 .vote-btn:hover{
-    border-color:#71809b;
+&#x20;   border-color:#71809b;
 }
+
 .vote-btn.selected{
-    border-color:#fff;
-    background:#253044;
+&#x20;   border-color:#fff;
+&#x20;   background:#253044;
 }
-/* =========================
-   RESULT
-========================= */
+
+/\* =========================
+&#x20;  RESULT
+\========================= \*/
+
 .result-main{
-    text-align:center;
-    padding:20px;
+&#x20;   text-align:center;
+&#x20;   padding:20px;
 }
+
 .result-icon{
-    font-size:55px;
-    margin-bottom:10px;
+&#x20;   font-size:55px;
+&#x20;   margin-bottom:10px;
 }
+
 .accused-result{
-    font-size:28px;
-    font-weight:900;
-    margin:12px 0 20px;
+&#x20;   font-size:28px;
+&#x20;   font-weight:900;
+&#x20;   margin:12px 0 20px;
 }
+
 .score-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:12px;
-    background:#0b1018;
-    border:1px solid #202c3e;
-    border-radius:9px;
-    margin-bottom:7px;
+&#x20;   display:flex;
+&#x20;   justify-content:space-between;
+&#x20;   align-items:center;
+&#x20;   padding:12px;
+&#x20;   background:#0b1018;
+&#x20;   border:1px solid #202c3e;
+&#x20;   border-radius:9px;
+&#x20;   margin-bottom:7px;
 }
+
 .vote-details{
-    margin-top:20px;
+&#x20;   margin-top:20px;
 }
+
 .vote-detail{
-    color:#b9c3d2;
-    padding:9px 0;
-    border-bottom:1px solid #202938;
+&#x20;   color:#b9c3d2;
+&#x20;   padding:9px 0;
+&#x20;   border-bottom:1px solid #202938;
 }
-/* =========================
-   STATUS
-========================= */
+
+/\* =========================
+&#x20;  STATUS
+\========================= \*/
+
 .status{
-    text-align:center;
-    color:#8f9bad;
-    font-size:13px;
-    margin-top:15px;
-    min-height:20px;
+&#x20;   text-align:center;
+&#x20;   color:#8f9bad;
+&#x20;   font-size:13px;
+&#x20;   margin-top:15px;
+&#x20;   min-height:20px;
 }
+
 .error{
-    color:#ff7f88;
+&#x20;   color:#ff7f88;
 }
+
 .success{
-    color:#71d5a9;
+&#x20;   color:#71d5a9;
 }
-/* =========================
-   RESPONSIVE
-========================= */
+
+/\* =========================
+&#x20;  RESPONSIVE
+\========================= \*/
+
 @media(max-width:600px){
-    #app{
-        padding:12px;
-    }
-    .logo h1{
-        font-size:34px;
-        letter-spacing:5px;
-    }
-    .card{
-        padding:17px;
-    }
-    .mode-buttons{
-        grid-template-columns:1fr;
-    }
-    .game-code{
-        font-size:29px;
-    }
-    .timer{
-        font-size:34px;
-    }
+
+&#x20;   \#app{
+&#x20;       padding:12px;
+&#x20;   }
+
+&#x20;   .logo h1{
+&#x20;       font-size:34px;
+&#x20;       letter-spacing:5px;
+&#x20;   }
+
+&#x20;   .card{
+&#x20;       padding:17px;
+&#x20;   }
+
+&#x20;   .mode-buttons{
+&#x20;       grid-template-columns:1fr;
+&#x20;   }
+
+&#x20;   .game-code{
+&#x20;       font-size:29px;
+&#x20;   }
+
+&#x20;   .timer{
+&#x20;       font-size:34px;
+&#x20;   }
 }
-</style>
-</head>
-<body>
-<div id="app">
-    <!-- =========================
-         HOME
-    ========================== -->
-    <section id="homeScreen" class="screen">
-        <div class="logo">
-            <h1>THE CASE</h1>
-            <p>مين المـتـهـم؟</p>
-        </div>
-        <div class="card">
-            <h2>ابدأ اللعبة</h2>
-            <div class="mode-buttons">
-                <button
-                    class="btn btn-primary"
-                    onclick="showHostScreen()">
-                    <span class="big-icon">🎩</span>
-                    إنشاء لعبة
-                </button>
-                <button
-                    class="btn btn-secondary"
-                    onclick="showJoinScreen()">
-                    <span class="big-icon">🔎</span>
-                    دخول لعبة
-                </button>
-            </div>
-        </div>
-        <div id="homeStatus" class="status"></div>
-    </section>
-    <!-- =========================
-         HOST SCREEN
-    ========================== -->
-    <section id="hostScreen" class="screen hidden">
-        <div class="logo">
-            <h1>HOST</h1>
-            <p>أنشئ القضية واختار السيناريو</p>
-        </div>
-        <div class="card">
-            <h2>بياناتك</h2>
-            <div class="input-group">
-                <label>اسمك</label>
-                <input
-                    id="hostName"
-                    maxlength="20"
-                    placeholder="اكتب اسمك">
-            </div>
-        </div>
-        <div class="card">
-            <h2>اختار القضية</h2>
-            <select id="caseSelect"
-                    onchange="previewCase()">
-            </select>
-            <div id="casePreview"
-                 class="case-preview">
-                <div class="case-preview-title">
-                    اختار قضية
-                </div>
-                <div class="case-preview-story">
-                    تفاصيل القضية هتظهر هنا.
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <button
-                class="btn btn-primary"
-                onclick="createGame()">
-                إنشاء اللعبة
-            </button>
-            <button
-                class="btn btn-secondary"
-                onclick="showHome()">
-                رجوع
-            </button>
-        </div>
-        <div id="hostStatus" class="status"></div>
-    </section>
-    <!-- =========================
-         JOIN SCREEN
-    ========================== -->
-    <section id="joinScreen" class="screen hidden">
-        <div class="logo">
-            <h1>JOIN</h1>
-            <p>ادخل بيانات اللعبة</p>
-        </div>
-        <div class="card">
-            <div class="input-group">
-                <label>اسمك</label>
-                <input
-                    id="joinName"
-                    maxlength="20"
-                    placeholder="اكتب اسمك">
-            </div>
-            <div class="input-group">
-                <label>Game Code</label>
-                <input
-                    id="joinCode"
-                    maxlength="6"
-                    placeholder="مثال: A7K2P9"
-                    style="text-transform:uppercase">
-            </div>
-            <button
-                class="btn btn-primary"
-                onclick="joinGame()">
-                دخول اللعبة
-            </button>
-            <button
-                class="btn btn-secondary"
-                onclick="showHome()">
-                رجوع
-            </button>
-        </div>
-        <div id="joinStatus" class="status"></div>
-    </section>
-    <!-- =========================
-         LOBBY SCREEN
-    ========================== -->
-    <section id="lobbyScreen" class="screen hidden">
-        <div class="logo">
-            <h1>LOBBY</h1>
-            <p>مستني باقي المحققين...</p>
-        </div>
-        <div class="card">
-            <h2>Game Code</h2>
-            <div id="gameCode"
-                 class="game-code">
-                ------
-            </div>
-            <div class="status">
-                ابعت الكود لأصحابك
-            </div>
-        </div>
-        <div class="card">
-            <h2>القضية</h2>
-            <div id="lobbyCaseTitle"
-                 class="case-preview-title">
-                -
-            </div>
-            <div id="lobbyCaseStory"
-                 class="case-preview-story">
-                -
-            </div>
-        </div>
-        <div class="card">
-            <h2>
-                اللاعبين
-                (<span id="playerCount">0</span>)
-            </h2>
-            <div id="playersList"
-                 class="players-list">
-            </div>
-        </div>
-        <div id="hostControls"
-             class="card hidden">
-            <button
-                id="startButton"
-                class="btn btn-primary"
-                onclick="startGame()">
-                🚨 ابدأ التحقيق
-            </button>
-        </div>
-        <div class="card">
-            <button
-                class="btn btn-danger"
-                onclick="leaveGame()">
-                مغادرة اللعبة
-            </button>
-        </div>
-        <div id="lobbyStatus"
-             class="status">
-        </div>
-    </section>
-    <!-- =========================
-         GAME SCREEN
-    ========================== -->
-    <section id="gameScreen" class="screen hidden">
-        <div class="logo">
-            <h1>THE CASE</h1>
-            <p>التحقيق بدأ</p>
-        </div>
-        <div class="card">
-            <div id="timer"
-                 class="timer">
-                15:00
-            </div>
-            <h2 id="gameCaseTitle">
-                -
-            </h2>
-            <p id="gameCaseStory"
-               class="case-preview-story">
-                -
-            </p>
-        </div>
-        <div class="card">
-            <div id="roleBox"
-                 class="role-box">
-                <div id="roleName"
-                     class="role-name">
-                    -
-                </div>
-                <div id="roleDescription"
-                     class="role-description">
-                    -
-                </div>
-                <div id="scriptBox"
-                     class="script-box">
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <h2>الأدلة العامة</h2>
-            <div id="evidenceList">
-            </div>
-        </div>
-        <div class="card">
-            <h2>🗳️ التصويت</h2>
-            <p class="role-description">
-                اختار الشخص اللي شايف إنه المتهم.
-                أول ما كل اللاعبين يصوتوا النتيجة هتظهر فورًا.
-            </p>
-            <div id="voteGrid"
-                 class="vote-grid">
-            </div>
-            <div id="voteStatus"
-                 class="status">
-            </div>
-        </div>
-    </section>
-    <!-- =========================
-         RESULT SCREEN
-    ========================== -->
-    <section id="resultScreen" class="screen hidden">
-        <div class="logo">
-            <h1>CASE CLOSED</h1>
-            <p>انتهى التحقيق</p>
-        </div>
-        <div class="card">
-            <div class="result-main">
-                <div class="result-icon">
-                    🕵️
-                </div>
-                <h2>المتهم الحقيقي هو</h2>
-                <div id="accusedResult"
-                     class="accused-result">
-                    -
-                </div>
-                <div id="resultMessage"
-                     class="role-description">
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <h2>🏆 النقاط</h2>
-            <div id="scoresList">
-            </div>
-        </div>
-        <div class="card">
-            <h2>🗳️ التصويتات</h2>
-            <div id="voteDetails"
-                 class="vote-details">
-            </div>
-        </div>
-        <div id="resultHostControls"
-             class="card hidden">
-            <button
-                class="btn btn-primary"
-                onclick="backToLobby()">
-                🔄 قضية جديدة
-            </button>
-        </div>
-        <div id="resultStatus"
-             class="status">
-        </div>
-    </section>
-</div>
+\</style>
+\</head>
+
+\<body>
+
+\<div id="app">
+
+&#x20;   \<!-- =========================
+&#x20;        HOME
+&#x20;   \========================== -->
+
+&#x20;   \<section id="homeScreen" class="screen">
+
+&#x20;       \<div class="logo">
+&#x20;           \<h1>THE CASE\</h1>
+&#x20;           \<p>مين المـتـهـم؟\</p>
+&#x20;       \</div>
+
+&#x20;       \<div class="card">
+
+&#x20;           \<h2>ابدأ اللعبة\</h2>
+
+&#x20;           \<div class="mode-buttons">
+
+&#x20;               \<button
+&#x20;                   class="btn btn-primary"
+&#x20;                   onclick="showHostScreen()">
+
+&#x20;                   \<span class="big-icon">🎩\</span>
+&#x20;                   إنشاء لعبة
+
+&#x20;               \</button>
+
+&#x20;               \<button
+&#x20;                   class="btn btn-secondary"
+&#x20;                   onclick="showJoinScreen()">
+
+&#x20;                   \<span class="big-icon">🔎\</span>
+&#x20;                   دخول لعبة
+
+&#x20;               \</button>
+
+&#x20;           \</div>
+
+&#x20;       \</div>
+
+&#x20;       \<div id="homeStatus" class="status">\</div>
+
+&#x20;   \</section>
+
+
+&#x20;   \<!-- =========================
+&#x20;        HOST SCREEN
+&#x20;   \========================== -->
+
+&#x20;   \<section id="hostScreen" class="screen hidden">
+
+&#x20;       \<div class="logo">
+&#x20;           \<h1>HOST\</h1>
+&#x20;           \<p>أنشئ القضية واختار السيناريو\</p>
+&#x20;       \</div>
+
+&#x20;       \<div class="card">
+
+&#x20;           \<h2>بياناتك\</h2>
+
+&#x20;           \<div class="input-group">
+&#x20;               \<label>اسمك\</label>
+
+&#x20;               \<input
+&#x20;                   id="hostName"
+&#x20;                   maxlength="20"
+&#x20;                   placeholder="اكتب اسمك">
+&#x20;           \</div>
+
+&#x20;       \</div>
+
+
+&#x20;       \<div class="card">
+
+&#x20;           \<h2>اختار القضية\</h2>
+
+&#x20;           \<select id="caseSelect"
+&#x20;                   onchange="previewCase()">
+&#x20;           \</select>
+
+&#x20;           \<div id="casePreview"
+&#x20;                class="case-preview">
+
+&#x20;               \<div class="case-preview-title">
+&#x20;                   اختار قضية
+&#x20;               \</div>
+
+&#x20;               \<div class="case-preview-story">
+&#x20;                   تفاصيل القضية هتظهر هنا.
+&#x20;               \</div>
+
+&#x20;           \</div>
+
+&#x20;       \</div>
+
+
+&#x20;       \<div class="card">
+
+&#x20;           \<button
+&#x20;               class="btn btn-primary"
+&#x20;               onclick="createGame()">
+
+&#x20;               إنشاء اللعبة
+
+&#x20;           \</button>
+
+&#x20;           \<button
+&#x20;               class="btn btn-secondary"
+&#x20;               onclick="showHome()">
+
+&#x20;               رجوع
+
+&#x20;           \</button>
+
+&#x20;       \</div>
+
+&#x20;       \<div id="hostStatus" class="status">\</div>
+
+&#x20;   \</section>
+
+
+&#x20;   \<!-- =========================
+&#x20;        JOIN SCREEN
+&#x20;   \========================== -->
+
+&#x20;   \<section id="joinScreen" class="screen hidden">
+
+&#x20;       \<div class="logo">
+&#x20;           \<h1>JOIN\</h1>
+&#x20;           \<p>ادخل بيانات اللعبة\</p>
+&#x20;       \</div>
+
+&#x20;       \<div class="card">
+
+&#x20;           \<div class="input-group">
+&#x20;               \<label>اسمك\</label>
+
+&#x20;               \<input
+&#x20;                   id="joinName"
+&#x20;                   maxlength="20"
+&#x20;                   placeholder="اكتب اسمك">
+&#x20;           \</div>
+
+&#x20;           \<div class="input-group">
+&#x20;               \<label>Game Code\</label>
+
+&#x20;               \<input
+&#x20;                   id="joinCode"
+&#x20;                   maxlength="6"
+&#x20;                   placeholder="مثال: A7K2P9"
+&#x20;                   style="text-transform:uppercase">
+
+&#x20;           \</div>
+
+&#x20;           \<button
+&#x20;               class="btn btn-primary"
+&#x20;               onclick="joinGame()">
+
+&#x20;               دخول اللعبة
+
+&#x20;           \</button>
+
+&#x20;           \<button
+&#x20;               class="btn btn-secondary"
+&#x20;               onclick="showHome()">
+
+&#x20;               رجوع
+
+&#x20;           \</button>
+
+&#x20;       \</div>
+
+&#x20;       \<div id="joinStatus" class="status">\</div>
+
+&#x20;   \</section>
+
+
+&#x20;   \<!-- =========================
+&#x20;        LOBBY SCREEN
+&#x20;   \========================== -->
+
+&#x20;   \<section id="lobbyScreen" class="screen hidden">
+
+&#x20;       \<div class="logo">
+&#x20;           \<h1>LOBBY\</h1>
+&#x20;           \<p>مستني باقي المحققين...\</p>
+&#x20;       \</div>
+
+&#x20;       \<div class="card">
+
+&#x20;           \<h2>Game Code\</h2>
+
+&#x20;           \<div id="gameCode"
+&#x20;                class="game-code">
+&#x20;               \------
+&#x20;           \</div>
+
+&#x20;           \<div class="status">
+&#x20;               ابعت الكود لأصحابك
+&#x20;           \</div>
+
+&#x20;       \</div>
+
+
+&#x20;       \<div class="card">
+
+&#x20;           \<h2>القضية\</h2>
+
+&#x20;           \<div id="lobbyCaseTitle"
+&#x20;                class="case-preview-title">
+&#x20;               \-
+&#x20;           \</div>
+
+&#x20;           \<div id="lobbyCaseStory"
+&#x20;                class="case-preview-story">
+&#x20;               \-
+&#x20;           \</div>
+
+&#x20;       \</div>
+
+
+&#x20;       \<div class="card">
+
+&#x20;           \<h2>
+&#x20;               اللاعبين
+&#x20;               (\<span id="playerCount">0\</span>)
+&#x20;           \</h2>
+
+&#x20;           \<div id="playersList"
+&#x20;                class="players-list">
+&#x20;           \</div>
+
+&#x20;       \</div>
+
+
+&#x20;       \<div id="hostControls"
+&#x20;            class="card hidden">
+
+&#x20;           \<button
+&#x20;               id="startButton"
+&#x20;               class="btn btn-primary"
+&#x20;               onclick="startGame()">
+
+&#x20;               🚨 ابدأ التحقيق
+
+&#x20;           \</button>
+
+&#x20;       \</div>
+
+&#x20;       \<div class="card">
+
+&#x20;           \<button
+&#x20;               class="btn btn-danger"
+&#x20;               onclick="leaveGame()">
+
+&#x20;               مغادرة اللعبة
+
+&#x20;           \</button>
+
+&#x20;       \</div>
+
+&#x20;       \<div id="lobbyStatus"
+&#x20;            class="status">
+&#x20;       \</div>
+
+&#x20;   \</section>
+
+
+&#x20;   \<!-- =========================
+&#x20;        GAME SCREEN
+&#x20;   \========================== -->
+
+&#x20;   \<section id="gameScreen" class="screen hidden">
+
+&#x20;       \<div class="logo">
+&#x20;           \<h1>THE CASE\</h1>
+&#x20;           \<p>التحقيق بدأ\</p>
+&#x20;       \</div>
+
+&#x20;       \<div class="card">
+
+&#x20;           \<div id="timer"
+&#x20;                class="timer">
+&#x20;               15:00
+&#x20;           \</div>
+
+&#x20;           \<h2 id="gameCaseTitle">
+&#x20;               \-
+&#x20;           \</h2>
+
+&#x20;           \<p id="gameCaseStory"
+&#x20;              class="case-preview-story">
+&#x20;               \-
+&#x20;           \</p>
+
+&#x20;       \</div>
+
+
+&#x20;       \<div class="card">
+
+&#x20;           \<div id="roleBox"
+&#x20;                class="role-box">
+
+&#x20;               \<div id="roleName"
+&#x20;                    class="role-name">
+&#x20;                   \-
+&#x20;               \</div>
+
+&#x20;               \<div id="roleDescription"
+&#x20;                    class="role-description">
+&#x20;                   \-
+&#x20;               \</div>
+
+&#x20;               \<div id="scriptBox"
+&#x20;                    class="script-box">
+&#x20;               \</div>
+
+&#x20;           \</div>
+
+&#x20;       \</div>
+
+
+&#x20;       \<div class="card">
+
+&#x20;           \<h2>الأدلة العامة\</h2>
+
+&#x20;           \<div id="evidenceList">
+&#x20;           \</div>
+
+&#x20;       \</div>
+
+
+&#x20;       \<div class="card">
+
+&#x20;           \<h2>🗳️ التصويت\</h2>
+
+&#x20;           \<p class="role-description">
+&#x20;               اختار الشخص اللي شايف إنه المتهم.
+&#x20;               أول ما كل اللاعبين يصوتوا النتيجة هتظهر فورًا.
+&#x20;           \</p>
+
+&#x20;           \<div id="voteGrid"
+&#x20;                class="vote-grid">
+&#x20;           \</div>
+
+&#x20;           \<div id="voteStatus"
+&#x20;                class="status">
+&#x20;           \</div>
+
+&#x20;       \</div>
+
+&#x20;   \</section>
+
+
+&#x20;   \<!-- =========================
+&#x20;        RESULT SCREEN
+&#x20;   \========================== -->
+
+&#x20;   \<section id="resultScreen" class="screen hidden">
+
+&#x20;       \<div class="logo">
+&#x20;           \<h1>CASE CLOSED\</h1>
+&#x20;           \<p>انتهى التحقيق\</p>
+&#x20;       \</div>
+
+&#x20;       \<div class="card">
+
+&#x20;           \<div class="result-main">
+
+&#x20;               \<div class="result-icon">
+&#x20;                   🕵️
+&#x20;               \</div>
+
+&#x20;               \<h2>المتهم الحقيقي هو\</h2>
+
+&#x20;               \<div id="accusedResult"
+&#x20;                    class="accused-result">
+&#x20;                   \-
+&#x20;               \</div>
+
+&#x20;               \<div id="resultMessage"
+&#x20;                    class="role-description">
+&#x20;               \</div>
+
+&#x20;           \</div>
+
+&#x20;       \</div>
+
+
+&#x20;       \<div class="card">
+
+&#x20;           \<h2>🏆 النقاط\</h2>
+
+&#x20;           \<div id="scoresList">
+&#x20;           \</div>
+
+&#x20;       \</div>
+
+
+&#x20;       \<div class="card">
+
+&#x20;           \<h2>🗳️ التصويتات\</h2>
+
+&#x20;           \<div id="voteDetails"
+&#x20;                class="vote-details">
+&#x20;           \</div>
+
+&#x20;       \</div>
+
+
+&#x20;       \<div id="resultHostControls"
+&#x20;            class="card hidden">
+
+&#x20;           \<button
+&#x20;               class="btn btn-primary"
+&#x20;               onclick="backToLobby()">
+
+&#x20;               🔄 قضية جديدة
+
+&#x20;           \</button>
+
+&#x20;       \</div>
+
+&#x20;       \<div id="resultStatus"
+&#x20;            class="status">
+&#x20;       \</div>
+
+&#x20;   \</section>
+
+\</div>
+
 <script>
+
 /* =========================================================
    THE CASE — GAME DATA
 ========================================================= */
+
 const CASES = [
+
     {
         title:"لغز يخت البحر المظلم",
+
         story:
         "اجتمعت مجموعة أصدقاء على يخت في رحلة ليلية. " +
         "قبل منتصف الليل اختفى مفتاح غرفة القبطان، " +
         "وبعدها بدقائق اكتشف الجميع أن أحدهم كان يعرف " +
         "عن المفتاح أكثر مما ينبغي.",
+
         evidence:[
             "المفتاح اختفى من درج القبطان.",
             "شخص ما شوهد قرب غرفة القبطان قبل اختفاء المفتاح.",
             "لا توجد آثار كسر على الباب.",
             "أحد الأشخاص غيّر قصته أثناء التحقيق."
         ],
+
         clues:[
             "لاحظت شخصًا قرب غرفة القبطان قبل الحادث.",
             "سمعت صوت درج يُفتح أثناء وجودك في الممر.",
@@ -686,18 +937,22 @@ const CASES = [
             "سمعت شخصًا يقول إنه لم يدخل الممر، رغم أنك رأيته هناك."
         ]
     },
+
     {
         title:"سر المتحف الليلي",
+
         story:
         "أُغلقت أبواب متحف صغير بعد انتهاء الزيارة. " +
         "في صباح اليوم التالي اكتشف الحراس أن قطعة أثرية " +
         "اختفت من صندوقها، رغم أن نظام الإنذار لم يسجل اقتحامًا.",
+
         evidence:[
             "الصندوق لم يتعرض للكسر.",
             "الإنذار لم يعمل.",
             "شخص واحد كان يعرف رمز غرفة التخزين.",
             "هناك اختلاف بين أقوال الموجودين."
         ],
+
         clues:[
             "رأيت شخصًا يقترب من غرفة التخزين.",
             "سمعت شخصًا يتحدث عن رمز الدخول.",
@@ -707,18 +962,22 @@ const CASES = [
             "أحد الأشخاص كان يعرف مكان القطعة بدقة."
         ]
     },
+
     {
         title:"قطار منتصف الليل",
+
         story:
         "في رحلة قطار ليلية، اكتشف الركاب أن حقيبة مهمة اختفت " +
         "من إحدى العربات. كل الركاب كانوا داخل القطار، " +
         "لكن أحدهم كان يعرف بالضبط متى تكون العربة فارغة.",
+
         evidence:[
             "الحقيبة كانت موجودة في بداية الرحلة.",
             "لم يتوقف القطار خلال الفترة المهمة.",
             "شخص واحد غيّر مكانه أكثر من مرة.",
             "الحقيبة اختفت أثناء ازدحام إحدى العربات."
         ],
+
         clues:[
             "شاهدت شخصًا يدخل العربة في وقت غير معتاد.",
             "لاحظت أن أحدهم كان يراقب حركة الركاب.",
@@ -728,18 +987,22 @@ const CASES = [
             "لاحظت أن أحدهم عرف وقت ازدحام العربة."
         ]
     },
+
     {
         title:"سر الفندق القديم",
+
         story:
         "في فندق قديم، اختفت ساعة ثمينة من غرفة مقفلة. " +
         "الغرفة لم يكن بها أي أثر اقتحام، وعدة أشخاص كانوا " +
         "يمتلكون سببًا لدخول الطابق.",
+
         evidence:[
             "الغرفة كانت مقفلة.",
             "لا يوجد كسر في القفل.",
             "أحد الموجودين كان لديه مفتاح احتياطي.",
             "وقت اختفاء الساعة غير محدد بدقة."
         ],
+
         clues:[
             "رأيت شخصًا بالقرب من الغرفة.",
             "سمعت صوت مفتاح في الباب.",
@@ -749,18 +1012,22 @@ const CASES = [
             "أحد الأشخاص كان يعرف نظام مفاتيح الفندق."
         ]
     },
+
     {
         title:"حفلة القصر",
+
         story:
         "خلال حفلة خاصة في قصر قديم، اختفى صندوق صغير من مكتب مغلق. " +
         "كان هناك عدد محدود من الضيوف، وكل شخص تقريبًا تحرك " +
         "داخل القصر أثناء الحفلة.",
+
         evidence:[
             "المكتب لم يكن مكسورًا.",
             "الصندوق كان موجودًا قبل الحفلة.",
             "أحد الضيوف يعرف المكتب جيدًا.",
             "شخص غيّر روايته عن مكانه."
         ],
+
         clues:[
             "رأيت شخصًا يدخل المكتب.",
             "شخص سأل عن صاحب مفتاح المكتب.",
@@ -770,18 +1037,22 @@ const CASES = [
             "شخص قال إنه لم يغادر الحفلة."
         ]
     },
+
     {
         title:"لغز المكتب المغلق",
+
         story:
         "في شركة صغيرة اختفى ملف مهم من مكتب المدير. " +
         "المكتب كان مغلقًا معظم الوقت، والموظفون الموجودون " +
         "كانوا يعرفون أن الملف يحتوي على معلومات مهمة.",
+
         evidence:[
             "الملف كان موجودًا صباحًا.",
             "المكتب لم يتعرض للكسر.",
             "ثلاثة أشخاص يعرفون مكان الملف.",
             "كاميرا الممر توقفت لدقائق."
         ],
+
         clues:[
             "رأيت شخصًا يدخل مكتب المدير.",
             "لاحظت أن أحدهم كان يعرف موعد توقف الكاميرا.",
@@ -791,37 +1062,56 @@ const CASES = [
             "رأيت شخصًا يحمل أوراقًا مشابهة."
         ]
     }
+
 ];
+
+
 /* =========================================================
    GAME STATE
 ========================================================= */
+
 let peer = null;
 let isHost = false;
+
 let myId = null;
 let myName = "";
+
 let hostPeerId = null;
 let gameCode = "";
+
 let players = {};
 let connections = {};
+
 let selectedCaseIndex = 0;
 let currentCase = null;
+
 let myRole = null;
 let mySecret = null;
+
 let gameStarted = false;
 let roundFinished = false;
+
 let gameEndTime = 0;
 let timerInterval = null;
+
 let votes = {};
 let scores = {};
+
 let accusedId = null;
 let detectiveId = null;
+
+
 /* =========================================================
    HELPERS
 ========================================================= */
+
 function $(id){
     return document.getElementById(id);
 }
+
+
 function showScreen(id){
+
     const screens = [
         "homeScreen",
         "hostScreen",
@@ -830,167 +1120,1019 @@ function showScreen(id){
         "gameScreen",
         "resultScreen"
     ];
+
     screens.forEach(screen=>{
         if($(screen)){
             $(screen).classList.add("hidden");
         }
     });
+
     if($(id)){
         $(id).classList.remove("hidden");
     }
 }
+
+
 function setStatus(id,text,type=""){
+
     const el = $(id);
+
     if(!el) return;
+
     el.className = "status " + type;
     el.textContent = text || "";
 }
+
+
 function safeName(name){
+
     name = String(name || "").trim();
+
     if(!name){
         return "Player";
     }
+
     return name.substring(0,20);
 }
+
+
 function randomCode(){
+
     const chars =
         "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
     let result = "";
+
     for(let i=0;i<6;i++){
+
         result +=
             chars[Math.floor(Math.random()*chars.length)];
+
     }
+
     return result;
 }
-function escapeHtml(value){
-    return String(value ?? "")
-        .replace(/&/g,"&")
-        .replace(/</g,"<")
-        .replace(/>/g,">")
-        .replace(/"/g,""")
-        .replace(/'/g,"'");
+
+// =========================================================
+// GAME ROUND SYSTEM
+// =========================================================
+
+function startGame(){
+    if(!isHost) return;
+
+    const playerIds = Object.keys(players);
+
+    if(playerIds.length < 3){
+        alert("لازم يكون فيه 3 لاعبين على الأقل عشان تبدأ القضية.");
+        return;
+    }
+
+    // تأكيد القضية المختارة من الـ Lobby
+    selectedCaseIndex = Number($("caseSelect")?.value ?? selectedCaseIndex);
+    currentCase = CASES[selectedCaseIndex];
+
+    if(!currentCase){
+        alert("اختار قضية الأول.");
+        return;
+    }
+
+    // Reset round
+    votes = {};
+    roundFinished = false;
+    gameStarted = true;
+
+    // الحفاظ على السكور
+    playerIds.forEach(id => {
+        if(typeof scores[id] !== "number"){
+            scores[id] = 0;
+        }
+    });
+
+    // اختيار Detective و Accused
+    const shuffled = [...playerIds].sort(() => Math.random() - 0.5);
+
+    detectiveId = shuffled[0];
+    accusedId = shuffled[1];
+
+    gameEndTime = Date.now() + (15 * 60 * 1000);
+
+    // إرسال بيانات مختلفة لكل لاعب
+    playerIds.forEach(id => {
+
+        let role = "suspect";
+        let secret = "";
+
+        if(id === detectiveId){
+            role = "detective";
+
+            secret = `
+أنت المحقق في هذه القضية. مهمتك هي إدارة التحقيق والوصول إلى المتهم الحقيقي.
+ابدأ بأسئلة هادئة لكل اللاعبين، واطلب من كل شخص أن يحكي روايته بنفسه.
+ركز على التفاصيل الصغيرة، مثل الوقت والمكان ومن كان يعرف ماذا، وقارن إجابات اللاعبين ببعضها.
+لا تكشف من تشك فيه بسرعة، وحاول أن تجعل كل لاعب يشرح قصته بالتفصيل.
+في النهاية، كوّن رأيك بناءً على التناقضات والأدلة الموجودة، ثم صوّت على الشخص الذي تعتقد أنه المتهم.
+`;
+        }
+        else if(id === accusedId){
+            role = "accused";
+
+            secret = `
+أنت المتهم في هذه القضية، لكن باقي اللاعبين لا يعرفون أنك المتهم.
+لديك رواية خاصة بك عن الأحداث، ومهمتك أن تدافع عن نفسك بطريقة طبيعية من غير ما تكشف دورك.
+جاوب على أسئلة المحقق واللاعبين بثبات، وحاول أن تجعل روايتك متوافقة مع أحداث القضية.
+لو حد اتهمك، لا تتوتر ولا تغيّر كلامك بشكل واضح؛ اشرح وجهة نظرك واطلب منه أن يوضح لماذا يشك فيك.
+هدفك أن تنهي التصويت من غير أن يتم اختيارك.
+`;
+        }
+        else{
+            role = "suspect";
+
+            const clues = currentCase.clues || [];
+            const clue = clues.length
+                ? clues[Math.floor(Math.random() * clues.length)]
+                : "لاحظت تفصيلة مهمة أثناء الأحداث، لكنك غير متأكد من معناها.";
+
+            secret = `
+أنت أحد المشتبه بهم في هذه القضية.
+لديك معلومة خاصة لا يعرفها باقي اللاعبين: ${clue}
+
+مهمتك أن تتصرف كشخص طبيعي موجود في القضية، وتحكي فقط الجزء الذي تعرفه.
+يمكنك مشاركة المعلومة الخاصة بك أثناء التحقيق إذا شعرت أنها ستساعد في كشف الحقيقة، لكن لا تكشف كل ما تعرفه من البداية.
+اسمع روايات باقي اللاعبين وقارنها بمعلومتك، وإذا لاحظت تناقضاً في كلام شخص ما، اسأله عنه مباشرة.
+في النهاية، صوّت على الشخص الذي ترى أنه المتهم الحقيقي.
+`;
+        }
+
+        const payload = {
+            type: "GAME_START",
+            caseIndex: selectedCaseIndex,
+            caseData: currentCase,
+            role: role,
+            secret: secret,
+            accusedId: accusedId,
+            detectiveId: detectiveId,
+            endTime: gameEndTime,
+            scores: scores
+        };
+
+        if(id === myId){
+            myRole = role;
+            mySecret = secret;
+            renderGame();
+        }
+        else if(connections[id]){
+            try{
+                connections[id].send(payload);
+            }catch(e){
+                console.error("GAME_START send error:", e);
+            }
+        }
+    });
+
+    showScreen("gameScreen");
+    startTimer();
+    renderGame();
 }
+
+
+function receiveGameStart(data){
+
+    gameStarted = true;
+    roundFinished = false;
+
+    selectedCaseIndex = Number(data.caseIndex);
+    currentCase = data.caseData;
+
+    myRole = data.role;
+    mySecret = data.secret;
+
+    accusedId = data.accusedId;
+    detectiveId = data.detectiveId;
+
+    gameEndTime = data.endTime;
+
+    if(data.scores){
+        scores = data.scores;
+    }
+
+    votes = {};
+
+    showScreen("gameScreen");
+    renderGame();
+    startTimer();
+}
+
+
+function getRoleTitle(role){
+
+    if(role === "detective"){
+        return "🕵️ المحقق";
+    }
+
+    if(role === "accused"){
+        return "🎭 المتهم";
+    }
+
+    return "🔎 مشتبه به";
+}
+
+
+function getRoleDescription(role){
+
+    if(role === "detective"){
+        return "أنت المسؤول عن التحقيق. اسأل اللاعبين، قارن رواياتهم، وابحث عن التناقضات.";
+    }
+
+    if(role === "accused"){
+        return "أنت المتهم السري. دافع عن روايتك وحاول ألا يتم اكتشاف دورك.";
+    }
+
+    return "أنت مشتبه به. شارك المعلومات التي لديك وساعد في اكتشاف المتهم.";
+}
+
+
+function renderGame(){
+
+    if(!currentCase) return;
+
+    if($("gameCaseTitle")){
+        $("gameCaseTitle").textContent =
+            currentCase.title || "القضية";
+    }
+
+    if($("gameCaseStory")){
+        $("gameCaseStory").textContent =
+            currentCase.story || currentCase.description || "";
+    }
+
+    if($("roleName")){
+        $("roleName").textContent =
+            getRoleTitle(myRole);
+    }
+
+    if($("roleDescription")){
+        $("roleDescription").textContent =
+            getRoleDescription(myRole);
+    }
+
+    if($("scriptBox")){
+        $("scriptBox").innerHTML = `
+            <div class="script-title">📜 السيناريو الخاص بك</div>
+            <p>${escapeHtml(mySecret || "")}</p>
+        `;
+    }
+
+    if($("evidenceList")){
+
+        const clues = currentCase.clues || [];
+
+        if(clues.length){
+            $("evidenceList").innerHTML = clues.map((clue, i) => `
+                <div class="evidence-item">
+                    <strong>دليل ${i + 1}</strong>
+                    <span>${escapeHtml(clue)}</span>
+                </div>
+            `).join("");
+        }
+        else{
+            $("evidenceList").innerHTML =
+                "<div>لا توجد أدلة عامة إضافية.</div>";
+        }
+    }
+
+    renderVoting();
+}
+
+
+function renderVoting(){
+
+    const box = $("votingArea");
+
+    if(!box) return;
+
+    if(roundFinished){
+        box.innerHTML = `
+            <div class="vote-status">
+                انتهى التصويت.
+            </div>
+        `;
+        return;
+    }
+
+    // المتهم لا يصوت
+    if(myRole === "accused"){
+        box.innerHTML = `
+            <div class="vote-status">
+                🎭 أنت المتهم في القضية، لذلك لا يمكنك التصويت.
+                <br>
+                انتظر نتيجة التحقيق.
+            </div>
+        `;
+        return;
+    }
+
+    const alreadyVoted = Object.prototype.hasOwnProperty.call(votes, myId);
+
+    let html = `
+        <div class="vote-title">🗳️ اختر الشخص الذي تعتقد أنه المتهم</div>
+    `;
+
+    Object.keys(players).forEach(id => {
+
+        if(id === myId) return;
+
+        const name = players[id]?.name || "لاعب";
+
+        const selected =
+            alreadyVoted && votes[myId] === id;
+
+        html += `
+            <button
+                class="vote-btn ${selected ? "selected" : ""}"
+                onclick="submitVote('${id}')"
+                ${alreadyVoted ? "disabled" : ""}
+            >
+                ${escapeHtml(name)}
+            </button>
+        `;
+    });
+
+    if(alreadyVoted){
+        html += `
+            <div class="vote-status">
+                ✅ تم تسجيل تصويتك. انتظر باقي اللاعبين.
+            </div>
+        `;
+    }
+
+    box.innerHTML = html;
+}
+
+
+function submitVote(targetId){
+
+    if(roundFinished || !gameStarted) return;
+
+    if(myRole === "accused"){
+        return;
+    }
+
+    if(targetId === myId){
+        return;
+    }
+
+    if(Object.prototype.hasOwnProperty.call(votes, myId)){
+        return;
+    }
+
+    // المضيف يسجل تصويته بنفسه
+    if(isHost){
+        recordVote(myId, targetId);
+    }
+    else if(connections.host){
+
+        connections.host.send({
+            type: "VOTE",
+            voterId: myId,
+            targetId: targetId
+        });
+
+        votes[myId] = targetId;
+        renderVoting();
+    }
+}
+
+
+function recordVote(voterId, targetId){
+
+    if(!isHost || roundFinished) return;
+
+    if(!players[voterId] || !players[targetId]){
+        return;
+    }
+
+    // المتهم لا يصوت
+    if(voterId === accusedId){
+        return;
+    }
+
+    // ممنوع التصويت للنفس
+    if(voterId === targetId){
+        return;
+    }
+
+    // منع التصويت مرتين
+    if(Object.prototype.hasOwnProperty.call(votes, voterId)){
+        return;
+    }
+
+    votes[voterId] = targetId;
+
+    const eligibleVoters =
+        Object.keys(players).filter(id => id !== accusedId);
+
+    const voteCount = Object.keys(votes).length;
+
+    broadcast({
+        type: "VOTE_UPDATE",
+        votes: votes,
+        voteCount: voteCount,
+        eligibleCount: eligibleVoters.length
+    });
+
+    renderVoting();
+
+    // بمجرد ما كل الناس المسموح لهم يصوتوا تخلص القضية فوراً
+    if(voteCount >= eligibleVoters.length){
+        finishVoting();
+    }
+}
+
+
+function finishVoting(){
+
+    if(!isHost || roundFinished) return;
+
+    roundFinished = true;
+    gameStarted = false;
+
+    if(timerInterval){
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+
+    const voteCounts = {};
+
+    Object.keys(votes).forEach(voterId => {
+
+        const targetId = votes[voterId];
+
+        if(!voteCounts[targetId]){
+            voteCounts[targetId] = 0;
+        }
+
+        voteCounts[targetId]++;
+    });
+
+    const accusedVotes =
+        voteCounts[accusedId] || 0;
+
+    // لو محدش عرف المتهم
+    if(accusedVotes === 0){
+
+        scores[accusedId] =
+            (scores[accusedId] || 0) + 1;
+    }
+    else{
+
+        // كل واحد صوّت صح ياخد نقطة
+        Object.keys(votes).forEach(voterId => {
+
+            if(votes[voterId] === accusedId){
+
+                scores[voterId] =
+                    (scores[voterId] || 0) + 1;
+            }
+        });
+    }
+
+    const resultData = {
+        type: "RESULT",
+        accusedId: accusedId,
+        detectiveId: detectiveId,
+        votes: votes,
+        voteCounts: voteCounts,
+        scores: scores,
+        players: players,
+        caseData: currentCase
+    };
+
+    broadcast(resultData);
+
+    showResult(resultData);
+}
+
+
+function receiveResult(data){
+
+    roundFinished = true;
+    gameStarted = false;
+
+    if(timerInterval){
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+
+    accusedId = data.accusedId;
+    detectiveId = data.detectiveId;
+    votes = data.votes || {};
+    scores = data.scores || scores;
+
+    showResult(data);
+}
+
+
+function showResult(data){
+
+    showScreen("resultScreen");
+
+    const accusedName =
+        data.players?.[data.accusedId]?.name ||
+        players[data.accusedId]?.name ||
+        "المتهم";
+
+    const detectiveName =
+        data.players?.[data.detectiveId]?.name ||
+        players[data.detectiveId]?.name ||
+        "المحقق";
+
+    const accusedVotes =
+        data.voteCounts?.[data.accusedId] || 0;
+
+    if($("resultTitle")){
+        $("resultTitle").textContent =
+            "🔍 انتهى التحقيق";
+    }
+
+    if($("resultMessage")){
+
+        if(accusedVotes === 0){
+            $("resultMessage").innerHTML = `
+                المتهم الحقيقي كان
+                <strong>${escapeHtml(accusedName)}</strong>
+                🎭
+                <br>
+                محدش قدر يكتشفه، لذلك حصل على نقطة.
+            `;
+        }
+        else{
+            $("resultMessage").innerHTML = `
+                المتهم الحقيقي كان
+                <strong>${escapeHtml(accusedName)}</strong>
+                🎭
+                <br>
+                وتم التصويت عليه ${accusedVotes} مرة.
+            `;
+        }
+    }
+
+    if($("resultDetective")){
+        $("resultDetective").textContent =
+            "🕵️ المحقق: " + detectiveName;
+    }
+
+    if($("scoreBoard")){
+
+        const sourcePlayers =
+            data.players || players;
+
+        const sourceScores =
+            data.scores || scores;
+
+        $("scoreBoard").innerHTML =
+            Object.keys(sourcePlayers)
+            .sort((a,b) =>
+                (sourceScores[b] || 0) -
+                (sourceScores[a] || 0)
+            )
+            .map(id => `
+                <div class="score-row">
+                    <span>${escapeHtml(sourcePlayers[id]?.name || "لاعب")}</span>
+                    <strong>${sourceScores[id] || 0}</strong>
+                </div>
+            `)
+            .join("");
+    }
+
+    if($("resultControls")){
+
+        if(isHost){
+            $("resultControls").innerHTML = `
+                <button class="btn btn-primary"
+                        onclick="backToLobby()">
+                    🔄 قضية جديدة
+                </button>
+            `;
+        }
+        else{
+            $("resultControls").innerHTML = `
+                <div class="vote-status">
+                    ⏳ انتظر المضيف لبدء القضية التالية.
+                </div>
+            `;
+        }
+    }
+}
+
+
+function updateTimer(){
+
+    if(!gameStarted) return;
+
+    const remaining =
+        Math.max(0, gameEndTime - Date.now());
+
+    const totalSeconds =
+        Math.ceil(remaining / 1000);
+
+    const minutes =
+        Math.floor(totalSeconds / 60);
+
+    const seconds =
+        totalSeconds % 60;
+
+    const text =
+        String(minutes).padStart(2,"0") +
+        ":" +
+        String(seconds).padStart(2,"0");
+
+    if($("timer")){
+        $("timer").textContent = text;
+    }
+
+    if(remaining <= 0){
+
+        if(isHost){
+            finishVoting();
+        }
+        else{
+            if($("timer")){
+                $("timer").textContent = "00:00";
+            }
+        }
+    }
+}
+
+
+function startTimer(){
+
+    if(timerInterval){
+        clearInterval(timerInterval);
+    }
+
+    updateTimer();
+
+    timerInterval =
+        setInterval(updateTimer,1000);
+}
+
+
+function handleGameVoteUpdate(data){
+
+    votes = data.votes || {};
+
+    renderVoting();
+}
+
+
+function backToLobby(){
+
+    if(!isHost) return;
+
+    gameStarted = false;
+    roundFinished = false;
+
+    if(timerInterval){
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+
+    votes = {};
+    myRole = null;
+    mySecret = null;
+    accusedId = null;
+    detectiveId = null;
+
+    // نفس اللاعبين ونفس السكور
+    broadcastLobby();
+
+    showScreen("lobbyScreen");
+
+    if(typeof renderLobby === "function"){
+        renderLobby();
+    }
+}
+
+
+function leaveGame(){
+
+    if(timerInterval){
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+
+    Object.values(connections).forEach(conn => {
+        try{
+            conn.close();
+        }catch(e){}
+    });
+
+    connections = {};
+
+    if(peer){
+        try{
+            peer.destroy();
+        }catch(e){}
+    }
+
+    peer = null;
+
+    players = {};
+    votes = {};
+    scores = {};
+
+    gameStarted = false;
+    roundFinished = false;
+
+    myRole = null;
+    mySecret = null;
+    accusedId = null;
+    detectiveId = null;
+
+    showHome();
+}
+
+
+// =========================================================
+// OVERRIDE DATA HANDLERS
+// =========================================================
+
+function handleHostData(data, conn){
+
+    if(!data || !data.type) return;
+
+    if(data.type === "JOIN"){
+
+        addPlayer(data.playerId, data.playerName, conn);
+
+        conn.send({
+            type: "LOBBY",
+            players: players,
+            caseIndex: selectedCaseIndex,
+            caseData: currentCase
+        });
+
+        broadcastLobby();
+        return;
+    }
+
+    if(data.type === "VOTE"){
+
+        recordVote(
+            data.voterId,
+            data.targetId
+        );
+
+        return;
+    }
+}
+
+
+function handleClientData(data){
+
+    if(!data || !data.type) return;
+
+    if(data.type === "LOBBY"){
+
+        receiveLobby(data);
+        return;
+    }
+
+    if(data.type === "GAME_START"){
+
+        receiveGameStart(data);
+        return;
+    }
+
+    if(data.type === "VOTE_UPDATE"){
+
+        handleGameVoteUpdate(data);
+        return;
+    }
+
+    if(data.type === "RESULT"){
+
+        receiveResult(data);
+        return;
+    }
+}
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
 /* =========================================================
    NAVIGATION
 ========================================================= */
+
 function showHome(){
+
     showScreen("homeScreen");
+
     setStatus("homeStatus","");
 }
+
+
 function showHostScreen(){
+
     showScreen("hostScreen");
+
     setupCaseSelector();
+
     setStatus("hostStatus","");
 }
+
+
 function showJoinScreen(){
+
     showScreen("joinScreen");
+
     setStatus("joinStatus","");
 }
+
+
 /* =========================================================
    CASE SELECTOR
 ========================================================= */
+
 function setupCaseSelector(){
+
     const select = $("caseSelect");
+
     if(!select) return;
+
     select.innerHTML = "";
+
     CASES.forEach((caseData,index)=>{
+
         const option =
             document.createElement("option");
+
         option.value = index;
+
         option.textContent =
             `${index + 1}. ${caseData.title}`;
+
         select.appendChild(option);
+
     });
+
     select.value = String(selectedCaseIndex);
+
     previewCase();
 }
+
+
 function previewCase(){
+
     const select = $("caseSelect");
+
     if(!select) return;
+
     selectedCaseIndex =
         Number(select.value);
+
     currentCase =
         CASES[selectedCaseIndex];
+
     if(!currentCase) return;
+
     $("casePreview").innerHTML = `
+
         <div class="case-preview-title">
             ${escapeHtml(currentCase.title)}
         </div>
+
         <div class="case-preview-story">
             ${escapeHtml(currentCase.story)}
         </div>
+
     `;
 }
+
+
 /* =========================================================
    LOBBY CASE SELECTOR
 ========================================================= */
+
 function createLobbyCaseSelector(){
+
     if(!isHost) return;
+
     const controls = $("hostControls");
+
     if(!controls) return;
+
     if($("lobbyCaseSelect")){
         return;
     }
+
     const wrapper =
         document.createElement("div");
+
     wrapper.id = "lobbyCaseSelectorWrapper";
+
     wrapper.style.marginBottom = "15px";
+
     wrapper.innerHTML = `
+
         <div style="margin-bottom:7px;color:#9da8bb;font-size:13px;">
             اختار القضية
         </div>
+
         <select id="lobbyCaseSelect"></select>
+
         <div id="lobbyCasePreview"
              class="case-preview">
         </div>
+
     `;
+
     controls.insertBefore(
         wrapper,
         $("startButton")
     );
+
     const select =
         $("lobbyCaseSelect");
+
     CASES.forEach((caseData,index)=>{
+
         const option =
             document.createElement("option");
+
         option.value = index;
+
         option.textContent =
             `${index + 1}. ${caseData.title}`;
+
         select.appendChild(option);
+
     });
+
     select.value =
         String(selectedCaseIndex);
+
     select.addEventListener("change",()=>{
+
         selectedCaseIndex =
             Number(select.value);
+
         currentCase =
             CASES[selectedCaseIndex];
+
         updateLobbyCasePreview();
+
         broadcastLobby();
+
     });
+
     updateLobbyCasePreview();
 }
+
+
 function updateLobbyCasePreview(){
+
     const preview =
         $("lobbyCasePreview");
+
     if(!preview || !currentCase) return;
+
     preview.innerHTML = `
+
         <div class="case-preview-title">
             ${escapeHtml(currentCase.title)}
         </div>
+
         <div class="case-preview-story">
             ${escapeHtml(currentCase.story)}
         </div>
+
     `;
 }
+
+
 /* =========================================================
    PEER
 ========================================================= */
+
 function createPeer(peerId){
+
     return new Promise((resolve,reject)=>{
+
         const p =
             new Peer(peerId,{
+
                 debug:0,
+
                 config:{
                     iceServers:[
                         {
@@ -1003,142 +2145,215 @@ function createPeer(peerId){
                         }
                     ]
                 }
+
             });
+
         let finished = false;
+
         p.on("open",id=>{
+
             if(finished) return;
+
             finished = true;
+
             resolve({
                 peer:p,
                 id:id
             });
+
         });
+
         p.on("error",err=>{
+
             if(!finished){
+
                 finished = true;
                 reject(err);
+
             }else{
+
                 console.error(err);
+
             }
+
         });
+
     });
 }
+
+
 /* =========================================================
    CREATE GAME
 ========================================================= */
+
 async function createGame(){
+
     const rawName =
         $("hostName").value.trim();
+
     if(!rawName){
+
         setStatus(
             "hostStatus",
             "اكتب اسمك الأول.",
             "error"
         );
+
         return;
     }
+
     myName =
         safeName(rawName);
+
     selectedCaseIndex =
         Number($("caseSelect").value);
+
     currentCase =
         CASES[selectedCaseIndex];
+
     gameCode =
         randomCode();
+
     const peerId =
         "THECASE-" + gameCode;
+
     setStatus(
         "hostStatus",
         "جاري إنشاء اللعبة..."
     );
+
     try{
+
         const result =
             await createPeer(peerId);
+
         peer = result.peer;
         myId = result.id;
+
         isHost = true;
         hostPeerId = myId;
+
         players = {};
         connections = {};
+
         scores = {};
         votes = {};
+
         gameStarted = false;
         roundFinished = false;
+
         players[myId] = {
+
             id:myId,
             name:myName,
             isHost:true
+
         };
+
         scores[myId] = 0;
+
         peer.on("connection",conn=>{
+
             setupConnection(conn);
+
         });
+
         $("gameCode").textContent =
             gameCode;
+
         $("lobbyCaseTitle").textContent =
             currentCase.title;
+
         $("lobbyCaseStory").textContent =
             currentCase.story;
+
         $("hostControls")
             .classList
             .remove("hidden");
+
         createLobbyCaseSelector();
+
         showScreen("lobbyScreen");
+
         renderPlayers();
+
         setStatus(
             "lobbyStatus",
             "اللعبة جاهزة. ابعت الكود لأصحابك.",
             "success"
         );
+
     }catch(error){
+
         console.error(error);
+
         setStatus(
             "hostStatus",
             "حصلت مشكلة في إنشاء اللعبة. جرّب تاني.",
             "error"
         );
+
     }
 }
+
+
 /* =========================================================
    JOIN GAME
 ========================================================= */
+
 async function joinGame(){
+
     const rawName =
         $("joinName").value.trim();
+
     gameCode =
         $("joinCode").value
             .trim()
             .toUpperCase();
+
     if(!rawName){
+
         setStatus(
             "joinStatus",
             "اكتب اسمك الأول.",
             "error"
         );
+
         return;
     }
+
     if(!/^[A-Z0-9]{6}$/.test(gameCode)){
+
         setStatus(
             "joinStatus",
             "Game Code لازم يكون 6 حروف/أرقام.",
             "error"
         );
+
         return;
     }
+
     myName =
         safeName(rawName);
+
     setStatus(
         "joinStatus",
         "جاري الاتصال باللعبة..."
     );
+
     try{
+
         const result =
             await createPeer();
+
         peer = result.peer;
         myId = result.id;
+
         isHost = false;
+
         hostPeerId =
             "THECASE-" + gameCode;
+
         const conn =
             peer.connect(
                 hostPeerId,
@@ -1146,983 +2361,1577 @@ async function joinGame(){
                     reliable:true
                 }
             );
+
         connections.host = conn;
+
         setupConnection(conn);
+
         conn.on("open",()=>{
+
             sendToHost({
+
                 type:"JOIN",
+
                 player:{
                     id:myId,
                     name:myName
                 }
+
             });
+
         });
+
         setTimeout(()=>{
+
             if(
                 !conn.open &&
                 !gameStarted
             ){
+
                 setStatus(
                     "joinStatus",
                     "مش قادر أوصل للعبة. تأكد من الكود والـHost.",
                     "error"
                 );
+
             }
+
         },7000);
+
     }catch(error){
+
         console.error(error);
+
         setStatus(
             "joinStatus",
             "فشل الاتصال. جرّب تاني.",
             "error"
         );
+
     }
 }
+
+
 /* =========================================================
    CONNECTION
 ========================================================= */
+
 function setupConnection(conn){
+
     if(!conn) return;
+
     conn.on("open",()=>{
+
         console.log(
             "Connected:",
             conn.peer
         );
+
     });
+
     conn.on("data",data=>{
+
         handleData(data,conn);
+
     });
+
     conn.on("close",()=>{
+
         if(!isHost){
+
             setStatus(
                 "lobbyStatus",
                 "الاتصال بالـHost انقطع.",
                 "error"
             );
+
         }
+
     });
+
     conn.on("error",error=>{
+
         console.error(
             "Connection error:",
             error
         );
+
     });
+
     if(isHost){
+
         connections[conn.peer] = conn;
+
     }
+
 }
+
+
 /* =========================================================
    DATA ROUTER
 ========================================================= */
+
 function handleData(data,conn){
+
     if(!data || !data.type) return;
+
     if(isHost){
+
         handleHostData(data,conn);
+
     }else{
+
         handleClientData(data);
+
     }
+
 }
+
+
 /* =========================================================
    HOST DATA
 ========================================================= */
+
 function handleHostData(data,conn){
+
     if(data.type === "JOIN"){
+
         if(gameStarted){
             return;
         }
+
         if(
             !data.player ||
             !data.player.id
         ){
             return;
         }
+
         addPlayer(data.player);
+
         broadcastLobby();
+
         return;
     }
+
+
     if(data.type === "VOTE"){
+
         if(
             !gameStarted ||
             roundFinished
         ){
             return;
         }
+
         const voterId =
             data.playerId;
+
         const targetId =
             data.targetId;
+
         if(!players[voterId]){
             return;
         }
+
         if(!players[targetId]){
             return;
         }
+
         /* المتهم الحقيقي لا يصوت */
+
         if(voterId === accusedId){
             return;
         }
+
         /* اللاعب لا يصوت لنفسه */
+
         if(voterId === targetId){
             return;
         }
+
         /* منع التصويت مرتين */
+
         if(votes[voterId]){
             return;
         }
+
         votes[voterId] =
             targetId;
+
         const eligibleCount =
             Object.keys(players)
                 .filter(id=>id !== accusedId)
                 .length;
+
         const votedCount =
             Object.keys(votes).length;
+
         broadcast({
+
             type:"VOTE_UPDATE",
+
             votedCount:votedCount,
+
             total:eligibleCount
+
         });
+
         if(votedCount >= eligibleCount){
+
             finishVoting();
+
         }
+
         return;
     }
+
 }
 
-/\* =========================================================
+
+/* =========================================================
    CLIENT DATA
-\========================================================= \*/
+========================================================= */
+
 function handleClientData(data){
+
     if(data.type === "LOBBY"){
+
         receiveLobby(data);
+
         return;
     }
-    if(data.type === "GAME\_START"){
+
+
+    if(data.type === "GAME_START"){
+
         receiveGameStart(data);
+
         return;
     }
-    if(data.type === "VOTE\_UPDATE"){
+
+
+    if(data.type === "VOTE_UPDATE"){
+
         setStatus(
             "voteStatus",
-            \`تم التصويت: ${data.votedCount}/${data.total}\`,
+            `تم التصويت: ${data.votedCount}/${data.total}`,
             "success"
         );
+
         return;
     }
+
+
     if(data.type === "RESULT"){
+
         receiveResult(data);
+
         return;
     }
+
+
     if(data.type === "ERROR"){
+
         setStatus(
             "lobbyStatus",
             data.message || "حصل خطأ.",
             "error"
         );
+
     }
+
 }
-/\* =========================================================
+
+
+/* =========================================================
    PLAYER MANAGEMENT
-\========================================================= \*/
+========================================================= */
+
 function addPlayer(player){
+
     if(!player || !player.id){
         return;
     }
+
     players[player.id] = {
+
         id:player.id,
+
         name:safeName(player.name),
+
         isHost:
             player.id === hostPeerId
+
     };
+
     if(
         scores[player.id] === undefined
     ){
+
         scores[player.id] = 0;
+
     }
+
 }
+
+
 function renderPlayers(){
+
     const list =
         $("playersList");
+
     if(!list) return;
+
     list.innerHTML = "";
+
     const ids =
         Object.keys(players);
+
     $("playerCount").textContent =
         ids.length;
+
     ids.forEach(id=>{
+
         const player =
             players[id];
+
         const row =
             document.createElement("div");
-        row\.className =
+
+        row.className =
             "player";
-        row\.innerHTML = \`
-            \<span class="player-name">
+
+        row.innerHTML = `
+
+            <span class="player-name">
                 ${escapeHtml(player.name)}
-            \</span>
+            </span>
+
             ${
                 player.isHost
                 ?
-                \`\<span class="host-badge">
+                `<span class="host-badge">
                     HOST
-                 \</span>\`
+                 </span>`
                 :
                 ""
             }
-        \`;
+
+        `;
+
         list.appendChild(row);
+
     });
+
 }
-/\* =========================================================
+
+
+/* =========================================================
    BROADCAST
-\========================================================= \*/
+========================================================= */
+
 function broadcast(message){
+
     Object.values(connections)
         .forEach(conn=>{
+
             if(
                 conn &&
                 conn.open
             ){
+
                 try{
+
                     conn.send(message);
+
                 }catch(error){
+
                     console.error(error);
+
                 }
+
             }
+
         });
+
 }
+
+
 function sendToHost(message){
+
     const conn =
         connections.host;
+
     if(
         conn &&
         conn.open
     ){
+
         conn.send(message);
+
     }
+
 }
-/\* =========================================================
+
+
+/* =========================================================
    LOBBY
-\========================================================= \*/
+========================================================= */
+
 function broadcastLobby(){
+
     if(!isHost || !currentCase){
         return;
     }
+
     $("lobbyCaseTitle").textContent =
         currentCase.title;
+
     $("lobbyCaseStory").textContent =
         currentCase.story;
+
     updateLobbyCasePreview();
+
     broadcast({
+
         type:"LOBBY",
+
         players:players,
+
         caseIndex:selectedCaseIndex,
+
         caseTitle:currentCase.title,
+
         caseStory:currentCase.story
+
     });
+
     renderPlayers();
 }
+
+
 function receiveLobby(data){
+
     players =
         data.players || {};
+
     selectedCaseIndex =
         Number(data.caseIndex);
+
     currentCase =
         CASES[selectedCaseIndex];
+
     $("gameCode").textContent =
         gameCode;
+
     $("lobbyCaseTitle").textContent =
         data.caseTitle ||
         currentCase.title;
+
     $("lobbyCaseStory").textContent =
         data.caseStory ||
         currentCase.story;
+
     $("hostControls")
         .classList
         .add("hidden");
+
     showScreen("lobbyScreen");
+
     renderPlayers();
+
     setStatus(
         "lobbyStatus",
         "متصل باللعبة.",
         "success"
     );
+
 }
-/\* =========================================================
+
+
+/* =========================================================
    ROLE SCRIPTS
-\========================================================= \*/
+========================================================= */
+
 function getRoleData(role,clue){
+
     const clueText =
         clue ||
         "خليك مركز في كلام باقي اللاعبين وحاول تلاحظ أي تناقض.";
+
     if(role === "detective"){
+
         return {
+
             name:"🕵️ المحقق",
+
             description:
             "أنت المحقق المسؤول عن إدارة التحقيق. مهمتك إنك تجمع المعلومات من كل الموجودين وتحاول تعرف مين المتهم الحقيقي. أنت لا تعرف هوية المتهم.",
+
             secret:
             "أنت المحقق الوحيد في القضية. لا تكشف دورك بسرعة لو شايف إن ده هيخلي التحقيق أسهل للمتهم.",
+
             script:
-            \`أنت المحقق في قضية ${currentCase.title}. ابدأ التحقيق بهدوء وخلّي كل لاعب يحكي مكانه وتصرفاته وقت حدوث الواقعة. اسأل كل شخص أسئلة مختلفة، وارجع لنفس السؤال بعد فترة بطريقة مختلفة لو احتجت تختبر ثبات قصته. متعلنش اتهامك بدري، لأن هدفك إنك تجمع أكبر قدر من التناقضات قبل التصويت. عندك الأدلة العامة الموجودة أمامك، لكنك لا تعرف مين المتهم. أثناء الكلام ركز على الشخص الذي يعرف تفاصيل أكثر من المفروض، أو الذي تتغير روايته عندما تسأله مرة ثانية. في نهاية التحقيق لازم تختار الشخص الذي تعتقد أنه المتهم وتصوت له.\`
+            `أنت المحقق في قضية ${currentCase.title}. ابدأ التحقيق بهدوء وخلّي كل لاعب يحكي مكانه وتصرفاته وقت حدوث الواقعة. اسأل كل شخص أسئلة مختلفة، وارجع لنفس السؤال بعد فترة بطريقة مختلفة لو احتجت تختبر ثبات قصته. متعلنش اتهامك بدري، لأن هدفك إنك تجمع أكبر قدر من التناقضات قبل التصويت. عندك الأدلة العامة الموجودة أمامك، لكنك لا تعرف مين المتهم. أثناء الكلام ركز على الشخص الذي يعرف تفاصيل أكثر من المفروض، أو الذي تتغير روايته عندما تسأله مرة ثانية. في نهاية التحقيق لازم تختار الشخص الذي تعتقد أنه المتهم وتصوت له.`
+
         };
+
     }
+
+
     if(role === "accused"){
+
         return {
+
             name:"🎭 المتهم",
+
             description:
             "أنت المتهم الحقيقي في القضية. باقي اللاعبين لا يعرفون هويتك، ومهمتك إنك تحافظ على قصتك وتخلي الشك يروح لشخص آخر.",
+
             secret:
-            \`أنت المتهم الحقيقي في ${currentCase.title}. لا تعترف بدورك ولا تقول للاعبين إنك المتهم. استخدم قصة دفاع منطقية وحاول تشرح أي دليل ممكن يثير الشك عليك.\`,
+            `أنت المتهم الحقيقي في ${currentCase.title}. لا تعترف بدورك ولا تقول للاعبين إنك المتهم. استخدم قصة دفاع منطقية وحاول تشرح أي دليل ممكن يثير الشك عليك.`,
+
             script:
-            \`أنت المتهم الحقيقي في قضية ${currentCase.title}. أثناء التحقيق، اتكلم بثقة وحافظ على نفس الرواية من أول الجولة لآخرها. لو حد سألك كنت فين، قدم تفسير واضح ومتناسق وماتغيرش التفاصيل بدون سبب. لو ظهر دليل ممكن يوجه الشك عليك، حاول تشرح تفسير بديل منطقي بدل ما تدخل في ارتباك. اسأل أنت كمان باقي اللاعبين عن تحركاتهم عشان ما تبقاش مركز الاهتمام طول الوقت. ممكن تشكك في قصة لاعب آخر، لكن حاول ما تبالغش في الاتهامات حتى لا تلفت النظر لنفسك. أهم حاجة إنك تفضل هادي وتحافظ على قصتك لحد التصويت النهائي. لو قدرت تمنع باقي اللاعبين من التصويت عليك، أنت نجحت في الهروب من القضية.\`
+            `أنت المتهم الحقيقي في قضية ${currentCase.title}. أثناء التحقيق، اتكلم بثقة وحافظ على نفس الرواية من أول الجولة لآخرها. لو حد سألك كنت فين، قدم تفسير واضح ومتناسق وماتغيرش التفاصيل بدون سبب. لو ظهر دليل ممكن يوجه الشك عليك، حاول تشرح تفسير بديل منطقي بدل ما تدخل في ارتباك. اسأل أنت كمان باقي اللاعبين عن تحركاتهم عشان ما تبقاش مركز الاهتمام طول الوقت. ممكن تشكك في قصة لاعب آخر، لكن حاول ما تبالغش في الاتهامات حتى لا تلفت النظر لنفسك. أهم حاجة إنك تفضل هادي وتحافظ على قصتك لحد التصويت النهائي. لو قدرت تمنع باقي اللاعبين من التصويت عليك، أنت نجحت في الهروب من القضية.`
+
         };
+
     }
+
+
     return {
+
         name:"👤 مشتبه به",
+
         description:
         "أنت مشتبه به. أنت لست المتهم الحقيقي، لكن عندك معلومة خاصة يمكن أن تساعد المجموعة. مهمتك إنك تتكلم وتستجوب الآخرين بدون ما تكشف كل شيء فورًا.",
+
         secret:
-        \`معلومتك السرية في هذه القضية هي: ${clueText}\`,
+        `معلومتك السرية في هذه القضية هي: ${clueText}`,
+
         script:
-        \`أنت أحد المشتبه بهم في قضية ${currentCase.title}، لكنك لست المتهم الحقيقي. عندك معلومة خاصة لا يعرفها باقي اللاعبين: ${clueText} يمكنك استخدام هذه المعلومة أثناء التحقيق عندما تشعر أن الوقت مناسب، لكن لا يلزم أن تكشفها فورًا. اتكلم عن اللي شفته أو سمعته بطريقة طبيعية، واسأل اللاعبين عن أماكنهم وتصرفاتهم. لو لاحظت إن شخصًا بيغير كلامه أو عنده معلومة ماكانش المفروض يعرفها، اذكر ملاحظتك للمجموعة. في نفس الوقت، حاول تتأكد من كلام الآخرين قبل ما تتهم أي شخص، لأن هدفك النهائي هو مساعدة المجموعة في معرفة المتهم الحقيقي والتصويت عليه.\`
+        `أنت أحد المشتبه بهم في قضية ${currentCase.title}، لكنك لست المتهم الحقيقي. عندك معلومة خاصة لا يعرفها باقي اللاعبين: ${clueText} يمكنك استخدام هذه المعلومة أثناء التحقيق عندما تشعر أن الوقت مناسب، لكن لا يلزم أن تكشفها فورًا. اتكلم عن اللي شفته أو سمعته بطريقة طبيعية، واسأل اللاعبين عن أماكنهم وتصرفاتهم. لو لاحظت إن شخصًا بيغير كلامه أو عنده معلومة ماكانش المفروض يعرفها، اذكر ملاحظتك للمجموعة. في نفس الوقت، حاول تتأكد من كلام الآخرين قبل ما تتهم أي شخص، لأن هدفك النهائي هو مساعدة المجموعة في معرفة المتهم الحقيقي والتصويت عليه.`
+
     };
+
 }
-/\* =========================================================
+
+
+/* =========================================================
    START GAME
-\========================================================= \*/
+========================================================= */
+
 function startGame(){
+
     if(!isHost){
         return;
     }
+
     const playerIds =
         Object.keys(players);
+
     if(playerIds.length < 3){
+
         setStatus(
             "lobbyStatus",
             "لازم يكون فيه 3 لاعبين على الأقل عشان تبدأ القضية.",
             "error"
         );
+
         return;
     }
+
     if(!currentCase){
+
         selectedCaseIndex =
             Number($("lobbyCaseSelect")?.value || 0);
+
         currentCase =
             CASES[selectedCaseIndex];
+
     }
+
     if(!currentCase){
         return;
     }
-    /\* منع بدء جولتين فوق بعض \*/
+
+    /* منع بدء جولتين فوق بعض */
+
     if(gameStarted && !roundFinished){
         return;
     }
-    /\* =====================================================
+
+    /* =====================================================
        اختيار الأدوار
-    \===================================================== \*/
+    ===================================================== */
+
     const shuffled =
         [...playerIds]
             .sort(()=>Math.random()-0.5);
+
     detectiveId =
         shuffled[0];
+
     accusedId =
         shuffled[1];
+
     gameStarted = true;
     roundFinished = false;
+
     votes = {};
+
     gameEndTime =
-        Date.now() + (15 \* 60 \* 1000);
-    /\* =====================================================
+        Date.now() + (15 * 60 * 1000);
+
+    /* =====================================================
        تجهيز كل لاعب
-    \===================================================== \*/
+    ===================================================== */
+
     playerIds.forEach((id,index)=>{
+
         let role;
+
         if(id === detectiveId){
+
             role = "detective";
+
         }else if(id === accusedId){
+
             role = "accused";
+
         }else{
+
             role = "suspect";
+
         }
+
         players[id].role =
             role;
+
         if(role === "suspect"){
+
             const suspectIds =
                 playerIds.filter(
                     pid =>
                     players[pid].role === "suspect"
                 );
+
             const suspectIndex =
                 suspectIds.indexOf(id);
+
             players[id].clue =
                 currentCase.clues[
                     suspectIndex %
                     currentCase.clues.length
                 ];
+
         }
+
     });
-    /\* =====================================================
+
+
+    /* =====================================================
        إرسال المعلومات الخاصة لكل لاعب
-    \===================================================== \*/
+    ===================================================== */
+
     playerIds.forEach(id=>{
+
         const role =
             players[id].role;
+
         const clue =
             players[id].clue || "";
+
         const roleData =
             getRoleData(role,clue);
+
         const payload = {
-            type:"GAME\_START",
+
+            type:"GAME_START",
+
             caseIndex:
                 selectedCaseIndex,
+
             caseTitle:
                 currentCase.title,
+
             caseStory:
                 currentCase.story,
+
             evidence:
                 currentCase.evidence,
+
             role:role,
+
             roleName:
                 roleData.name,
+
             roleDescription:
                 roleData.description,
+
             secret:
                 roleData.secret,
+
             script:
                 roleData.script,
+
             endTime:
                 gameEndTime
+
         };
+
         if(id === myId){
+
             receiveGameStart(payload);
+
         }else{
+
             const conn =
                 connections[id];
+
             if(
                 conn &&
                 conn.open
             ){
+
                 conn.send(payload);
+
             }
+
         }
+
     });
+
     showScreen("gameScreen");
+
     renderGame();
+
     startTimer();
+
 }
-/\* =========================================================
+
+
+/* =========================================================
    RECEIVE GAME START
-\========================================================= \*/
+========================================================= */
+
 function receiveGameStart(data){
+
     gameStarted = true;
     roundFinished = false;
+
     selectedCaseIndex =
         Number(data.caseIndex);
+
     currentCase =
         CASES[selectedCaseIndex];
+
     myRole =
         data.role;
+
     mySecret =
         data.secret;
+
     gameEndTime =
         Number(data.endTime);
+
     $("gameCaseTitle").textContent =
         data.caseTitle ||
         currentCase.title;
+
     $("gameCaseStory").textContent =
         data.caseStory ||
         currentCase.story;
+
     $("roleName").textContent =
         data.roleName;
+
     $("roleDescription").textContent =
         data.roleDescription;
-    $("scriptBox").innerHTML = \`
-        \<h3>📜 السيناريو الخاص بك\</h3>
-        \<p>
+
+    $("scriptBox").innerHTML = `
+
+        <h3>📜 السيناريو الخاص بك</h3>
+
+        <p>
             ${escapeHtml(data.script)}
-        \</p>
-        \<div class="secret"
+        </p>
+
+        <div class="secret"
              style="margin-top:15px;padding:14px;border-radius:10px;border:1px solid #54452e;background:#17120d;">
-            \<h3>🔐 سرك الخاص\</h3>
-            \<p>
+
+            <h3>🔐 سرك الخاص</h3>
+
+            <p>
                 ${escapeHtml(data.secret)}
-            \</p>
-        \</div>
-    \`;
+            </p>
+
+        </div>
+
+    `;
+
     renderEvidence(
         data.evidence || []
     );
+
     renderVoting();
+
     showScreen("gameScreen");
+
     startTimer();
+
 }
-/\* =========================================================
+
+
+/* =========================================================
    GAME RENDER
-\========================================================= \*/
+========================================================= */
+
 function renderGame(){
+
     if(!currentCase) return;
+
     $("gameCaseTitle").textContent =
         currentCase.title;
+
     $("gameCaseStory").textContent =
         currentCase.story;
+
     renderEvidence(
         currentCase.evidence
     );
+
     renderVoting();
+
 }
+
+
 function renderEvidence(evidence){
+
     const list =
         $("evidenceList");
+
     if(!list) return;
+
     list.innerHTML = "";
+
     evidence.forEach((item,index)=>{
+
         const box =
             document.createElement("div");
+
         box.className =
             "evidence";
-        box.innerHTML = \`
-            \<div class="evidence-title">
+
+        box.innerHTML = `
+
+            <div class="evidence-title">
                 الدليل ${index + 1}
-            \</div>
-            \<div class="evidence-text">
+            </div>
+
+            <div class="evidence-text">
                 ${escapeHtml(item)}
-            \</div>
-        \`;
+            </div>
+
+        `;
+
         list.appendChild(box);
+
     });
+
 }
-/\* =========================================================
+
+
+/* =========================================================
    TIMER
-\========================================================= \*/
+========================================================= */
+
 function startTimer(){
+
     if(timerInterval){
+
         clearInterval(timerInterval);
+
     }
+
     updateTimer();
+
     timerInterval =
         setInterval(()=>{
+
             updateTimer();
+
         },1000);
+
 }
+
+
 function updateTimer(){
+
     if(!gameStarted){
+
         return;
     }
+
     const remaining =
         Math.max(
             0,
             gameEndTime - Date.now()
         );
+
     const totalSeconds =
         Math.ceil(
             remaining / 1000
         );
+
     const minutes =
         Math.floor(
             totalSeconds / 60
         );
+
     const seconds =
         totalSeconds % 60;
+
     $("timer").textContent =
-        \`${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}\`;
+        `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
     if(totalSeconds <= 60){
+
         $("timer")
             .classList
             .add("warning");
+
     }else{
+
         $("timer")
             .classList
             .remove("warning");
+
     }
+
     if(remaining <= 0){
+
         clearInterval(timerInterval);
+
         timerInterval = null;
+
         if(isHost && !roundFinished){
+
             finishVoting();
+
         }else{
+
             setStatus(
                 "voteStatus",
                 "انتهى الوقت، مستني النتيجة...",
                 ""
             );
+
         }
+
     }
+
 }
-/\* =========================================================
+
+
+/* =========================================================
    VOTING
-\========================================================= \*/
+========================================================= */
+
 function renderVoting(){
+
     const grid =
         $("voteGrid");
+
     if(!grid) return;
+
     grid.innerHTML = "";
+
     if(myRole === "accused"){
+
         setStatus(
             "voteStatus",
             "أنت المتهم الحقيقي، لذلك لا يمكنك التصويت.",
             ""
         );
+
         return;
     }
+
     Object.keys(players).forEach(id=>{
-        /\* اللاعب لا يصوت لنفسه \*/
+
+        /* اللاعب لا يصوت لنفسه */
+
         if(id === myId){
             return;
         }
+
         const player =
             players[id];
+
         const button =
             document.createElement("button");
+
         button.className =
             "vote-btn";
+
         button.textContent =
             player.name;
+
         button.onclick = ()=>{
+
             submitVote(id);
+
         };
+
         grid.appendChild(button);
+
     });
+
 }
+
+
 function submitVote(targetId){
+
     if(!gameStarted || roundFinished){
+
         return;
     }
+
     if(myRole === "accused"){
+
         setStatus(
             "voteStatus",
             "المتهم لا يستطيع التصويت.",
             "error"
         );
+
         return;
     }
+
     if(votes[myId]){
+
         setStatus(
             "voteStatus",
             "أنت صوتت بالفعل.",
             "error"
         );
+
         return;
     }
-    /\* العميل \*/
+
+    /* العميل */
+
     if(!isHost){
+
         sendToHost({
+
             type:"VOTE",
+
             playerId:myId,
+
             targetId:targetId
+
         });
+
     }else{
-        /\* الـHost نفسه يصوت \*/
+
+        /* الـHost نفسه يصوت */
+
         if(targetId === myId){
             return;
         }
+
         votes[myId] =
             targetId;
+
         const eligibleCount =
             Object.keys(players)
                 .filter(id=>id !== accusedId)
                 .length;
+
         const votedCount =
             Object.keys(votes).length;
+
         setStatus(
             "voteStatus",
-            \`تم التصويت: ${votedCount}/${eligibleCount}\`,
+            `تم التصويت: ${votedCount}/${eligibleCount}`,
             "success"
         );
+
         broadcast({
-            type:"VOTE\_UPDATE",
+
+            type:"VOTE_UPDATE",
+
             votedCount:votedCount,
+
             total:eligibleCount
+
         });
+
         if(
             votedCount >=
             eligibleCount
         ){
+
             finishVoting();
+
         }
+
     }
-    /\* تعطيل أزرار التصويت \*/
+
+    /* تعطيل أزرار التصويت */
+
     const buttons =
         document.querySelectorAll(".vote-btn");
+
     buttons.forEach(button=>{
+
         button.disabled = true;
         button.style.opacity = "0.5";
+
     });
+
     setStatus(
         "voteStatus",
         "تم تسجيل تصويتك. مستني باقي اللاعبين...",
         "success"
     );
+
 }
-/\* =========================================================
+
+
+/* =========================================================
    FINISH VOTING
-\========================================================= \*/
+========================================================= */
+
 function finishVoting(){
+
     if(!isHost){
         return;
     }
+
     if(roundFinished){
         return;
     }
+
     roundFinished = true;
     gameStarted = false;
+
     if(timerInterval){
+
         clearInterval(timerInterval);
+
         timerInterval = null;
+
     }
+
     const voteCounts = {};
+
     Object.values(votes)
         .forEach(targetId=>{
+
             voteCounts[targetId] =
                 (voteCounts[targetId] || 0) + 1;
+
         });
+
     const accusedVotes =
         voteCounts[accusedId] || 0;
-    /\* =====================================================
+
+    /* =====================================================
        النقاط
-    \===================================================== \*/
+    ===================================================== */
+
     Object.keys(votes)
         .forEach(voterId=>{
+
             if(
                 votes[voterId] ===
                 accusedId
             ){
+
                 scores[voterId] =
                     (scores[voterId] || 0) + 1;
+
             }
+
         });
-    /\* لو محدش اكتشف المتهم \*/
+
+    /* لو محدش اكتشف المتهم */
+
     if(accusedVotes === 0){
+
         scores[accusedId] =
             (scores[accusedId] || 0) + 1;
+
     }
+
     const resultMessage =
         accusedVotes > 0
         ?
-        \`تم اكتشاف المتهم! حصل على ${accusedVotes} تصويت.\`
+        `تم اكتشاف المتهم! حصل على ${accusedVotes} تصويت.`
         :
         "المتهم هرب! محدش صوت عليه.";
+
     const resultData = {
+
         type:"RESULT",
+
         accusedId:
             accusedId,
+
         detectiveId:
             detectiveId,
+
         votes:
             votes,
+
         scores:
             scores,
+
         accusedVotes:
             accusedVotes,
+
         message:
             resultMessage
+
     };
+
     receiveResult(resultData);
+
     broadcast(resultData);
+
 }
-/\* =========================================================
+
+
+/* =========================================================
    RESULT
-\========================================================= \*/
+========================================================= */
+
 function receiveResult(data){
+
     roundFinished = true;
     gameStarted = false;
+
     if(timerInterval){
+
         clearInterval(timerInterval);
+
         timerInterval = null;
+
     }
+
     accusedId =
         data.accusedId;
+
     detectiveId =
         data.detectiveId;
+
     votes =
         data.votes || {};
+
     scores =
         data.scores || {};
+
     const accused =
         players[accusedId];
+
     $("accusedResult").textContent =
         accused
         ?
         accused.name
         :
         "غير معروف";
+
     $("resultMessage").textContent =
         data.message || "";
+
     renderScores();
+
     renderVoteDetails();
+
     if(isHost){
+
         $("resultHostControls")
             .classList
             .remove("hidden");
+
         setStatus(
             "resultStatus",
             "أنت الـHost. تقدر تبدأ قضية جديدة.",
             "success"
         );
+
     }else{
+
         $("resultHostControls")
             .classList
             .add("hidden");
+
         setStatus(
             "resultStatus",
             "مستني الـHost يبدأ القضية الجديدة.",
             ""
         );
+
     }
+
     showScreen("resultScreen");
+
 }
+
+
 function renderScores(){
+
     const list =
         $("scoresList");
+
     if(!list) return;
+
     list.innerHTML = "";
+
     const ids =
         Object.keys(players)
             .sort((a,b)=>{
+
                 return (
                     (scores[b] || 0) -
                     (scores[a] || 0)
                 );
+
             });
+
     ids.forEach((id,index)=>{
+
         const row =
             document.createElement("div");
-        row\.className =
+
+        row.className =
             "score-row";
-        row\.innerHTML = \`
-            \<span>
+
+        row.innerHTML = `
+
+            <span>
                 ${index + 1}. ${escapeHtml(players[id].name)}
-            \</span>
-            \<strong>
+            </span>
+
+            <strong>
                 ${scores[id] || 0} نقطة
-            \</strong>
-        \`;
+            </strong>
+
+        `;
+
         list.appendChild(row);
+
     });
+
 }
+
+
 function renderVoteDetails(){
+
     const box =
         $("voteDetails");
+
     if(!box) return;
+
     box.innerHTML = "";
+
     const voteIds =
         Object.keys(votes);
+
     if(voteIds.length === 0){
+
         box.innerHTML =
-            \`\<div class="vote-detail">لم يتم تسجيل أي تصويت.\</div>\`;
+            `<div class="vote-detail">لم يتم تسجيل أي تصويت.</div>`;
+
         return;
     }
+
     voteIds.forEach(voterId=>{
+
         const targetId =
             votes[voterId];
+
         const voter =
             players[voterId];
+
         const target =
             players[targetId];
+
         if(!voter) return;
+
         const detail =
             document.createElement("div");
+
         detail.className =
             "vote-detail";
-        detail.innerHTML = \`
-            \<strong>
+
+        detail.innerHTML = `
+
+            <strong>
                 ${escapeHtml(voter.name)}
-            \</strong>
+            </strong>
+
             صوّت لـ
-            \<strong>
+
+            <strong>
                 ${escapeHtml(target ? target.name : "غير معروف")}
-            \</strong>
+            </strong>
+
             ${
                 targetId === accusedId
                 ?
-                \` ✅\`
+                ` ✅`
                 :
-                \` ❌\`
+                ` ❌`
             }
-        \`;
+
+        `;
+
         box.appendChild(detail);
+
     });
+
 }
-/\* =========================================================
+
+
+/* =========================================================
    BACK TO LOBBY / NEW CASE
-\========================================================= \*/
+========================================================= */
+
 function backToLobby(){
+
     if(!isHost){
         return;
     }
+
     gameStarted = false;
     roundFinished = false;
+
     votes = {};
+
     myRole = null;
     mySecret = null;
+
     accusedId = null;
     detectiveId = null;
+
     currentCase =
         CASES[selectedCaseIndex];
+
     $("lobbyCaseTitle").textContent =
         currentCase.title;
+
     $("lobbyCaseStory").textContent =
         currentCase.story;
+
     $("hostControls")
         .classList
         .remove("hidden");
+
     if($("lobbyCaseSelect")){
+
         $("lobbyCaseSelect").value =
             String(selectedCaseIndex);
+
     }
+
     updateLobbyCasePreview();
+
     showScreen("lobbyScreen");
+
     renderPlayers();
+
     broadcastLobby();
+
     setStatus(
         "lobbyStatus",
         "اختار القضية الجديدة، وبعدها ابدأ التحقيق.",
         "success"
     );
+
 }
-/\* =========================================================
+
+
+/* =========================================================
    LEAVE GAME
-\========================================================= \*/
+========================================================= */
+
 function leaveGame(){
+
     if(timerInterval){
+
         clearInterval(timerInterval);
+
         timerInterval = null;
+
     }
+
     Object.values(connections)
         .forEach(conn=>{
+
             try{
+
                 if(conn){
                     conn.close();
                 }
+
             }catch(error){}
+
         });
+
     connections = {};
+
     if(peer){
+
         try{
             peer.destroy();
         }catch(error){}
+
     }
+
     peer = null;
+
     isHost = false;
+
     myId = null;
     hostPeerId = null;
+
     gameCode = "";
+
     players = {};
     votes = {};
+
     currentCase = null;
+
     myRole = null;
     mySecret = null;
+
     gameStarted = false;
     roundFinished = false;
+
     accusedId = null;
     detectiveId = null;
+
     showHome();
+
 }
-/\* =========================================================
+
+
+/* =========================================================
    INITIALIZE
-\========================================================= \*/
+========================================================= */
+
 document.addEventListener("DOMContentLoaded",()=>{
+
     setupCaseSelector();
+
 });
-\</script>
+
+</script>
+
 \</body>
 \</html>
